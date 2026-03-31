@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Regular Donor Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Style_css/regulardonarverification.css">
+    <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+    <link rel="stylesheet" href="../../zheaderfooter/header.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <img src="../../zimages/projectlogo.png"> Humanity Bridge
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav>
+                <a href="home_pg.html">Home</a>
+                <a href="about_pg.html">About</a>
+                <a href="ourwork_pg.html">Our Work</a>
+                <a href="gallery_pg.html">Gallery</a>
+                <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="donardashboard_pg.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- MAIN -->
+    <div class="container main-content">
+
+        <!-- LEFT PANEL -->
+        <div class="left">
+            <h1>Regular Donor Verification</h1>
+            <p>Please complete the form to verify your regular donor status and schedule an admin visit.</p>
+
+            <div class="steps">
+                <h3>Important Steps</h3>
+                <ul>
+                    <li>• Valid ID and Business Proof</li>
+                    <li>• Accurate Contact Information</li>
+                    <li>• Schedule Admin Visit</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="form-box">
+            <h3>Owner / Contact Person Details</h3>
+
+            <div class="row">
+                <input type="text" placeholder="Full Name">
+                <input type="text" placeholder="Phone">
+            </div>
+            <div class="row">
+                <input type="email" placeholder="Email">
+                <select>
+                    <option>Designation</option>
+                    <option>Manager</option>
+                    <option>Owner</option>
+                </select>
+            </div>
+
+            <h3>Organization / Business Details</h3>
+            <div class="row">
+                <input type="text" placeholder="Organization Name">
+                <select>
+                    <option>Business Type</option>
+                    <option>NGO</option>
+                    <option>Company</option>
+                </select>
+            </div>
+            <input type="text" placeholder="Address">
+            <div class="row">
+                <input type="text" placeholder="City">
+                <input type="text" placeholder="Pincode">
+            </div>
+
+            <h3>Proof & Identity</h3>
+            <div class="row">
+                <select>
+                    <option>ID Proof Type</option>
+                    <option>Licence no.</option>
+                    <option>GST Registration</option>
+                    <option>PAN Card of Organization</option>
+                </select>
+                <input type="text" placeholder="ID Number">
+            </div>
+            <div class="row">
+                <input type="file">
+                <input type="file">
+            </div>
+
+            <h3>Upload Business Photo</h3>
+            <input type="file">
+
+            <h3>Book Slot for Admin Visit</h3>
+            <div class="row">
+                <!-- Desktop Inputs -->
+                <input type="date" class="desktop-input">
+                <input type="time" class="desktop-input">
+
+                <!-- Mobile Inputs with Placeholders -->
+                <input type="text" class="mobile-input" placeholder="Select Date" onfocus="(this.type='date')"
+                    onblur="(this.type= this.value ? 'date' : 'text')">
+                <input type="text" class="mobile-input" placeholder="Select Time" onfocus="(this.type='time')"
+                    onblur="(this.type= this.value ? 'time' : 'text')">
+            </div>
+            <div class="row">
+                <input type="text" placeholder="Contact Person">
+                <input type="text" placeholder="Contact Phone">
+            </div>
+            <textarea placeholder="Special Instructions"></textarea>
+
+            <div class="checkbox">
+                I confirm that all information provided is accurate.<input type="checkbox">
+            </div>
+
+            <a href="formsubmit.html"><button type="submit">Submit for Verification</button></a>
+        </div>
+
+    </div>
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+</html>

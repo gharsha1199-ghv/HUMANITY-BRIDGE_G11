@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Humanity Bridge | Tracking</title>
+  <link rel="stylesheet" href="../Style_css/tracking.css">
+  <link rel="stylesheet" href="../../zheaderfooter/header.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+  <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+        <img src="../../zimages/projectlogo.png" alt="logo">
+        <span>Humanity Bridge</span>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="profile-toggle" id="profileToggle">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <nav>
+        <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div></nav>
+
+    </div>
+  </header>
+
+
+
+  <!-- MAIN CONTENT -->
+  <section class="distribution-section">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Admin<span>Panel</span></h3>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="admin.html"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+        <li><a href="verification.html"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+
+        <li><a href="donations.html"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+        <li class="active"><a href="#"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+        <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+        &nbsp; <br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp;<br>
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp;<br>
+        &nbsp;<br>
+        <li id="logout"><a href="../../BEFORE LOGIN humanity bridge/Script_html/login_pg.html"><i
+              class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+      </ul>
+    </aside>
+
+    <h1 class="title">Distribution Tracking</h1>
+
+    <div class="card">
+
+      <div class="controls">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+
+        <div class="filter-box">
+          <select id="statusFilter">
+            <option value="all">Status: All</option>
+            <option value="On the Way">On the Way</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+          <button class="filter-btn">Filter</button>
+        </div>
+      </div>
+
+      <table id="distributionTable">
+        <thead>
+          <tr>
+            <th>Delivery ID</th>
+            <th>Date</th>
+            <th>Receiver Name</th>
+            <th>Location</th>
+            <th>Donation Type</th>
+            <th>Quantity / Details</th>
+            <th>Volunteer</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr data-status="On the Way">
+            <td>DLV-10245</td>
+            <td>2024-04-24</td>
+            <td>Sara Ahmed</td>
+            <td>Mumbai / 400001</td>
+            <td><span class="tag food">Food</span></td>
+            <td>120 Meals</td>
+            <td>John D.</td>
+            <td><span class="status onway">OntheWay</span></td>
+            <td><button class="action-btn">Mark Delivered</button></td>
+          </tr>
+
+          <tr data-status="On the Way">
+            <td>DLV-10232</td>
+            <td>2024-04-24</td>
+            <td>Ravi Kumar</td>
+            <td>Delhi / 110015</td>
+            <td><span class="tag clothes">Clothes</span></td>
+            <td>50 Jackets</td>
+            <td>Priya S.</td>
+            <td><span class="status onway">Delivered</span></td>
+            <td><button class="action-btn">Mark Delivered</button></td>
+          </tr>
+
+          <tr data-status="On the Way">
+            <td>DLV-10218</td>
+            <td>2024-04-23</td>
+            <td>Ayesha Khan</td>
+            <td>Kolkata / 700019</td>
+            <td><span class="tag money">Money</span></td>
+            <td>Rs. 15,000</td>
+            <td>Amit P.</td>
+            <td><span class="status onway">OntheWay</span></td>
+            <td><button class="action-btn">Mark Delivered</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- FOOTER (UNCHANGED) -->
+  <footer>
+    <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('shrunk');
+      body.classList.toggle('sidebar-active');
+    });
+
+    // Toggle sidebar with Profile Icon (Mobile / Tablet)
+    const profileToggle = document.getElementById('profileToggle');
+    if (profileToggle) {
+      profileToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        if (window.innerWidth > 768) {
+          mainContent.classList.toggle('shrunk');
+        }
+        body.classList.toggle('sidebar-active');
+      });
+    }
+
+    // Hamburger menu for mobile
+    // const hamburger = document.querySelector('.hamburger');
+    // const nav = document.querySelector('nav');
+
+    // if (hamburger) {
+    //   hamburger.addEventListener('click', () => {
+    //     hamburger.classList.toggle('active');
+    //     nav.classList.toggle('active');
+    //   });
+
+    //   const navLinks = document.querySelectorAll('nav a');
+    //   navLinks.forEach(link => {
+    //     link.addEventListener('click', () => {
+    //       hamburger.classList.remove('active');
+    //       nav.classList.remove('active');
+    //     });
+    //   });
+    // }
+  </script>
+  <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+</html>

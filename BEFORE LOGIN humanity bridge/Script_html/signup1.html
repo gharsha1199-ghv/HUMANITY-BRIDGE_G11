@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity Bridge | SignUp</title>
+    <link rel="stylesheet" href="../Style_css/signup1.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css"/>
+  <link rel="stylesheet" href="../../zheaderfooter/header.css" />
+    <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <img src="../../zimages/projectlogo.png" alt="logo">
+                <span>Humanity Bridge</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+
+
+            <nav>
+        <a href="../../index.html">Home</a>
+                <a href="about_pg.html">About</a>
+                <a href="ourwork_pg.html">Our work</a>
+                <a href="gallery_pg.html">Gallery</a>
+                <a href="login_pg.html" class="login-btn">Login / SignUp</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="signup-section">
+
+        <div class="intro-text">
+            <h1>Join Humanity Bridge</h1>
+            <p>Choose how you want to be part of reducing waste and helping people.</p>
+        </div>
+
+        <div class="role-viewport" id="roleCarousel">
+
+            <div class="carousel-spacer"></div>
+
+            <a href="signupdonar.html" class="role-card">
+                <div class="circle-icon ">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <h3>Individual Donor</h3>
+                <p>Donate occasionally</p>
+            </a>
+
+            <a href="signupRdonar.html" class="role-card">
+                <div class="circle-icon ">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <h3>Regular Donor</h3>
+                <p>Hotels, Restaurants,<br>Function Halls</p>
+            </a>
+
+            <a href="signupreciever.html" class="role-card">
+                <div class="circle-icon ">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <h3>NGO</h3>
+                <p>Communities in need</p>
+            </a>
+
+            <div class="carousel-spacer"></div>
+
+        </div>
+
+        <div class="swipe-hint">
+            <i class="fa-solid fa-left-right"></i> Swipe to select
+        </div>
+
+    </section>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousel = document.getElementById('roleCarousel');
+            const cards = document.querySelectorAll('.role-card');
+
+            // Function to check if mobile
+            const isMobile = () => window.innerWidth <= 900;
+
+            // 1. Initial Setup
+            if (isMobile()) {
+                // Scroll to center card on mobile load
+                // Card width (260) + margins (30) = 290 approx
+                setTimeout(() => {
+                    carousel.scrollLeft = 290;
+                }, 100);
+            } else {
+                // Desktop: Set middle card (Index 1) as active manually
+                if (cards[1]) cards[1].classList.add('active');
+            }
+
+            // 2. Intersection Observer (Detects center item)
+            const options = {
+                root: carousel,
+                // Defines a narrow vertical strip in the center
+                rootMargin: "0px -45% 0px -45%",
+                threshold: 0.01
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        cards.forEach(c => c.classList.remove('active'));
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, options);
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+</html>

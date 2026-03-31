@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humanity Bridge | Donations</title>
+  <link rel="stylesheet" href="../Style_css/donations.css">
+  <link rel="stylesheet" href="../../zheaderfooter/header.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+  <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+        <img src="../../zimages/projectlogo.png" alt="logo">
+        <span>Humanity Bridge</span>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="profile-toggle" id="profileToggle">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <nav>
+        <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div></nav>
+
+    </div>
+  </header>
+
+
+  <body>
+    <!-- Top spacing reserved for header -->
+    <div class="header-space"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Admin<span>Panel</span></h3>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="admin.html"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+        <li><a href="verification.html"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+
+        <li class="active"><a href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+        <li><a href="tracking.html"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+        <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+        &nbsp; <br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp;<br>
+
+        &nbsp;<br>
+        &nbsp; <br>
+        &nbsp;<br>
+        &nbsp;<br>
+        &nbsp;<br>
+        <li id="logout"><a href="../../BEFORE LOGIN humanity bridge/Script_html/login_pg.html"><i
+              class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+      </ul>
+    </aside>
+
+    <section class="report-section">
+      <h1>Monthly Donations Report</h1>
+      <p class="subtitle">All donations received this month with status and details.</p>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>January 2026</h2>
+
+          <div class="controls">
+            <select>
+              <option>January 2026</option>
+              <option>December 2025</option>
+              <option>November 2025</option>
+            </select>
+
+            <input type="text" placeholder="Search">
+
+            <button class="export-btn">Export</button>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Donation Type</th>
+              <th>Donor Name</th>
+              <th>Quantity / Amount</th>
+              <th>Location</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Jan 28</td>
+              <td>Food</td>
+              <td>Emily Johnson</td>
+              <td>100 Meals</td>
+              <td>New York</td>
+              <td><span class="status approved">Approved</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 25</td>
+              <td>Clothes</td>
+              <td>Ahmed Khan</td>
+              <td>75 Bags</td>
+              <td>Detroit</td>
+              <td><span class="status onway">On The Way</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 23</td>
+              <td>Money</td>
+              <td>Sarah Lee</td>
+              <td>$300</td>
+              <td>San Francisco</td>
+              <td><span class="status completed">Completed</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 19</td>
+              <td>Food</td>
+              <td>Michael Brown</td>
+              <td>150 Meals</td>
+              <td>Houston</td>
+              <td><span class="status approved">Approved</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 18</td>
+              <td>Money</td>
+              <td>Jessica Martinez</td>
+              <td>$500</td>
+              <td>Chicago</td>
+              <td><span class="status pending">Pending</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 14</td>
+              <td>Clothes</td>
+              <td>Kevin Smith</td>
+              <td>80 Bags</td>
+              <td>Miami</td>
+              <td><span class="status completed">Completed</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 10</td>
+              <td>Food</td>
+              <td>Ananya Patel</td>
+              <td>200 Meals</td>
+              <td>Atlanta</td>
+              <td><span class="status onway">On The Way</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 5</td>
+              <td>Money</td>
+              <td>David Wilson</td>
+              <td>$250</td>
+              <td>Seattle</td>
+              <td><span class="status approved">Approved</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 3</td>
+              <td>Food</td>
+              <td>Maria Gomez</td>
+              <td>120 Meals</td>
+              <td>Los Angeles</td>
+              <td><span class="status approved">Approved</span></td>
+            </tr>
+
+            <tr>
+              <td>Jan 1</td>
+              <td>Clothes</td>
+              <td>John Carter</td>
+              <td>65 Bags</td>
+              <td>Dallas</td>
+              <td><span class="status completed">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Bottom spacing reserved for footer -->
+    <div class="footer-space"></div>
+
+
+
+    <!-- FOOTER (UNCHANGED) -->
+    <footer>
+      <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      const toggleBtn = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      const body = document.body;
+
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        mainContent.classList.toggle('shrunk');
+        // Optional: Add a class to body if you want to trigger the blur filter on background
+        body.classList.toggle('sidebar-active');
+      });
+
+      // Toggle sidebar with Profile Icon (Mobile / Tablet)
+      const profileToggle = document.getElementById('profileToggle');
+      if (profileToggle) {
+        profileToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('open');
+          if (window.innerWidth > 768) {
+            mainContent.classList.toggle('shrunk');
+          }
+          body.classList.toggle('sidebar-active');
+        });
+      }
+
+
+
+      // const hamburger = document.querySelector('.hamburger');
+      // const nav = document.querySelector('nav');
+
+      // hamburger.addEventListener('click', () => {
+      //   hamburger.classList.toggle('active');
+      //   nav.classList.toggle('active');
+      // });
+
+      // const navLinks = document.querySelectorAll('nav a');
+      // navLinks.forEach(link => {
+      //   link.addEventListener('click', () => {
+      //     hamburger.classList.remove('active');
+      //     nav.classList.remove('active');
+      //   });
+      // });
+
+
+
+    </script>
+    <script src="../../zheaderfooter/nav.js"></script>
+  </body>
+
+</html>

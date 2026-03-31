@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humanity Bridge | Donate Food</title>
+  <link rel="stylesheet" href="../Style_css/donatefood_pg.css">
+  <link rel="stylesheet" href="../../zheaderfooter/header.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+  <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <img src="../../zimages/projectlogo.png">
+        Humanity Bridge
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+      <nav>
+        <a href="home_pg.html">Home</a>
+        <a href="about_pg.html">About</a>
+        <a href="ourwork_pg.html">Our Work</a>
+        <a href="gallery_pg.html">Gallery</a>
+        <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Harsha &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="donardashboard_pg.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="donation-section">
+    <div class="container">
+
+      <!-- Left Text Content -->
+      <div class="left-content">
+        <h1>Donate Food Responsibly</h1>
+        <p>
+          Help reduce food waste while ensuring
+          <br>
+          safe and dignified distribution.
+        </p>
+      </div>
+
+      <!-- Right Form Card
+            <div class="form-card">
+                <h2>Food Donation</h2>
+                <div class="form-group">
+                    <label>Type of Food</label>
+                    <div class="checkbox-row">
+                        <label><input type="checkbox" checked> Cooked Food</label>
+                        <label><input type="checkbox" checked> Packed / Sealed Food</label>
+                        <label><input type="checkbox" checked> Raw Ingredients</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Food Category</label>
+                    <select>
+                        <option>Vegetarian</option>
+                        <option>Non-Vegetarian</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Food Preparation Details</label>
+                    <div class="date-time">
+                        <input type="date">
+                        <input type="time" value="13:00">
+                    </div>
+                    <small>Only freshly prepared food is accepted to ensure safety.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity of Food</label>
+                    <input type="number" placeholder="Approximate number of people it can serve">
+                </div>
+
+                <div class="form-group">
+                    <label>Packaging & Storage Status</label>
+                    <div class="checkbox-row">
+                        <label><input type="checkbox" checked> Properly packed</label>
+                        <label><input type="checkbox" checked> Stored hygienically</label>
+                        <label><input type="checkbox" checked> Not previously opened</label>
+                    </div>
+                </div>
+
+                <div class="form-group confirm">
+                    <label>
+                        <input type="checkbox" checked>
+                        I confirm that the food is fresh, safe to consume, and prepared under hygienic conditions.
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Pickup Location</label>
+                    <div class="location">
+                        <input type="text" placeholder="City">
+                        <select>
+                            <option>Area / Pincode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Pickup Preference</label>
+                    <select>
+                        <option>Select preference</option>
+                        <option>Immediate Pickup</option>
+                        <option>Scheduled Pickup</option>
+                    </select>
+                </div>
+
+                <a href="formsubmit.html"><button class="submit-btn">Donate Food Responsibly</button></a>
+
+            </div> -->
+
+
+      <!-- RIGHT FORM CARD -->
+      <div class="form-card">
+        <div class="form-group">
+          <form id="donationForm">
+
+            <!-- Type of Food (ONLY Packed + Raw) -->
+            <div class="form-block">
+              <h3>Type of Food</h3>
+
+
+
+
+
+
+              <div class="row-check">
+                <label class="checkbox-row">
+                  <input type="radio" name="foodType" value="packed">
+                  <span>Packed / Sealed Food</span>
+                </label>
+
+                <label class="check">
+                  <input type="radio" name="foodType" value="raw">
+                  <span>Raw Ingredients</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Food Category -->
+            <div class="form-block">
+              <h3>Food Category</h3>
+              <select id="foodCategory">
+                <option value="" disabled selected>Select</option>
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+                <option value="mixed">Mixed</option>
+              </select>
+            </div>
+
+            <!-- Donor Details -->
+            <div class="form-block">
+              <h3>Donor Details</h3>
+
+              <div class="grid-2">
+                <input type="text" id="donorName" placeholder="Donor Name">
+                <input type="tel" id="donorPhone" placeholder="Phone Number">
+              </div>
+
+              <div class="grid-2 mt-10">
+                <input type="email" id="donorEmail" placeholder="Email (optional)">
+                <input type="text" id="donorCity" placeholder="City">
+              </div>
+
+              <div class="grid-2 mt-10">
+                <input type="number" id="donorPincode" placeholder="Pincode">
+                <input type="text" id="pickupAddress" placeholder="Pickup Address">
+              </div>
+            </div>
+
+            <!-- Freshness / Expiry (Dynamic) -->
+            <div class="form-block">
+              <h3>Freshness / Expiry Details</h3>
+
+              <!-- Packed/Raw show Expiry -->
+              <div class="grid-2" id="expiryBox">
+                <input type="date" id="expiryDate">
+                <input type="time" id="expiryTime" placeholder="Best before time (optional)">
+              </div>
+
+              <p class="note">Expiry details help the admin approve only safe donations.</p>
+            </div>
+
+            <!-- Quantity (Dynamic unit) -->
+            <div class="form-block">
+              <h3>Quantity of Food</h3>
+
+              <div class="grid-2">
+                <input type="number" id="quantity" placeholder="Quantity">
+                <input type="text" id="unitField" value="Select food type first" readonly>
+              </div>
+
+              <input type="text" id="peopleServe" class="mt-100"
+                placeholder="Explain about the food (example: item names, quantity details, any notes..">
+            </div>
+
+            <!-- Sealed Option (ONLY for Packed) -->
+            <div class="form-block hidden" id="sealedBox">
+              <h3>Sealed Status</h3>
+              <select id="sealedStatus">
+                <option value="" disabled selected>Is it properly sealed?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <!-- Packaging & Storage (ONLY 2 CHECKBOXES) -->
+            <div class="form-block">
+              <h3>Packaging & Storage Status</h3>
+
+              <label class="check">
+                <input type="checkbox" id="packedProperly">
+                <span>Properly packed</span>
+              </label>
+
+              <label class="confirm">
+                <input type="checkbox" id="confirmCheckbox">
+                <span>I confirm that the food is safe and stored under hygienic conditions.</span>
+              </label>
+            </div>
+
+            <!-- Pickup Availability -->
+            <div class="form-block">
+              <h3>Pickup Availability</h3>
+
+              <div class="grid-2">
+                <input type="time" id="availableFrom">
+                <input type="time" id="availableTill">
+              </div>
+            </div>
+
+            <!-- Extra Contact Person -->
+            <div class="form-block">
+              <h3>Extra Contact (Optional)</h3>
+              <div class="grid-2">
+                <input type="text" id="extraPerson" placeholder="Contact Person Name (optional)">
+                <input type="tel" id="extraPhone" placeholder="Contact Number (optional)">
+              </div>
+            </div>
+
+            <!-- Upload Image -->
+            <div class="form-block">
+              <h3>Upload Food Image (Optional)</h3>
+              <input type="file" id="foodImage" accept="image/*">
+            </div>
+
+            <!-- Submit Button -->
+            <a href="formsubmit.html"><button type="button" class="submit-btn">Donate Food Responsibly</button></a>
+          </form>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </section>
+  <footer>
+    <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+  </footer>
+
+  <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+</html>

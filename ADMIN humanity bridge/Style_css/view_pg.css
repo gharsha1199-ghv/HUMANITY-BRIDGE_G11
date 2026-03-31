@@ -1,0 +1,153 @@
+* {
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    padding-top: 100px;
+}
+
+.card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 25px 35px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.8s ease;
+}
+
+.header11 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.back {
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+    color: #6a5acd;
+    font-weight: 600;
+}
+
+h2 {
+    color: #4b3ca7;
+}
+
+.details {
+    margin-top: 20px;
+}
+
+.details div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.details span {
+    font-weight: 600;
+    color: #444;
+}
+
+#status {
+    color: orange;
+}
+
+.buttons {
+    margin-top: 25px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 30px;
+    margin: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.approve {
+    background: #ffc107;
+}
+
+.approve:hover {
+    background: #ffb300;
+    transform: scale(1.05);
+}
+
+.reject {
+    background: #eee;
+}
+
+.reject:hover {
+    background: #ddd;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 600px) {
+    .card {
+        padding: 20px;
+    }
+
+    .header11 {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .back {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .details div {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
+}

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity Bridge | Admin Dashboard</title>
+    <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../../zheaderfooter/header.css">
+    <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+    <link rel="stylesheet" href="../Style_css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+                <img src="../../zimages/projectlogo.png" alt="logo">
+                <span>Humanity Bridge</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="profile-toggle" id="profileToggle">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <nav>
+                <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div></nav>
+
+        </div>
+    </header>
+
+    <div class="dashboard-wrapper">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin<span>Panel</span></h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+                <li><a href="verification.html"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+
+                <li><a href="donations.html"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+                <li><a href="tracking.html"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+                <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+                &nbsp; <br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp;<br>
+
+                &nbsp;<br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp;<br>
+                &nbsp;<br>
+                <li id="logout"><a href="../../BEFORE LOGIN humanity bridge/Script_html/login_pg.html"><i
+                            class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+
+            <div class="page-title">
+                <h2><strong>Admin</strong> Dashboard</h2>
+            </div>
+            <div class="shining-line"></div>
+
+            <h3 class="section-title">Overview</h3>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h4>Total Donations</h4>
+                    <h2>$382,450</h2>
+                    <div class="stat-bar"></div>
+                </div>
+                <div class="stat-card">
+                    <h4>Successful Receivers</h4>
+                    <h2>27,480</h2>
+                    <div class="stat-bar"></div>
+                </div>
+                <div class="stat-card">
+                    <h4>Meals Served</h4>
+                    <h2>145,300</h2>
+                    <div class="stat-bar"></div>
+                </div>
+                <div class="stat-card">
+                    <h4>Funds Utilised</h4>
+                    <h2>$289,700</h2>
+                    <div class="stat-bar"></div>
+                </div>
+                <div class="stat-card">
+                    <h4>Clothes Donated</h4>
+                    <h2>18,900</h2>
+                    <div class="stat-bar"></div>
+                </div>
+            </div>
+
+
+            <div class="section-container">
+
+                <h3 class="section-title">Donations</h3>
+                <div class="cards-row two-col">
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h4>Pending Donations</h4>
+                        </div>
+                        <div class="card-body center-text">
+                            <h2 class="big-number">32 <span class="sub-text">Pending Approval</span></h2>
+                            <button class="action-btn yellow">Review Pending</button>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h4>Pending Requests</h4>
+                        </div>
+                        <div class="card-body center-text">
+                            <h2 class="big-number">32 <span class="sub-text">Pending Approval</span></h2>
+                            <button class="action-btn yellow">Review Pending</button>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h4>Approved Donations</h4>
+                        </div>
+                        <div class="card-body center-text">
+                            <h2 class="big-number">32 <span class="sub-text">Approved</span></h2>
+                            <button class="action-btn green">Approved</button>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <h4>Approved Requests</h4>
+                        </div>
+                        <div class="card-body center-text">
+                            <h2 class="big-number">215 <span class="sub-text">Approved</span></h2>
+                            <button class="action-btn green">Approved</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+
+
+                <h3 class="section-title">Verifications</h3>
+                <div class="cards-row two-col">
+                    <div class="dash-card">
+                        <div class="card-header border-bottom">
+                            <h4>New Donor Verifications</h4>
+                        </div>
+                        <div class="card-body row-flex">
+                            <span class="user-name">John Smith</span>
+                            <div class="btn-group">
+                                <button class="sm-btn outline">Verify</button>
+                                <button class="sm-btn blue">View</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header border-bottom">
+                            <h4>New Receiver Verifications</h4>
+                        </div>
+                        <div class="card-body row-flex">
+                            <span class="user-name">Hope Community Center</span>
+                            <div class="btn-group">
+                                <button class="sm-btn outline">Verify</button>
+                                <button class="sm-btn green-fill">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+
+                <h3 class="section-title">Tracking</h3>
+                <div class="cards-row three-col">
+                    <div class="dash-card">
+                        <div class="card-header border-bottom">
+                            <h4>Assigned</h4>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="med-number">12 <span class="sub-text">Cases</span></h2>
+                            <button class="status-btn yellow-badge"><i class="fa-solid fa-box"></i> Assigned</button>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header border-bottom">
+                            <h4>In Transit</h4>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="med-number">8 <span class="sub-text">Shipments</span></h2>
+                            <div class="loading-line"></div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-header border-bottom">
+                            <h4>Delivered</h4>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="med-number">56 <span class="sub-text">Completed</span></h2>
+                            <button class="status-btn green-badge"><i class="fa-solid fa-check"></i> Delivered</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h3 class="section-title">Settings</h3>
+                <div class="dash-card full-width">
+                    <ul class="settings-list">
+                        <li><i class="fa-solid fa-gear"></i> Manage Account Settings</li>
+                        <li><i class="fa-solid fa-shield-halved"></i> Admin Controls</li>
+                        <li><i class="fa-solid fa-desktop"></i> System Preferences</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            mainContent.classList.toggle('shrunk');
+            body.classList.toggle('sidebar-active');
+        });
+
+        // Toggle sidebar with Profile Icon (Mobile / Tablet)
+        const profileToggle = document.getElementById('profileToggle');
+        if (profileToggle) {
+            profileToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                // On mobile, we might not want to shrink content, just overlay
+                if (window.innerWidth > 768) {
+                    mainContent.classList.toggle('shrunk');
+                }
+                body.classList.toggle('sidebar-active');
+            });
+        }
+
+
+
+        // const hamburger = document.querySelector('.hamburger');
+        // const nav = document.querySelector('nav');
+
+        // hamburger.addEventListener('click', () => {
+        //     hamburger.classList.toggle('active');
+        //     nav.classList.toggle('active');
+        // });
+
+        // const navLinks = document.querySelectorAll('nav a');
+        // navLinks.forEach(link => {
+        //     link.addEventListener('click', () => {
+        //         hamburger.classList.remove('active');
+        //         nav.classList.remove('active');
+        //     });
+        // });
+
+    </script>
+    <script src="../../zheaderfooter/nav.js"></script>
+
+
+</body>
+
+</html>

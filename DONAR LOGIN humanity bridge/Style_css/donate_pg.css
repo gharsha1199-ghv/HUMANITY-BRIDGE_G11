@@ -1,0 +1,168 @@
+/* --- Global Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- YOUR HEADER CODE --- */
+/* .header {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 246px;
+    margin-right: 246px;
+    align-items: center;
+    padding: 20px 0;
+}
+
+Responsive adjustment: If screen is small, reduce margins so nav doesn't break
+@media (max-width: 1200px) {
+    .nav {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    font-size: 30px;
+    color: white; Ensure logo text is white on dark background
+} 
+
+.logo img {
+    width: 45px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 25px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a.active {
+    border-bottom: 2px solid #ffcc00;
+}
+
+.login-btn {
+    border: 1px solid #ffcc00;
+    padding: 8px 16px;
+    border-radius: 5px;
+} */
+
+/* --- NEW HERO SECTION CSS --- */
+.donation-section {
+    flex: 1;
+    /* Makes this section fill the screen pushing footer down */
+    /* Radial gradient to match the purple lighting in your image */
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 100px;
+    /* Space for the absolute header */
+    padding-bottom: 50px;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* The yellow/orange color for "Donation" */
+.highlight {
+    color: #fdb913;
+    border-bottom: 3px solid #fdb913;
+    display: inline-block;
+    line-height: 1.1;
+}
+
+.card-container a {
+    text-decoration: none;
+}
+
+.subtitle {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    font-weight: 300;
+}
+
+.card-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* Wraps to next line on small screens */
+}
+
+/* White Circular Buttons */
+.donation-card {
+    background: white;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.donation-card:hover {
+    transform: translateY(-10px);
+    /* Moves up slightly on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.donation-card i {
+    font-size: 3rem;
+    color: #2e2055;
+    /* Dark purple icon color */
+    margin-bottom: 15px;
+}
+
+.donation-card h3 {
+    color: #2e2055;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 2px;
+}
+
+.donation-card:hover h3 {
+    border-bottom: 2px solid #2e2055;
+}
+
+/* --- YOUR FOOTER CODE --- */
+/* footer {
+    background: #2a044a;
+    text-align: center;
+    padding: 20px;
+    color: rgba(255,255,255,0.7); Added text color so it's visible
+}
+footer p {
+    margin: 0;
+} */

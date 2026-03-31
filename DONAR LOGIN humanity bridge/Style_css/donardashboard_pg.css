@@ -1,0 +1,345 @@
+/* === RESET & GLOBAL === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+#logout {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+
+    list-style: none;
+    background-color: #ffcc00;
+    font-weight: 500;
+    border: 2px solid #ffcc00;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#logout a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#logout:hover {
+    background-color: #ffcc00;
+    color: black;
+    transition: 0.3s ease;
+}
+
+#logout:hover a {
+    color: black;
+}
+
+
+
+/* === HEADER CSS (EXACT COPY) === */
+/* .header {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 246px;
+    margin-right: 246px;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.logo img {
+    width: 45px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 25px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a.active {
+    border-bottom: 2px solid #ffcc00;
+}
+
+.login-btn {
+    border: 1px solid #ffcc00;
+    padding: 8px 16px;
+    border-radius: 5px;
+} */
+
+/* === DASHBOARD STYLES === */
+
+.dashboard-container {
+    flex: 1;
+    /* UPDATED: Pushed the whole section down further */
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0px;
+}
+
+/* Title Section */
+.title-section {
+    text-align: center;
+    /* UPDATED: Increased gap to push cards down */
+    margin-bottom: 50px;
+}
+
+.title-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Shining Line Effect */
+.shining-line {
+    height: 3px;
+    width: 400px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, #ffcc00, #fff, #ffcc00, transparent);
+    box-shadow: 0 0 15px #ffcc00;
+    border-radius: 10px;
+}
+
+/* === CAROUSEL VIEWPORT === */
+.carousel-viewport {
+    width: 100%;
+    height: 650px;
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* UPDATED: Added top padding so hover animation has room */
+    padding-top: 50px;
+}
+
+.carousel-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+/* Spacer to allow first/last cards to center */
+.carousel-spacer {
+    min-width: calc(50% - 200px);
+    /* 400px / 2 = 200px */
+    flex-shrink: 0;
+}
+
+/* === CARD WRAPPER === */
+.impact-card-wrapper {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    width: 400px;
+    margin: 0 20px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* Default Inactive State (Side Cards) */
+    transform: scale(0.9);
+    opacity: 0.6;
+    filter: grayscale(40%);
+    z-index: 1;
+}
+
+/* === HOVER EFFECT (Only for Center Card) === */
+/* We chain the classes so this ONLY applies if the card has 'center-active' class */
+/* .impact-card-wrapper.center-active:hover {
+    Scale significantly larger on hover
+    transform: scale(1.55) !important; 
+    z-index: 100 !important; 
+    cursor: pointer;
+} */
+
+/* Apply the glow/lift effect only to the center card's white box */
+/* .impact-card-wrapper.center-active:hover .main-date-card {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.5); Strong Gold Glow
+    border-top: 2px solid #ffcc00;
+} */
+
+/* OPTIONAL: If you want side cards to stay dull even if hovered, ensure this rule is present */
+/* .impact-card-wrapper:not(.center-active):hover {
+    Keeps side cards small and faded if user hovers them
+    transform: scale(0.9);
+    opacity: 0.6;
+    filter: grayscale(40%);
+    cursor: default;
+} */
+
+/* === MAIN DATE CARD (The White Card) === */
+.main-date-card {
+    background: white;
+    border-radius: 15px 15px 0 0;
+    padding: 25px;
+    text-align: center;
+    color: #48348a;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 5;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-date-card h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 5px;
+}
+
+.main-date-card p {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* === ACTIVE CENTER STATE === */
+.impact-card-wrapper.center-active {
+    transform: scale(1.1);
+    opacity: 1;
+    filter: grayscale(0%);
+    z-index: 10;
+}
+
+.impact-card-wrapper.center-active .main-date-card {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* === STACKED LAYERS (Impact Cards) === */
+.stacked-layers {
+    position: relative;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+/* Reveal layers on center active card */
+.impact-card-wrapper.center-active .stacked-layers {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+}
+
+/* Reveal layers on hover too */
+.impact-card-wrapper:hover .stacked-layers {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Human Layer (Yellow) */
+.human-layer {
+    background: linear-gradient(to right, #fbb034, #ffdd00);
+    padding: 15px 20px;
+    color: white;
+    z-index: 4;
+    border-radius: 0 0 5px 5px;
+    margin-top: -5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Eco Layer (Green) */
+.eco-layer {
+    background: linear-gradient(to right, #56ab2f, #a8e063);
+    padding: 15px 20px 25px 20px;
+    color: white;
+    z-index: 3;
+    border-radius: 0 0 15px 15px;
+    margin-top: -5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Layer Content Styling */
+.layer-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.layer-content {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #333;
+}
+
+.secondary-icon {
+    font-size: 1.4rem;
+}
+
+.human-layer .secondary-icon {
+    color: #fbb034;
+}
+
+.eco-layer .secondary-icon {
+    color: #56ab2f;
+}
+
+.layer-content h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2a044a;
+}
+
+.layer-content p {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+
+/* Bottom Subtitle */
+.bottom-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ffcc00;
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* === FOOTER CSS (EXACT COPY) === */
+footer {
+    background: #2a044a;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}

@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+}
+
+.donation-section {
+    width: 100%;
+    padding: 60px 40px;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Left text */
+.text-content {
+    color: #ffffff;
+    max-width: 450px;
+}
+
+.text-content h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.text-content p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 250px;
+}
+
+/* Form Card */
+.form-card {
+    background: #ffffff;
+    width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.form-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.checkbox-group,
+.radio-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.checkbox-group label,
+.radio-group label {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+select,
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.location-group {
+    display: flex;
+    gap: 10px;
+}
+
+.location-group input,
+.location-group select {
+    flex: 1;
+}
+
+small {
+    font-size: 12px;
+    color: #777;
+}
+
+.checkbox-confirm label {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* .submit-btn {
+    width: 100%;
+    padding: 14px;
+  background: #ffcc00;
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease;
+} */
+ .submit-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #ffcc00;
+  color: #2a044a;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  transition: 0.2s ease;
+}
+
+.submit-btn:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+/* .submit-btn a {
+    text-decoration: none;
+    color: black;
+} */
+
+/* ===========================
+   MOBILE RESPONSIVENESS
+=========================== */
+@media (max-width: 768px) {
+    .donation-section {
+        padding: 80px 20px;
+    }
+
+    .donation-section .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        margin-top: 30px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    /* Left Text */
+    .text-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .text-content h1 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .text-content p {
+        font-size: 16px;
+        margin-bottom: 30px;
+        /* Reduced margin from 250px */
+    }
+
+    /* Form Card */
+    .form-card {
+        width: 100%;
+        padding: 25px;
+    }
+}

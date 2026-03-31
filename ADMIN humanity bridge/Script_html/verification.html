@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Humanity Bridge | Verification</title>
+  <link rel="stylesheet" href="../Style_css/verification.css">
+  <link rel="stylesheet" href="../../zheaderfooter/header.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+  <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+        <img src="../../zimages/projectlogo.png" alt="logo">
+        <span>Humanity Bridge</span>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="profile-toggle" id="profileToggle">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <nav>
+        <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div></nav>
+
+    </div>
+  </header>
+
+
+  <div class="bg">
+
+
+    <div class="container">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3>Admin<span>Panel</span></h3>
+        </div>
+        <ul class="sidebar-menu">
+          <li><a href="admin.html"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+          <li class="active"><a href="#"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+
+          <li><a href="donations.html"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+          <li><a href="tracking.html"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+          <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+          &nbsp; <br>
+          &nbsp; <br>
+          &nbsp;<br>
+          &nbsp; <br>
+          &nbsp;<br>
+          &nbsp;<br>
+
+          &nbsp;<br>
+          &nbsp; <br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp; <br>
+          &nbsp;<br>
+
+          <li id="logout"><a href="../../BEFORE LOGIN humanity bridge/Script_html/login_pg.html"><i
+                class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+        </ul>
+      </aside>
+
+      <h1>Verification Center</h1>
+      <p class="subtitle">
+        Verify new donors and receivers before giving platform access.
+      </p>
+
+      <div class="table-wrapper">
+
+        <div class="table-header">
+          <div class="tabs">
+            <button class="tab active">New Donors</button>
+            <button class="tab">New Receivers</button>
+          </div>
+
+          <div class="filters">
+            <input type="text" placeholder="Search...">
+            <select>
+              <option>Month</option>
+            </select>
+            <select>
+              <option>All Status</option>
+              <option>Pending</option>
+              <option>Approved</option>
+              <option>Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Date Joined</th>
+              <th>User Type</th>
+              <th>Name</th>
+              <th>Phone / Email</th>
+              <th>City</th>
+              <th>Area / Pincode</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>01/12/2022</td>
+              <td>Individual Donor</td>
+              <td class="name">john Smith</td>
+              <td>+1234567890</td>
+              <td>Hyderabad</td>
+              <td>500001</td>
+              <td><span class="status pending">Pending</span></td>
+              <td>
+                <a href="view_pg.html"> <button class="btn view">View</button></a>
+                <button class="btn approve">Approve</button>
+                <button class="btn reject">Reject</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>01/12/2022</td>
+              <td>Regular Donor</td>
+              <td class="name">Sarah Lee</td>
+              <td>sarah.lee@email.com</td>
+              <td>nizamabad</td>
+              <td>503001</td>
+              <td><span class="status approved">Approved</span></td>
+              <td>
+                <button class="btn view">View</button>
+                <button class="btn approve">Approve</button>
+                <button class="btn reject">Reject</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>01/10/2022</td>
+              <td>Receiver</td>
+              <td class="name">Raj Patel</td>
+              <td>+9876543210</td>
+              <td>nirmal</td>
+              <td>504106</td>
+              <td><span class="status rejected">Rejected</span></td>
+              <td>
+                <button class="btn view">View</button>
+                <button class="btn approve">Approve</button>
+                <button class="btn reject">Reject</button>
+              </td>
+            </tr>
+            <tr>
+              <td>01/12/2022</td>
+              <td>Individual Donor</td>
+              <td class="name">Alan Smith</td>
+              <td>+1234567890</td>
+              <td>Hyderabad</td>
+              <td>500001</td>
+              <td><span class="status pending">Pending</span></td>
+              <td>
+                <button class="btn view">View</button>
+                <button class="btn approve">Approve</button>
+                <button class="btn reject">Reject</button>
+              </td>
+            </tr>
+            <tr>
+              <td>01/12/2022</td>
+              <td>Individual Donor</td>
+              <td class="name">Alan Smith</td>
+              <td>+1234567890</td>
+              <td>Hyderabad</td>
+              <td>500001</td>
+              <td><span class="status pending">Pending</span></td>
+              <td>
+                <button class="btn view">View</button>
+                <button class="btn approve">Approve</button>
+                <button class="btn reject">Reject</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER (UNCHANGED) -->
+  <footer>
+    <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('shrunk');
+      body.classList.toggle('sidebar-active');
+    });
+
+    // Toggle sidebar with Profile Icon (Mobile / Tablet)
+    const profileToggle = document.getElementById('profileToggle');
+    if (profileToggle) {
+      profileToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        if (window.innerWidth > 768) {
+          mainContent.classList.toggle('shrunk');
+        }
+        body.classList.toggle('sidebar-active');
+      });
+    }
+
+    // Hamburger menu for mobile
+    // const hamburger = document.querySelector('.hamburger');
+    // const nav = document.querySelector('nav');
+
+    // if (hamburger) {
+    //   hamburger.addEventListener('click', () => {
+    //     hamburger.classList.toggle('active');
+    //     nav.classList.toggle('active');
+    //   });
+
+    //   const navLinks = document.querySelectorAll('nav a');
+    //   navLinks.forEach(link => {
+    //     link.addEventListener('click', () => {
+    //       hamburger.classList.remove('active');
+    //       nav.classList.remove('active');
+    //     });
+    //   });
+    // }
+  </script>
+  <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+/* === RESET & GLOBAL === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* Purple Gradient Background */
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* === HEADER CSS === */
+/* .header {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 246px;
+    margin-right: 246px;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    font-size: 30px;
+} 
+
+.logo img { width: 45px; }
+
+nav a {
+    color: #fff;
+    margin-left: 25px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a.active { border-bottom: 2px solid #ffcc00; }
+
+.login-btn {
+    border: 1px solid #ffcc00;
+    padding: 8px 16px;
+    border-radius: 5px;
+} */
+
+/* === MAIN LAYOUT === */
+.signup-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 140px;
+    /* Header space */
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.intro-text {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.intro-text h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffcc00;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+}
+
+/* === CAROUSEL CONTAINER === */
+.role-viewport {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* DESKTOP: Center items perfectly */
+    justify-content: center;
+    padding: 40px 0;
+
+    /* Scroll properties (mostly for mobile) */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.role-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+/* Spacer (Hidden on Desktop) */
+.carousel-spacer {
+    display: none;
+    flex-shrink: 0;
+}
+
+/* === ROLE CARD === */
+.role-card {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    width: 260px;
+    margin: 0 15px;
+    text-align: center;
+    text-decoration: none;
+
+    /* Inactive State */
+    transform: scale(0.9);
+    opacity: 0.6;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+/* Circle Icon */
+.circle-icon {
+    width: 160px;
+    height: 160px;
+    background: white;
+    border-radius: 50%;
+    margin: 0 auto 25px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: #48348a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 5px solid transparent;
+    transition: all 0.4s ease;
+}
+
+.role-card h3 {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    transition: color 0.3s;
+}
+
+.role-card p {
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: color 0.3s;
+}
+
+
+
+/* === HOVER STATE === */
+.role-card:hover {
+    opacity: 1;
+    transform: scale(1.05);
+
+}
+
+/* If active is hovered */
+.role-card.active:hover {
+    transform: scale(1.05);
+
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .signup-section {
+        padding-top: 100px;
+        padding-bottom: 30px;
+    }
+
+    .intro-text h1 {
+        font-size: 2rem;
+    }
+
+    .role-viewport {
+        padding: 20px 0;
+        /* Ensure horizontal scrolling is easy on mobile */
+        justify-content: flex-start;
+        padding-left: 20px;
+        /* Peek effect */
+    }
+
+    .role-card {
+        width: 220px;
+        /* Slightly smaller cards */
+    }
+
+    .circle-icon {
+        width: 120px;
+        height: 120px;
+        font-size: 2.5rem;
+    }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Humanity Bridge | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css"/>
+  <link rel="stylesheet" href="../../zheaderfooter/header.css" />
+    <link rel="stylesheet" href="../Style_css/login_pg.css">
+    <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <img src="../../zimages/projectlogo.png"> Humanity Bridge
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+        <a href="../../index.html">Home</a>
+                <a href="about_pg.html">About</a>
+                <a href="ourwork_pg.html">Our Work</a>
+                <a href="gallery_pg.html">Gallery</a>
+                <a class="active login-btn" href="#">Login / SignUp</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="main-content">
+
+            <div class="info-side">
+                <h1>Help Make a Difference</h1>
+                <p>Join Humanity Bridge and contribute to reducing waste, supporting communities, and helping those in
+                    need.</p>
+
+                <!-- <div class="feature-icons">
+                    <div class="icon-circle"><i class="fa-solid fa-box-open"></i></div>
+                    <div class="icon-circle"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
+                    <div class="icon-circle"><i class="fa-solid fa-truck-fast"></i></div>
+                </div> -->
+
+                <!-- <div class="volunteer-img">
+                    <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=600&auto=format&fit=crop"
+                        alt="Volunteers">
+                </div> -->
+            </div>
+
+            <div class="form-side">
+                <div class="login-card">
+                    <h2>Login</h2>
+                    <form id="loginForm" action="#">
+                        <!-- <div id="emailInput" class="input-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div id="passwordInput" class="input-group">
+                            <input type="password" placeholder="Password" required>
+                        </div> -->
+                        <div class="input-group">
+                            <input type="email" id="emailInput" placeholder="Email" required>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="passwordInput" placeholder="Password" required>
+                        </div>
+
+                        <!-- <div class="input-group">
+                            <select required>
+                                <option value="" disabled selected>Select User Type</option>
+                                <option value="volunteer">Volunteer</option>
+                                <option value="donor">Donor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div> -->
+
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Don't have account? <a href="signup1.html">Sign up</a></p><br>
+                        <a href="#" class="forgot-pass">Forgot password?</a>
+
+                        <div class="social-icons">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // stop form refresh
+
+            const email = document.getElementById("emailInput").value;
+            const password = document.getElementById("passwordInput").value;
+
+            if (email === "admin@gmail.com" && password === "humanitybridge") {
+                window.location.href = "/ADMIN humanity bridge/Script_html/admin.html";
+            }
+            else if (email === "ngo@gmail.com" && password === "humanitybridge") {
+                window.location.href = "/NGO LOGIN humanity bridge/Script_html/home_pg.html";
+            }
+            else if (email === "donar@gmail.com" && password === "humanitybridge") {
+                window.location.href = "/DONAR LOGIN humanity bridge/Script_html/home_pg.html";
+            }
+            else if (email === "regulardonar@gmail.com" && password === "humanitybridge") {
+                window.location.href = "/REGULAR DONAR humanity bridge/Script_html/home_pg.html";
+            }
+            else if (email === "b4login@gmail.com" && password === "humanitybridge") {
+                window.location.href = "/BEFORE LOGIN humanity bridge/Script_html/home_pg.html";
+            }
+            else {
+                alert("Invalid Email or Password!");
+            }
+        });
+
+        // const hamburger = document.querySelector('.hamburger');
+        // const nav = document.querySelector('nav');
+
+        // if (hamburger) {
+        //     hamburger.addEventListener('click', () => {
+        //         hamburger.classList.toggle('active');
+        //         nav.classList.toggle('active');
+        //     });
+        // }
+    </script>
+        <script src="../../zheaderfooter/nav.js"></script>
+
+
+
+
+</body>
+
+</html>

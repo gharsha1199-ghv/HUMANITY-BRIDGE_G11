@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Humanity Bridge | Verification</title>
+  <link rel="stylesheet" href="../Style_css/view_pg.css">
+  <link rel="stylesheet" href="../../zheaderfooter/header.css">
+  <link rel="stylesheet" href="../../zheaderfooter/footer.css">
+  <link rel="shortcut icon" href="../../zimages/faviconlogo.jpeg" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <img src="../../zimages/projectlogo.png"> Humanity Bridge
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav>
+        <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                    </div>
+                </div></nav>
+
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="header11">
+        <a href="verification.html"> <span class="back">← Back</span></a>
+        <h2>Application Details</h2>
+      </div>
+
+      <div class="details">
+        <div><span>Application ID:</span> APL123456</div>
+        <div><span>Applicant Name:</span> John Smith</div>
+        <div><span>Phone:</span> +1 234 567 8900</div>
+        <div><span>Email:</span> john.smith@example.com</div>
+        <div><span>Role / Type:</span> Regular Donor</div>
+        <div><span>Address:</span> 123 Main Street</div>
+        <div><span>City:</span> Los Angeles</div>
+        <div><span>Pincode:</span> 90015</div>
+        <div><span>Food Type:</span> Dry Goods</div>
+        <div><span>Quantity:</span> 50 Packs</div>
+        <div><span>Expiry Date:</span> 12/31/2023</div>
+        <div><span>Pickup Slot:</span> 2:00 PM - 3:00 PM</div>
+        <div><span>Status:</span> <b id="status">Pending</b></div>
+      </div>
+
+      <div class="buttons">
+        <button class="approve" onclick="approve()">Approve</button>
+        <button class="reject" onclick="reject()">Reject</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER (UNCHANGED) -->
+  <footer>
+    <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function approve() {
+      const status = document.getElementById("status");
+      status.innerText = "Approved";
+      status.style.color = "green";
+      alert("Application Approved Successfully!");
+    }
+
+    function reject() {
+      const status = document.getElementById("status");
+      status.innerText = "Rejected";
+      status.style.color = "red";
+      alert("Application Rejected!");
+    }
+
+    // const hamburger = document.querySelector('.hamburger');
+    // const nav = document.querySelector('nav');
+
+    // if (hamburger) {
+    //   hamburger.addEventListener('click', () => {
+    //     hamburger.classList.toggle('active');
+    //     nav.classList.toggle('active');
+    //   });
+
+    //   const navLinks = document.querySelectorAll('nav a');
+    //   navLinks.forEach(link => {
+    //     link.addEventListener('click', () => {
+    //       hamburger.classList.remove('active');
+    //       nav.classList.remove('active');
+    //     });
+    //   });
+    // }
+
+  </script>
+  <script src="../../zheaderfooter/nav.js"></script>
+</body>
+
+
+</html>
