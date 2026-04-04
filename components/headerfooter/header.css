@@ -86,7 +86,6 @@ nav a.active {
     transition: all 0.3s ease;
 }
 
-
 /* USER DROPDOWN */
 .user-dropdown {
     position: relative;
@@ -211,5 +210,4 @@ nav a.active {
         background-color: rgba(255, 255, 255, 0.1);
         color: white;
     }
-
 }
