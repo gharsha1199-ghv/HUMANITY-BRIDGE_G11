@@ -15,7 +15,7 @@ body {
     overflow-x: hidden;
 }
 
-#logout {
+/* #logout {
     position: fixed;
     bottom: 25px;
     right: 25px;
@@ -62,7 +62,7 @@ body {
 
 #logout:hover a {
     color: black;
-}
+} */
 
 
 
@@ -351,6 +351,109 @@ nav a.active {
     font-weight: 500;
     letter-spacing: 1px;
 }
+
+
+
+
+
+
+
+
+
+
+
+.chart-container{
+width:900px;
+margin:auto;
+margin-top: 100px;
+/* margin: center; */
+}
+
+h2{
+text-align:left;
+margin-left:80px;
+}
+
+.grid{
+stroke:#d7dce2;
+stroke-width:1;
+}
+
+.axis{
+stroke:black;
+stroke-width:2;
+}
+
+.food{
+background-color:#2f78b7;
+fill: #2f78b7;
+}
+
+.money{
+background-color:#7c4fa0;
+fill: #7c4fa0;
+}
+
+.cloth{
+background-color:#3d2b6b;
+fill: #3d2b6b;
+}
+
+.avg-line{
+fill:none;
+stroke:#f4c21d;
+stroke-width:4;
+}
+
+.avg-dot{
+fill:#f4c21d;
+}
+
+.legend{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:20px;
+font-size:20px;
+}
+
+.square{
+display:inline-block;
+width:25px;
+height:20px;
+margin-right:10px;
+}
+
+.line{
+display:inline-block;
+width:40px;
+height:4px;
+background:#f4c21d;
+margin-right:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {

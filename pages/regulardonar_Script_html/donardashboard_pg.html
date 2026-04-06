@@ -44,7 +44,7 @@
             </nav>
         </div>
     </header>
-    <section class="dashboard-container">
+    <!-- <section class="dashboard-container">
 
         <div class="title-section">
             <h1>Donor Impact Dashboard</h1>
@@ -230,13 +230,106 @@
 
         <p class="bottom-subtitle">Your Contributions Making a Difference!</p>
 
-    </section>
+    </section> -->
 
-    <div id="logout">
-        <a href="../../pages/beforelogin_Script_html/login_pg.html">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
-    </div>
+
+
+
+
+
+
+
+
+<div class="chart-container">
+<svg width="900" height="500">
+
+<!-- Grid Lines -->
+<line x1="80" y1="80" x2="850" y2="80" class="grid"/>
+<line x1="80" y1="140" x2="850" y2="140" class="grid"/>
+<line x1="80" y1="200" x2="850" y2="200" class="grid"/>
+<line x1="80" y1="260" x2="850" y2="260" class="grid"/>
+<line x1="80" y1="320" x2="850" y2="320" class="grid"/>
+<line x1="80" y1="380" x2="850" y2="380" class="grid"/>
+
+<!-- Axis -->
+<line x1="80" y1="380" x2="850" y2="380" class="axis"/>
+<line x1="80" y1="60" x2="80" y2="380" class="axis"/>
+
+<!-- Y Labels -->
+<text x="40" y="385" fill="white">100</text>
+<text x="40" y="325"fill="white">200</text>
+<text x="40" y="265" fill="white">300</text>
+<text x="40" y="205" fill="white">400</text>
+<text x="40" y="145" fill="white">500</text>
+<text x="40" y="85" fill="white">600</text>
+
+<!-- JAN -->
+<rect x="130" y="260" width="30" height="120" class="food"/>
+<rect x="165" y="230" width="30" height="150" class="money"/>
+<rect x="200" y="270" width="30" height="110" class="cloth"/>
+<text x="170" y="410" fill="white">JAN</text>
+
+<!-- FEB -->
+<rect x="290" y="240" width="30" height="140" class="food"/>
+<rect x="325" y="210" width="30" height="170" class="money"/>
+<rect x="360" y="230" width="30" height="150" class="cloth"/>
+<text x="330" y="410" fill="white">FEB</text>
+
+<!-- MAR -->
+<rect x="450" y="260" width="30" height="120" class="food"/>
+<rect x="485" y="220" width="30" height="160" class="money"/>
+<rect x="520" y="270" width="30" height="110" class="cloth"/>
+<text x="490" y="410" fill="white" >MAR</text>
+
+<!-- APR -->
+<rect x="610" y="240" width="30" height="140" class="food"/>
+<rect x="645" y="230" width="30" height="150" class="money"/>
+<rect x="680" y="190" width="30" height="190" class="cloth"/>
+<text x="650" y="410" fill="white">APR</text>
+
+<!-- Average Line -->
+<polyline
+points="165,250 330,220 490,255 650,210"
+class="avg-line"/>
+
+<!-- Average Dots -->
+<circle cx="165" cy="250" r="8" class="avg-dot"/>
+<circle cx="330" cy="220" r="8" class="avg-dot"/>
+<circle cx="490" cy="255" r="8" class="avg-dot"/>
+<circle cx="650" cy="210" r="8" class="avg-dot"/>
+
+</svg>
+
+<!-- Legend -->
+<div class="legend">
+
+<div><span  class="square food"></span>Food</div>
+<div><span class="square money"></span>Money</div>
+<div><span class="square cloth"></span>Clothing</div>
+<div><span class="line"></span>Average</div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
