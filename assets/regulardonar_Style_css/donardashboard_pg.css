@@ -437,6 +437,70 @@ margin-right:10px;
 
 
 
+/* calender */
+
+.calendar{
+    width:350px;
+    background:rgb(48, 0, 48);
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    overflow:hidden;
+    /* margin-left: 150px; */
+}
+
+.calendar-header{
+    background:orange;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.calendar-header button{
+    background:orange;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    text-align:center;
+    padding:10px 0;
+    font-weight:bold;
+    
+}
+
+.days div{
+    color:white;
+}
+
+.dates{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+    padding:10px;
+}
+
+.dates div{
+    text-align:center;
+    padding:10px;
+    border-radius:6px;
+}
+
+.dates div:hover{
+    background:#ff6b35;
+    color:white;
+}
+
+.today{
+    background:#ff6b35;
+    color:white;
+}
 
 
 
