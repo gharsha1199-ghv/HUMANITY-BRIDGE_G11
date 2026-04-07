@@ -1,3 +1,78 @@
+.chart-container{
+width:900px;
+/* margin:auto; */
+margin: 0 auto;
+padding-top: 120px;
+padding-bottom: 20px;
+}
+
+svg {
+    display: block;
+    margin: 0 auto;
+}
+
+h2{
+text-align:left;
+margin-left:80px;
+}
+
+.grid{
+stroke:#d7dce2;
+stroke-width:1;
+}
+
+.axis{
+stroke:black;
+stroke-width:2;
+}
+
+.food{
+background-color:#2f78b7;
+fill: #2f78b7;
+}
+
+.money{
+background-color:#7c4fa0;
+fill: #7c4fa0;
+}
+
+.cloth{
+background-color:#3d2b6b;
+fill: #3d2b6b;
+}
+
+.avg-line{
+fill:none;
+stroke:#f4c21d;
+stroke-width:4;
+}
+
+.avg-dot{
+fill:#f4c21d;
+}
+
+.legend{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:20px;
+font-size:20px;
+}
+
+.square{
+display:inline-block;
+width:25px;
+height:20px;
+margin-right:10px;
+}
+
+.line{
+display:inline-block;
+width:40px;
+height:4px;
+background:#f4c21d;
+margin-right:10px;
+} 
 /* RESET */
 * {
     margin: 0;
@@ -134,19 +209,12 @@ body {
 
 /* MAIN LAYOUT */
 .page-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* display: flex; */
     justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.h1p {
-    text-align: center;
-    color: white;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    /* horizontal center */
+    align-items: flex-start;
+    /* keeps it below header */
+    /* padding: 130px 20px 40px; */
 }
 
 
@@ -158,7 +226,8 @@ body {
     max-width: 1200px;
     width: 100%;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    margin: 0 auto;
+    margin-left: 220px;
+
 }
 
 .report-container h1 {

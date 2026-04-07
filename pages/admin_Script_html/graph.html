@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Humanity Bridge | Request Page</title>
+    <link rel="stylesheet" href="../../assets/admin_Style_css/graph.css">
+    <link rel="stylesheet" href="../../components/headerfooter/header.css">
+    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
+    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <span>Humanity Bridge</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="profile-toggle" id="profileToggle">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <nav>
+                <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="index.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                    </div>
+                </div></nav>
+
+        </div>
+    </header>
+    
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin<span>Panel</span></h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+                <li><a href="verification.html"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+
+                <li><a href="donations.html"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+                <li><a href="tracking.html"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+                <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+                &nbsp; <br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp;<br>
+
+                &nbsp;<br>
+                &nbsp; <br>
+                &nbsp;<br>
+                &nbsp;<br>
+                &nbsp;<br>
+                <li id="logout"><a href="../../pages/beforelogin_Script_html/login_pg.html"><i
+                            class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+            </ul>
+        </aside>
+<div class="chart-container">
+   <svg width="900" height="500">
+
+<!-- Grid Lines -->
+<line x1="80" y1="80" x2="850" y2="80" class="grid"/>
+<line x1="80" y1="140" x2="850" y2="140" class="grid"/>
+<line x1="80" y1="200" x2="850" y2="200" class="grid"/>
+<line x1="80" y1="260" x2="850" y2="260" class="grid"/>
+<line x1="80" y1="320" x2="850" y2="320" class="grid"/>
+<line x1="80" y1="380" x2="850" y2="380" class="grid"/>
+
+<!-- Axis -->
+<line x1="80" y1="380" x2="850" y2="380" class="axis"/>
+<line x1="80" y1="60" x2="80" y2="380" class="axis"/>
+
+<!-- Y Labels -->
+<text x="40" y="385" fill="white">100</text>
+<text x="40" y="325"fill="white">200</text>
+<text x="40" y="265" fill="white">300</text>
+<text x="40" y="205" fill="white">400</text>
+<text x="40" y="145" fill="white">500</text>
+<text x="40" y="85" fill="white">600</text>
+
+<!-- JAN -->
+<rect x="130" y="260" width="30" height="120" class="food"/>
+<rect x="165" y="230" width="30" height="150" class="money"/>
+<rect x="200" y="270" width="30" height="110" class="cloth"/>
+<text x="170" y="410" fill="white">JAN</text>
+
+<!-- FEB -->
+<rect x="290" y="240" width="30" height="140" class="food"/>
+<rect x="325" y="210" width="30" height="170" class="money"/>
+<rect x="360" y="230" width="30" height="150" class="cloth"/>
+<text x="330" y="410" fill="white">FEB</text>
+
+<!-- MAR -->
+<rect x="450" y="260" width="30" height="120" class="food"/>
+<rect x="485" y="220" width="30" height="160" class="money"/>
+<rect x="520" y="270" width="30" height="110" class="cloth"/>
+<text x="490" y="410" fill="white" >MAR</text>
+
+<!-- APR -->
+<rect x="610" y="240" width="30" height="140" class="food"/>
+<rect x="645" y="230" width="30" height="150" class="money"/>
+<rect x="680" y="190" width="30" height="190" class="cloth"/>
+<text x="650" y="410" fill="white">APR</text>
+
+<!-- Average Line -->
+<polyline
+points="165,250 330,220 490,255 650,210"
+class="avg-line"/>
+
+<!-- Average Dots -->
+<circle cx="165" cy="250" r="8" class="avg-dot"/>
+<circle cx="330" cy="220" r="8" class="avg-dot"/>
+<circle cx="490" cy="255" r="8" class="avg-dot"/>
+<circle cx="650" cy="210" r="8" class="avg-dot"/>
+
+</svg>
+
+<!-- Legend -->
+<div class="legend">
+
+<div><span  class="square food"></span>Food</div>
+<div><span class="square money"></span>Money</div>
+<div><span class="square cloth"></span>Clothing</div>
+<div><span class="line"></span>Average</div>
+
+</div>
+</div>
+
+    <!-- FOOTER (UNCHANGED) -->
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            mainContent.classList.toggle('shrunk');
+            body.classList.toggle('sidebar-active');
+        });
+
+        // Toggle sidebar with Profile Icon (Mobile / Tablet)
+        const profileToggle = document.getElementById('profileToggle');
+        if (profileToggle) {
+            profileToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                if (window.innerWidth > 768) {
+                    mainContent.classList.toggle('shrunk');
+                }
+                body.classList.toggle('sidebar-active');
+            });
+        }
+
+        // Hamburger menu for mobile
+        // const hamburger = document.querySelector('.hamburger');
+        // const nav = document.querySelector('nav');
+
+        // if (hamburger) {
+        //     hamburger.addEventListener('click', () => {
+        //         hamburger.classList.toggle('active');
+        //         nav.classList.toggle('active');
+        //     });
+
+        //     const navLinks = document.querySelectorAll('nav a');
+        //     navLinks.forEach(link => {
+        //         link.addEventListener('click', () => {
+        //             hamburger.classList.remove('active');
+        //             nav.classList.remove('active');
+        //         });
+        //     });
+        // }
+    </script>
+    <script src="../../components/headerfooter/nav.js"></script>
+</body>
+
+</html>

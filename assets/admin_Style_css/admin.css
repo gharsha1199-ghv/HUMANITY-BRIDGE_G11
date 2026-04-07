@@ -229,6 +229,7 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .stat-card h4 {
@@ -471,6 +472,9 @@ body {
     color: rgba(255, 255, 255, 0.3);
     font-size: 24px;
     margin-top: 20px;
+}
+.graph {
+    text-decoration: none;
 }
 
 /* #logout{
