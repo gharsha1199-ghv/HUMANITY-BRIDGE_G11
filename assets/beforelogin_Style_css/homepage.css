@@ -7,10 +7,15 @@
 
 body {
     background: linear-gradient(120deg, #4e025f, #831b9a);
+    
 
     background: #f8f8f8;
     color: #fff;
+
+
+
 }
+
 
 /* COMMON */
 .container {
