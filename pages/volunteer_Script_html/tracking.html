@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Humanity Bridge | Volunteer Tracking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../components/headerfooter/header.css">
+    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
+    <link rel="stylesheet" href="../../assets/volunteer_Style_css/tracking.css">
+    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <img src="../../assets/images/projectlogo.png">
+                    Humanity Bridge
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <nav>
+                    <a href="index.html">Home</a>
+                    <a href="orders.html">Orders</a>
+                    <a class="active" href="#">Tracking</a>
+                    <a href="myaccount_pg.html">My Account</a>
+                    <div class="user-dropdown">
+                        <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
+                        <div class="dropdown-content">
+                            <a href="index.html">View Dashboard</a>
+                            <a href="myaccount_pg.html">My Account</a>
+                            <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Delivery Tracking</h1>
+            <p>Monitor your active deliveries and update their status</p>
+        </div>
+
+        <!-- QUICK STATS -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="number">2</div>
+                <div class="label">Active Deliveries</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">47</div>
+                <div class="label">Completed Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">98%</div>
+                <div class="label">On-Time Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">4.8</div>
+                <div class="label">Average Rating</div>
+            </div>
+        </div>
+
+        <div class="tracking-container">
+            <!-- ACTIVE DELIVERIES -->
+            <div class="active-deliveries">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    Active Deliveries
+                </h2>
+
+                <!-- Delivery 1 -->
+                <div class="delivery-card">
+                    <div class="delivery-header">
+                        <div class="delivery-id">Order #V003</div>
+                        <div class="delivery-status">In Transit</div>
+                    </div>
+                    <div class="delivery-info">
+                        <div class="info-row">
+                            <strong>Route:</strong>
+                            <span>Tech Corp → Food Bank HQ</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Progress:</strong>
+                            <span>65% Complete</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>ETA:</strong>
+                            <span>25 minutes</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="delivery-actions">
+                        <button class="action-btn update-btn" onclick="updateLocation('V003')">
+                            <i class="fa-solid fa-location-dot"></i> Update Location
+                        </button>
+                        <button class="action-btn complete-btn" onclick="completeDelivery('V003')">
+                            <i class="fa-solid fa-check"></i> Complete
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Delivery 2 -->
+                <div class="delivery-card">
+                    <div class="delivery-header">
+                        <div class="delivery-id">Order #V005</div>
+                        <div class="delivery-status">Picked Up</div>
+                    </div>
+                    <div class="delivery-info">
+                        <div class="info-row">
+                            <strong>Route:</strong>
+                            <span>City Mall → Homeless Shelter</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Progress:</strong>
+                            <span>30% Complete</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>ETA:</strong>
+                            <span>45 minutes</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <div class="delivery-actions">
+                        <button class="action-btn update-btn" onclick="updateLocation('V005')">
+                            <i class="fa-solid fa-location-dot"></i> Update Location
+                        </button>
+                        <button class="action-btn complete-btn" onclick="completeDelivery('V005')">
+                            <i class="fa-solid fa-check"></i> Complete
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAP CONTAINER -->
+            <div class="map-container">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-map-marked-alt"></i>
+                    Live Map
+                </h2>
+                <div class="map-placeholder">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>Interactive Map</h3>
+                    <p>Live tracking of your delivery routes</p>
+                    <p style="font-size: 0.85rem; margin-top: 10px;">In a real application, this would show:</p>
+                    <ul style="text-align: left; font-size: 0.85rem; margin-top: 10px;">
+                        <li>Your current location</li>
+                        <li>Pickup and drop-off points</li>
+                        <li>Optimized routes</li>
+                        <li>Real-time traffic updates</li>
+                        <li>Estimated arrival times</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELIVERY HISTORY -->
+        <div class="delivery-history">
+            <h2 class="section-title">
+                <i class="fa-solid fa-history"></i>
+                Recent Deliveries
+            </h2>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Items</th>
+                        <th>Distance</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#V002</td>
+                        <td>Sarah's Boutique</td>
+                        <td>St. Mary's Orphanage</td>
+                        <td>Clothes (35 pcs)</td>
+                        <td>8.2 km</td>
+                        <td>25 min</td>
+                        <td><span class="status-badge completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#V001</td>
+                        <td>John's Restaurant</td>
+                        <td>Hope Community Center</td>
+                        <td>Food (25 srv)</td>
+                        <td>3.5 km</td>
+                        <td>15 min</td>
+                        <td><span class="status-badge completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#V006</td>
+                        <td>Green Grocers</td>
+                        <td>Food Bank</td>
+                        <td>Vegetables (50kg)</td>
+                        <td>6.8 km</td>
+                        <td>20 min</td>
+                        <td><span class="status-badge completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#V007</td>
+                        <td>Book Store</td>
+                        <td>Community Library</td>
+                        <td>Books (100)</td>
+                        <td>4.2 km</td>
+                        <td>-</td>
+                        <td><span class="status-badge cancelled">Cancelled</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../../components/headerfooter/nav.js"></script>
+    <script>
+        function updateLocation(orderId) {
+            const message = `
+Updating location for Order ${orderId}...
+
+Current location would be shared with:
+- Donor (pickup confirmation)
+- Recipient (ETA updates)
+- Admin (real-time tracking)
+
+In a real application, this would:
+1. Get GPS coordinates from device
+2. Update route progress automatically
+3. Send notifications to stakeholders
+4. Adjust ETA based on traffic
+            `;
+            alert(message);
+        }
+
+        function completeDelivery(orderId) {
+            if (confirm(`Mark Order ${orderId} as completed?`)) {
+                const rating = prompt("Please rate this delivery experience (1-5):");
+                if (rating && rating >= 1 && rating <= 5) {
+                    alert(`Order ${orderId} marked as completed!\n\nThank you for your service!\nYour rating: ${rating}/5`);
+                    // In a real app, this would update the backend
+                    location.reload();
+                } else if (rating !== null) {
+                    alert("Please provide a valid rating between 1 and 5.");
+                }
+            }
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const currentWidth = parseInt(bar.style.width);
+                if (currentWidth < 100) {
+                    const newWidth = Math.min(currentWidth + Math.random() * 2, 100);
+                    bar.style.width = newWidth + '%';
+                    
+                    // Update progress text
+                    const progressText = bar.closest('.delivery-card').querySelector('.info-row span');
+                    if (progressText && progressText.textContent.includes('Complete')) {
+                        progressText.textContent = `${Math.round(newWidth)}% Complete`;
+                    }
+                }
+            });
+        }, 5000); // Update every 5 seconds
+    </script>
+</body>
+
+</html>
