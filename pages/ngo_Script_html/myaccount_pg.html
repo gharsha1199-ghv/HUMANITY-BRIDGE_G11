@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../components/headerfooter/footer.css">
     <link rel="stylesheet" href="../../assets/ngo_Style_css/myaccount.css">
     <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -41,45 +42,180 @@
         </div>
     </header>
 
-    <section class="account-section">
-        <div class="account-card">
-            <div class="account-header">
-                <div class="profile-pic">O</div>
-                <h2>Orphanage</h2>
-                <p class="subtitle">Verified NGO</p>
-            </div>
-            
-            <div class="details-grid">
-                <div class="detail-item">
-                    <label>Full Name / Organization</label>
-                    <div class="value">Sunshine Orphanage</div>
+    <div class="container">
+        <div class="page-header">
+            <h1>My NGO Profile</h1>
+            <p>Manage your organization information and donation requests</p>
+        </div>
+
+        <div class="profile-container">
+            <!-- PROFILE CARD -->
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-hands-helping"></i>
                 </div>
-                <div class="detail-item">
-                    <label>Email Address</label>
-                    <div class="value">contact@sunshine.org</div>
-                </div>
-                <div class="detail-item">
-                    <label>Phone Number</label>
-                    <div class="value">+91 11111 22222</div>
-                </div>
-                <div class="detail-item">
-                    <label>Address</label>
-                    <div class="value">45 Hope Street, Hyderabad</div>
+                <div class="profile-name">Sunshine Orphanage</div>
+                <div class="profile-role">Verified NGO</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">892</span>
+                        <span class="stat-label">Donations Received</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5,234</span>
+                        <span class="stat-label">People Helped</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">Active Volunteers</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="actions">
-                <button class="btn primary">Edit Profile</button>
-                <button class="btn secondary">Change Password</button>
+            <!-- DETAILS CARD -->
+            <div class="details-card">
+                <h2 class="section-title">Organization Information</h2>
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="orgName">Organization Name</label>
+                            <input type="text" id="orgName" name="orgName" value="Sunshine Orphanage" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="orgType">Organization Type</label>
+                            <select id="orgType" name="orgType">
+                                <option value="orphanage">Orphanage</option>
+                                <option value="shelter">Homeless Shelter</option>
+                                <option value="foodbank">Food Bank</option>
+                                <option value="education">Education Center</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="contact@sunshine.org" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="+91 11111 22222" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" required>45 Hope Street, Hyderabad, Telangana, India</textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="capacity">Capacity</label>
+                            <input type="number" id="capacity" name="capacity" value="150" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="established">Established Year</label>
+                            <input type="number" id="established" name="established" value="2010" min="1900" max="2026" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="needs">Current Needs</label>
+                        <select id="needs" name="needs" multiple>
+                            <option value="food" selected>Food</option>
+                            <option value="clothes" selected>Clothes</option>
+                            <option value="books">Books</option>
+                            <option value="toys">Toys</option>
+                            <option value="medicines">Medicines</option>
+                            <option value="furniture">Furniture</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio / About Organization</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about your organization and mission...">Dedicated to providing shelter, education, and care for orphaned children in Hyderabad region.</textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <i class="fa-solid fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+
+        <!-- NGO ACHIEVEMENTS -->
+        <div class="achievements-section">
+            <h2 class="section-title">Organization Impact</h2>
+            <div class="achievements-grid">
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div class="achievement-name">Government Registered</div>
+                    <div class="achievement-desc">Official NGO certification</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="achievement-name">Large Network</div>
+                    <div class="achievement-desc">5000+ beneficiaries served</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="achievement-name">Excellence Award</div>
+                    <div class="achievement-desc">Recognized for outstanding service</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div class="achievement-name">Global Reach</div>
+                    <div class="achievement-desc">International partnerships</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-shield-alt"></i>
+                    </div>
+                    <div class="achievement-name">Transparent Operations</div>
+                    <div class="achievement-desc">Full financial transparency</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="achievement-name">Top Rated NGO</div>
+                    <div class="achievement-desc">5-star beneficiary rating</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
     <script src="../../components/headerfooter/nav.js"></script>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('NGO profile updated successfully!\n\nIn a real application, this would save to the database and update your organization information.');
+        });
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all changes?')) {
+                document.getElementById('profileForm').reset();
+                alert('Form has been reset to original values.');
+            }
+        }
+    </script>
 </body>
 
 </html>

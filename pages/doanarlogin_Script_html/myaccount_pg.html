@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../components/headerfooter/footer.css">
     <link rel="stylesheet" href="../../assets/donarlogin_Style_css/myaccount.css">
     <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -41,45 +42,174 @@
         </div>
     </header>
 
-    <section class="account-section">
-        <div class="account-card">
-            <div class="account-header">
-                <div class="profile-pic">H</div>
-                <h2>Harsha</h2>
-                <p class="subtitle">Regular Donor</p>
+    <div class="container">
+        <div class="page-header">
+            <h1>My Donor Profile</h1>
+            <p>Manage your donor information and contribution history</p>
+        </div>
+
+        <div class="profile-container">
+            <!-- PROFILE CARD -->
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <div class="profile-name">Harsha Vardhan</div>
+                <div class="profile-role">Regular Donor</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">Donations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2,341</span>
+                        <span class="stat-label">People Helped</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">$12,450</span>
+                        <span class="stat-label">Total Contributed</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="details-grid">
-                <div class="detail-item">
-                    <label>Full Name</label>
-                    <div class="value">Harsha Vardhan</div>
-                </div>
-                <div class="detail-item">
-                    <label>Email Address</label>
-                    <div class="value">harsha@example.com</div>
-                </div>
-                <div class="detail-item">
-                    <label>Phone Number</label>
-                    <div class="value">+91 98765 43210</div>
-                </div>
-                <div class="detail-item">
-                    <label>Default Address</label>
-                    <div class="value">123 Welfare Street, Hyderabad, Telangana</div>
-                </div>
-            </div>
+            <!-- DETAILS CARD -->
+            <div class="details-card">
+                <h2 class="section-title">Personal Information</h2>
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" value="Harsha" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" value="Vardhan" required>
+                        </div>
+                    </div>
 
-            <div class="actions">
-                <button class="btn primary">Edit Profile</button>
-                <button class="btn secondary">Change Password</button>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="harsha@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="+91 98765 43210" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" value="Hyderabad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" value="Telangana" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" required>123 Welfare Street, Hyderabad, Telangana</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="donationType">Preferred Donation Type</label>
+                        <select id="donationType" name="donationType">
+                            <option value="all">All Types</option>
+                            <option value="food">Food</option>
+                            <option value="clothes">Clothes</option>
+                            <option value="money">Money</option>
+                            <option value="books">Books</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio / About Me</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself and why you donate...">Passionate about helping communities and reducing waste through regular contributions.</textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <i class="fa-solid fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+
+        <!-- DONATION ACHIEVEMENTS -->
+        <div class="achievements-section">
+            <h2 class="section-title">Donation Impact</h2>
+            <div class="achievements-grid">
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="achievement-name">Food Donor</div>
+                    <div class="achievement-desc">45 food donations made</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <div class="achievement-name">Clothes Provider</div>
+                    <div class="achievement-desc">32 clothing donations</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="achievement-name">Financial Supporter</div>
+                    <div class="achievement-desc">79 monetary contributions</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="achievement-name">Consistent Giver</div>
+                    <div class="achievement-desc">12+ months regular donations</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="achievement-name">Community Hero</div>
+                    <div class="achievement-desc">Helped 2,000+ people</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="achievement-name">Top Donor</div>
+                    <div class="achievement-desc">Top contributor this month</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
     <script src="../../components/headerfooter/nav.js"></script>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Donor profile updated successfully!\n\nIn a real application, this would save to the database and update your donation preferences.');
+        });
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all changes?')) {
+                document.getElementById('profileForm').reset();
+                alert('Form has been reset to original values.');
+            }
+        }
+    </script>
 </body>
 
 </html>

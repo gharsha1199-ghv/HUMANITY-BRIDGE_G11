@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../components/headerfooter/footer.css">
     <link rel="stylesheet" href="../../assets/regulardonar_Style_css/myaccount.css">
     <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -41,45 +42,178 @@
         </div>
     </header>
 
-    <section class="account-section">
-        <div class="account-card">
-            <div class="account-header">
-                <div class="profile-pic">S</div>
-                <h2>Santhosh Dhaba</h2>
-                <p class="subtitle">Regular Donor</p>
-            </div>
-            
-            <div class="details-grid">
-                <div class="detail-item">
-                    <label>Full Name / Organization</label>
-                    <div class="value">Santhosh Dhaba</div>
+    <div class="container">
+        <div class="page-header">
+            <h1>My Business Profile</h1>
+            <p>Manage your business information and corporate donations</p>
+        </div>
+
+        <div class="profile-container">
+            <!-- PROFILE CARD -->
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-building"></i>
                 </div>
-                <div class="detail-item">
-                    <label>Email Address</label>
-                    <div class="value">contact@santhoshdhaba.com</div>
-                </div>
-                <div class="detail-item">
-                    <label>Phone Number</label>
-                    <div class="value">+91 99999 88888</div>
-                </div>
-                <div class="detail-item">
-                    <label>Address</label>
-                    <div class="value">Banjara Hills, Hyderabad</div>
+                <div class="profile-name">Santhosh Dhaba</div>
+                <div class="profile-role">Business Donor</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">287</span>
+                        <span class="stat-label">Donations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8,456</span>
+                        <span class="stat-label">People Helped</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">$45,890</span>
+                        <span class="stat-label">Total Contributed</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="actions">
-                <button class="btn primary">Edit Profile</button>
-                <button class="btn secondary">Change Password</button>
+            <!-- DETAILS CARD -->
+            <div class="details-card">
+                <h2 class="section-title">Business Information</h2>
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="businessName">Business Name</label>
+                            <input type="text" id="businessName" name="businessName" value="Santhosh Dhaba" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="businessType">Business Type</label>
+                            <select id="businessType" name="businessType">
+                                <option value="restaurant">Restaurant</option>
+                                <option value="retail">Retail Store</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="service">Service Provider</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="contact@santhoshdhaba.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="+91 99999 88888" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" value="Hyderabad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" value="Telangana" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Business Address</label>
+                        <textarea id="address" name="address" rows="3" required>Banjara Hills, Hyderabad, Telangana</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="donationType">Regular Donation Type</label>
+                        <select id="donationType" name="donationType">
+                            <option value="food">Food Surplus</option>
+                            <option value="clothes">Unused Uniforms</option>
+                            <option value="money">Financial Support</option>
+                            <option value="equipment">Equipment</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Business Bio</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about your business and why you donate...">Local restaurant committed to reducing food waste and supporting community welfare through regular donations.</textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <i class="fa-solid fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+
+        <!-- BUSINESS ACHIEVEMENTS -->
+        <div class="achievements-section">
+            <h2 class="section-title">Business Impact</h2>
+            <div class="achievements-grid">
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="achievement-name">Food Partner</div>
+                    <div class="achievement-desc">156 food donations made</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <div class="achievement-name">Community Supporter</div>
+                    <div class="achievement-desc">78 community events sponsored</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="achievement-name">Corporate Giver</div>
+                    <div class="achievement-desc">53 monetary contributions</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div class="achievement-name">Eco Warrior</div>
+                    <div class="achievement-desc">Reduced waste by 2,500 kg</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="achievement-name">Business Excellence</div>
+                    <div class="achievement-desc">Recognized for community service</div>
+                </div>
+                <div class="achievement-badge">
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="achievement-name">Top Business Donor</div>
+                    <div class="achievement-desc">Leading contributor Q3 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
     <script src="../../components/headerfooter/nav.js"></script>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Business profile updated successfully!\n\nIn a real application, this would save to the database and update your donation preferences.');
+        });
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset all changes?')) {
+                document.getElementById('profileForm').reset();
+                alert('Form has been reset to original values.');
+            }
+        }
+    </script>
 </body>
 
 </html>
