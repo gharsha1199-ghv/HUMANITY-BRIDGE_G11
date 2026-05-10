@@ -263,7 +263,7 @@ body {
 }
 
 /* RESPONSIVE */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     .container {
         width: 95%;
         padding: 100px 10px 20px;
@@ -295,4 +295,4 @@ body {
     .order-actions {
         flex-direction: column;
     }
-} */
+}

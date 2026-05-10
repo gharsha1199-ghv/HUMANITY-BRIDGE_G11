@@ -282,7 +282,7 @@ body {
 }
 
 /* RESPONSIVE */
-/* @media (max-width: 968px) {
+@media (max-width: 968px) {
     .tracking-container {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -325,4 +325,4 @@ body {
     .history-table td {
         padding: 8px;
     }
-} */
+}

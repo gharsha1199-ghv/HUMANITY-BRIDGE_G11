@@ -234,7 +234,7 @@ body {
 /* RESPONSIVE LAYOUT */
 
 /* HERO SECTION RESPONSIVENESS */
-/* @media (max-width: 1024px) {
+@media (max-width: 1024px) {
     .hero-content {
         flex-direction: column;
         text-align: center;
@@ -320,4 +320,4 @@ body {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-} */
+}

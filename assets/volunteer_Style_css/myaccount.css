@@ -271,7 +271,7 @@ body {
 }
 
 /* RESPONSIVE */
-/* @media (max-width: 968px) {
+@media (max-width: 968px) {
     .profile-container {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -309,4 +309,4 @@ body {
     .achievements-grid {
         grid-template-columns: 1fr;
     }
-} */
+}

@@ -283,7 +283,7 @@ body {
 }
 
 /* RESPONSIVE */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     .container {
         width: 95%;
         padding: 100px 10px 40px;
@@ -310,4 +310,4 @@ body {
         flex-direction: column;
         gap: 10px;
     }
-} */
+}
