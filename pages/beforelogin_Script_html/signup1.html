@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humanity Bridge | SignUp</title>
     <link rel="stylesheet" href="../../assets/beforelogin_Style_css/signup1.css">
-  <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
-  <link rel="stylesheet" href="../../components/headerfooter/header.css" />
+    <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
+    <link rel="stylesheet" href="../../components/headerfooter/header.css" />
     <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -28,10 +28,8 @@
                 <span></span>
             </div>
 
-
-
             <nav>
-        <a href="../../index.html">Home</a>
+                <a href="../../index.html">Home</a>
                 <a href="about_pg.html">About</a>
                 <a href="ourwork_pg.html">Our work</a>
                 <a href="gallery_pg.html">Gallery</a>
@@ -40,107 +38,154 @@
         </div>
     </header>
 
-    <section class="signup-section">
+    <section class="signup-wrapper">
+        <div class="signup-card">
 
-        <div class="intro-text">
-            <h1>Join Humanity Bridge</h1>
-            <p>Choose how you want to be part of reducing waste and helping people.</p>
+            <div class="card-header">
+                <div class="card-logo">
+                    <img src="../../assets/images/projectlogo.png" alt="Logo">
+                    <h3>Humanity Bridge</h3>
+                </div>
+                <h2>Create Your Account</h2>
+                <p>Join us in making a difference through responsible giving.</p>
+            </div>
+
+            <form class="signup-form" id="unifiedSignupForm">
+                
+                <!-- ROLE SELECTION -->
+                <div class="role-selection">
+                    <label>Select Your Role:</label>
+                    <div class="role-radio-group">
+                        <label class="role-radio">
+                            <input type="radio" name="role" value="donor" checked>
+                            <span><i class="fa-solid fa-hand-holding-heart"></i> Individual Donor</span>
+                        </label>
+
+                        <label class="role-radio">
+                            <input type="radio" name="role" value="volunteer">
+                            <span><i class="fa-solid fa-hands-helping"></i> Volunteer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- COMMON FIELDS -->
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="commonName" placeholder="Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="text" id="commonPhone" placeholder="Phone / Email" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" id="commonCity" placeholder="City" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <input type="text" id="commonArea" placeholder="Area / Pincode" required>
+                </div>
+
+
+
+                <!-- DYNAMIC FIELDS: VOLUNTEER -->
+                <div id="fields_volunteer" class="dynamic-fields" style="display: none;">
+                    <div class="input-group">
+                        <i class="fa-solid fa-car"></i>
+                        <select id="volVehicle">
+                            <option value="" disabled selected>Select Vehicle Type</option>
+                            <option value="car">Car</option>
+                            <option value="motorcycle">Motorcycle</option>
+                            <option value="bicycle">Bicycle</option>
+                            <option value="none">No Vehicle (Public Transport)</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="align-items: flex-start;">
+                        <i class="fa-solid fa-clock" style="top: 22px;"></i>
+                        <textarea id="volAvailability" placeholder="Your Availability (e.g., Weekends, Evenings, Afternoons)" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- COMMON PASSWORDS -->
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="commonPassword" placeholder="Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="commonConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+                <p class="login-link">Already have an account? <a href="login_pg.html">Login</a></p>
+
+            </form>
+
         </div>
-
-        <div class="role-viewport" id="roleCarousel">
-
-            <div class="carousel-spacer"></div>
-
-            <a href="signupdonar.html" class="role-card">
-                <div class="circle-icon ">
-                    <i class="fa-solid fa-hand-holding-heart"></i>
-                </div>
-                <h3>Individual Donor</h3>
-                <p>Donate occasionally</p>
-            </a>
-
-            <!-- <a href="signupRdonar.html" class="role-card">
-                <div class="circle-icon ">
-                    <i class="fa-solid fa-shop"></i>
-                </div>
-                <h3>Regular Donor</h3>
-                <p>Hotels, Restaurants,<br>hostels,Function Halls</p>
-            </a> -->
-
-            <a href="signupvolunteer.html" class="role-card">
-                <div class="circle-icon ">
-                    <i class="fa-solid fa-hands-helping"></i>
-                </div>
-                <h3>Volunteer</h3>
-                <p>Help deliver<br>donations</p>
-            </a>
-
-            <!-- <a href="signupreciever.html" class="role-card">
-                <div class="circle-icon ">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <h3>NGO</h3>
-                <p>Communities in need</p>
-            </a> -->
-
-            <div class="carousel-spacer"></div>
-
-        </div>
-
-        <div class="swipe-hint">
-            <i class="fa-solid fa-left-right"></i> Swipe to select
-        </div>
-
     </section>
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
+    <script src="../../components/headerfooter/nav.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const carousel = document.getElementById('roleCarousel');
-            const cards = document.querySelectorAll('.role-card');
-
-            // Function to check if mobile
-            const isMobile = () => window.innerWidth <= 900;
-
-            // 1. Initial Setup
-            if (isMobile()) {
-                // Scroll to center card on mobile load
-                // Card width (260) + margins (30) = 290 approx
-                setTimeout(() => {
-                    carousel.scrollLeft = 290;
-                }, 100);
-            } else {
-                // Desktop: Set middle card (Index 1) as active manually
-                if (cards[1]) cards[1].classList.add('active');
-            }
-
-            // 2. Intersection Observer (Detects center item)
-            const options = {
-                root: carousel,
-                // Defines a narrow vertical strip in the center
-                rootMargin: "0px -45% 0px -45%",
-                threshold: 0.01
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            
+            // Dynamic field containers
+            const fieldsVolunteer = document.getElementById('fields_volunteer');
+            
+            // Function to update visibility of dynamic fields based on selected role
+            const updateDynamicFields = () => {
+                const selectedRole = document.querySelector('input[name="role"]:checked').value;
+                
+                // Hide all dynamic fields first
+                fieldsVolunteer.style.display = 'none';
+                
+                // Remove required attribute from dynamic inputs when hidden
+                document.getElementById('volVehicle').required = false;
+                
+                // Show specific fields based on selection
+                if (selectedRole === 'volunteer') {
+                    fieldsVolunteer.style.display = 'block';
+                    document.getElementById('volVehicle').required = true;
+                }
             };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        cards.forEach(c => c.classList.remove('active'));
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, options);
-
-            cards.forEach(card => {
-                observer.observe(card);
+            
+            // Attach event listeners to radios
+            roleRadios.forEach(radio => {
+                radio.addEventListener('change', updateDynamicFields);
             });
+            
+            // Form submission logic
+            document.getElementById('unifiedSignupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const pwd = document.getElementById('commonPassword').value;
+                const confirmPwd = document.getElementById('commonConfirmPassword').value;
+                
+                if (pwd !== confirmPwd) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+                
+                const selectedRole = document.querySelector('input[name="role"]:checked').value;
+                alert("Sign Up successful as " + selectedRole + "!\n\nRedirecting to login...");
+                
+                setTimeout(() => {
+                    window.location.href = 'login_pg.html';
+                }, 1500);
+            });
+            
+            // Initialize fields on load
+            updateDynamicFields();
         });
     </script>
-
-    <script src="../../components/headerfooter/nav.js"></script>
 </body>
 
 </html>

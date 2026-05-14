@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../components/headerfooter/header.css">
   <link rel="stylesheet" href="../../components/headerfooter/footer.css">
   <link rel="stylesheet" href="../../assets/donarlogin_Style_css/donate_pg.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
 </head>
 
@@ -22,7 +23,7 @@
         <span></span>
         <span></span>
         <span></span>
-    </div>
+      </div>
 
       <nav>
         <a href="index.html">Home</a>
@@ -42,46 +43,313 @@
     </div>
   </header>
 
-
   <section class="donation-section">
-    <div class="content-wrapper">
-      <h1 class="main-title">Choose Your <span class="highlight">Donation</span></h1>
-      <p class="subtitle">Make a responsible and meaningful contribution.</p>
-
-      <div class="card-container">
-        <a href="donatefood_pg.html">
-          <div class="donation-card">
-            <i class="fa-solid fa-utensils"></i>
-            <h3>Food</h3>
-          </div>
-        </a>
-
-        <a href="donatecloths_pg.html">
-          <div class="donation-card">
-            <i class="fa-solid fa-shirt"></i>
-            <h3>Clothes</h3>
-          </div>
-        </a>
-        <a href="donatemoney.html">
-          <div class="donation-card">
-            <i class="fa-solid fa-book"></i>
-            <h3>Money</h3>
-          </div>
-        </a>
-
-
-
+    <div class="container-split">
+      
+      <!-- Left Content -->
+      <div class="left-content">
+        <h1>Make a Meaningful Contribution</h1>
+        <p>
+          Your responsible donation helps bridge the gap. Select what you would like to donate and fill out the details to ensure safe and dignified distribution.
+        </p>
       </div>
+
+      <!-- Right Form Card -->
+      <div class="form-card">
+        <form id="unifiedDonationForm">
+          
+          <!-- Donation Type Selection -->
+          <div class="donation-type-selection">
+            <label>Select Donation Type</label>
+            <div class="type-radio-group">
+              <label class="type-radio">
+                <input type="radio" name="donationType" value="money" checked>
+                <span><i class="fa-solid fa-coins"></i> Money</span>
+              </label>
+              <label class="type-radio">
+                <input type="radio" name="donationType" value="food">
+                <span><i class="fa-solid fa-utensils"></i> Food</span>
+              </label>
+              <label class="type-radio">
+                <input type="radio" name="donationType" value="clothes">
+                <span><i class="fa-solid fa-shirt"></i> Clothes</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- DYNAMIC SECTION: MONEY                     -->
+          <!-- ========================================== -->
+          <div id="fields_money" class="dynamic-fields">
+            <div class="form-block">
+              <h3>Donation Amount</h3>
+              <div class="amount-buttons" id="amountButtons">
+                <button type="button">10</button>
+                <button type="button">50</button>
+                <button type="button">100</button>
+                <button type="button">250</button>
+                <button type="button">500</button>
+              </div>
+              <div class="currency-input mt-10">
+                <span>Rs.</span>
+                <input type="number" id="moneyAmount" placeholder="Enter other amount" min="10">
+              </div>
+              <small class="note">Minimum donation Rs. 10</small>
+            </div>
+
+            <div class="form-block">
+              <h3>Purpose of Contribution</h3>
+              <select id="moneyPurpose">
+                <option>Maintenance of collection and distribution</option>
+                <option>Support for the needy</option>
+                <option>Where it is most needed</option>
+              </select>
+            </div>
+
+            <div class="form-block confirm" style="border: none;">
+              <label class="confirm">
+                <input type="checkbox" id="moneyConfirm" required>
+                <span>I understand my contribution will be used responsibly for verified collection, distribution, and support.</span>
+              </label>
+            </div>
+          </div>
+
+
+          <!-- ========================================== -->
+          <!-- DYNAMIC SECTION: FOOD                      -->
+          <!-- ========================================== -->
+          <div id="fields_food" class="dynamic-fields hidden">
+            
+            <div class="form-block">
+              <h3>Type of Food</h3>
+              <div class="row-check">
+                <label class="check">
+                  <input type="radio" name="foodType" value="packed" checked>
+                  <span>Packed / Sealed Food</span>
+                </label>
+                <label class="check">
+                  <input type="radio" name="foodType" value="raw">
+                  <span>Raw Ingredients</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-block">
+              <h3>Food Category</h3>
+              <select id="foodCategory">
+                <option value="" disabled selected>Select Category</option>
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+                <option value="mixed">Mixed</option>
+              </select>
+            </div>
+
+            <div class="form-block">
+              <h3>Freshness / Expiry Details</h3>
+              <div class="grid-2">
+                <input type="date" id="foodExpiryDate">
+                <input type="time" id="foodExpiryTime">
+              </div>
+              <p class="note">Expiry details help the admin approve only safe donations.</p>
+            </div>
+
+            <div class="form-block">
+              <h3>Quantity & Description</h3>
+              <div class="grid-2">
+                <input type="number" id="foodQuantity" placeholder="Quantity">
+                <input type="text" value="Items / Servings" readonly>
+              </div>
+              <input type="text" class="mt-10" id="foodDesc" placeholder="Brief description of the items...">
+            </div>
+
+            <div class="form-block">
+              <h3>Pickup & Storage Status</h3>
+              <label class="check mt-10">
+                <input type="checkbox" id="foodPackedProperly">
+                <span>Properly packed and hygienic</span>
+              </label>
+              
+              <div class="grid-2 mt-10">
+                <input type="time" id="foodAvailableFrom" placeholder="Available From">
+                <input type="time" id="foodAvailableTill" placeholder="Available Till">
+              </div>
+            </div>
+            
+            <!-- Donor Details (Shared with Clothes in reality, but replicated here for structure) -->
+            <div class="form-block">
+              <h3>Pickup Address</h3>
+              <div class="grid-2">
+                <input type="text" id="foodDonorName" placeholder="Donor Name">
+                <input type="tel" id="foodDonorPhone" placeholder="Phone Number">
+              </div>
+              <div class="grid-2 mt-10">
+                <input type="text" id="foodCity" placeholder="City">
+                <input type="number" id="foodPincode" placeholder="Pincode">
+              </div>
+              <input type="text" class="mt-10" id="foodAddress" placeholder="Full Pickup Address">
+            </div>
+
+            <div class="form-block confirm" style="border: none;">
+              <label class="confirm">
+                <input type="checkbox" id="foodConfirm">
+                <span>I confirm that the food is safe and stored under hygienic conditions.</span>
+              </label>
+            </div>
+          </div>
+
+
+          <!-- ========================================== -->
+          <!-- DYNAMIC SECTION: CLOTHES                   -->
+          <!-- ========================================== -->
+          <div id="fields_clothes" class="dynamic-fields hidden">
+            
+            <div class="form-block">
+              <h3>Target Group</h3>
+              <div class="row-check">
+                <label class="check"><input type="checkbox" value="men"> <span>Men</span></label>
+                <label class="check"><input type="checkbox" value="women"> <span>Women</span></label>
+                <label class="check"><input type="checkbox" value="children"> <span>Children</span></label>
+              </div>
+            </div>
+
+            <div class="form-block">
+              <h3>Clothing Category</h3>
+              <select id="clothesCategory">
+                <option value="" disabled selected>Select Category</option>
+                <option value="tops">Tops</option>
+                <option value="bottoms">Bottoms</option>
+                <option value="outerwear">Outerwear</option>
+                <option value="mixed">Mixed Bundle</option>
+              </select>
+            </div>
+
+            <div class="form-block">
+              <h3>Condition of Clothes</h3>
+              <div class="row-check" style="flex-direction: column; gap: 8px;">
+                <label class="check"><input type="radio" name="clothesCondition" value="new"> <span>New (unused)</span></label>
+                <label class="check"><input type="radio" name="clothesCondition" value="good" checked> <span>Gently used (good condition)</span></label>
+                <label class="check"><input type="radio" name="clothesCondition" value="heavy"> <span>Heavily used (not accepted)</span></label>
+              </div>
+              <p class="note">We accept only wearable clothes to maintain dignity.</p>
+            </div>
+
+            <div class="form-block">
+              <h3>Quantity</h3>
+              <input type="number" id="clothesQuantity" placeholder="Approximate number of items">
+            </div>
+
+            <div class="form-block">
+              <h3>Pickup Address</h3>
+              <div class="grid-2">
+                <input type="text" id="clothesCity" placeholder="City">
+                <input type="number" id="clothesPincode" placeholder="Pincode">
+              </div>
+              <input type="text" class="mt-10" id="clothesAddress" placeholder="Full Pickup Address">
+            </div>
+
+            <div class="form-block confirm" style="border: none;">
+              <label class="confirm">
+                <input type="checkbox" id="clothesConfirm">
+                <span>I confirm the clothes are clean, washed, and ready to wear.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- SUBMIT -->
+          <button type="submit" class="submit-btn" id="submitDonationBtn">Donate Now</button>
+
+        </form>
+      </div>
+
     </div>
   </section>
-
 
   <footer>
     <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
   </footer>
+  
   <script src="../../components/headerfooter/nav.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const typeRadios = document.querySelectorAll('input[name="donationType"]');
+      const fieldsMoney = document.getElementById('fields_money');
+      const fieldsFood = document.getElementById('fields_food');
+      const fieldsClothes = document.getElementById('fields_clothes');
+      const submitBtn = document.getElementById('submitDonationBtn');
+      const moneyInput = document.getElementById('moneyAmount');
+      const amountBtns = document.querySelectorAll('.amount-buttons button');
 
-  <!-- <script src="/Script_html/hamburger.js"></script> -->
+      // Update form fields based on selection
+      const updateDynamicFields = () => {
+        const selectedType = document.querySelector('input[name="donationType"]:checked').value;
+        
+        // Hide all
+        fieldsMoney.classList.add('hidden');
+        fieldsFood.classList.add('hidden');
+        fieldsClothes.classList.add('hidden');
+        
+        // Disable required attributes for hidden sections (prevent form submit blocking)
+        document.getElementById('moneyConfirm').required = false;
+        
+        if (selectedType === 'money') {
+          fieldsMoney.classList.remove('hidden');
+          document.getElementById('moneyConfirm').required = true;
+          submitBtn.innerText = "Donate Money Responsibly";
+        } else if (selectedType === 'food') {
+          fieldsFood.classList.remove('hidden');
+          submitBtn.innerText = "Donate Food Responsibly";
+        } else if (selectedType === 'clothes') {
+          fieldsClothes.classList.remove('hidden');
+          submitBtn.innerText = "Donate Clothes Responsibly";
+        }
+      };
+
+      // Listen to radio changes
+      typeRadios.forEach(radio => {
+        radio.addEventListener('change', updateDynamicFields);
+      });
+
+      // Money buttons logic
+      amountBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          // Remove active class from all
+          amountBtns.forEach(b => b.classList.remove('active'));
+          // Add active class to clicked
+          e.target.classList.add('active');
+          // Set value in input
+          moneyInput.value = e.target.innerText;
+        });
+      });
+
+      moneyInput.addEventListener('input', () => {
+         amountBtns.forEach(b => b.classList.remove('active'));
+      });
+
+      // Form Submit
+      document.getElementById('unifiedDonationForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectedType = document.querySelector('input[name="donationType"]:checked').value;
+        
+        if(selectedType === 'food' && !document.getElementById('foodConfirm').checked) {
+            alert("Please confirm that the food is safe and stored hygienically.");
+            return;
+        }
+        if(selectedType === 'clothes' && !document.getElementById('clothesConfirm').checked) {
+            alert("Please confirm the clothes are clean, washed, and ready to wear.");
+            return;
+        }
+
+        alert("Donation request for " + selectedType + " submitted successfully!\nThank you for your responsible contribution.");
+        
+        setTimeout(() => {
+            window.location.href = 'formsubmit.html'; // Assuming this exists as per previous links
+        }, 1000);
+      });
+
+      // Init
+      updateDynamicFields();
+    });
+  </script>
 </body>
 
 </html>
