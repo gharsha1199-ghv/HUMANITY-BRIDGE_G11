@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity Bridge | Add NGO/Receiver</title>
+    <link rel="stylesheet" href="../../assets/beforelogin_Style_css/signup1.css">
+    <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
+    <link rel="stylesheet" href="../../components/headerfooter/header.css" />
+    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <button id="sidebarToggle" class="toggle-btn" style="display:none;"><i class="fa-solid fa-bars"></i></button>
+                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <span>Humanity Bridge</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav>
+                <a href="add_regulardonar.html" class="login-btn">Add Regular Donar</a>
+                <a href="add_ngo.html" class="login-btn">Add NGO/Receiver</a>
+                <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="index.html">View Dashboard</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="signup-wrapper">
+        <div class="signup-card">
+
+            <div class="card-header">
+                <div class="card-logo">
+                    <img src="../../assets/images/projectlogo.png" alt="Logo">
+                    <h3>Humanity Bridge</h3>
+                </div>
+                <h2>Add NGO/Receiver</h2>
+                <p>Register a new NGO or Receiver account.</p>
+            </div>
+
+            <form class="signup-form" id="addNGOForm">
+                
+                <div class="input-group">
+                    <i class="fa-solid fa-building"></i>
+                    <input type="text" id="ngoName" placeholder="Organization / Receiver Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="text" id="ngoPhone" placeholder="Phone / Email" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" id="ngoCity" placeholder="City" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <input type="text" id="ngoArea" placeholder="Area / Pincode" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <input type="text" id="ngoRegNumber" placeholder="Registration Number (if applicable)">
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="ngoPassword" placeholder="Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="ngoConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
+
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../../components/headerfooter/nav.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('addNGOForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const pwd = document.getElementById('ngoPassword').value;
+                const confirmPwd = document.getElementById('ngoConfirmPassword').value;
+                
+                if (pwd !== confirmPwd) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+                
+                alert("NGO/Receiver account created successfully!");
+                document.getElementById('addNGOForm').reset();
+            });
+        });
+    </script>
+</body>
+
+</html>
+
