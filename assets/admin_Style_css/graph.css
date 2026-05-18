@@ -73,7 +73,6 @@ height:4px;
 background:#f4c21d;
 margin-right:10px;
 } 
-/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -81,7 +80,6 @@ margin-right:10px;
     font-family: 'Poppins', sans-serif;
 }
 
-/* Profile Toggle Icon */
 .profile-toggle {
     display: none;
     font-size: 24px;
@@ -126,28 +124,23 @@ body {
     color: white;
 }
 
-/* === SIDEBAR STYLES === */
 .sidebar {
     position: fixed;
     left: -280px;
-    /* Hidden by default */
     top: 0;
     bottom: 0;
     width: 260px;
     background: rgba(42, 4, 74, 0.95);
-    /* Dark purple glass */
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 99;
     padding-top: 100px;
-    /* Clear header */
     transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.open {
     left: 0;
-    /* Slide in */
 }
 
 .sidebar-header h3 {
@@ -207,18 +200,14 @@ body {
 
 
 
-/* MAIN LAYOUT */
 .page-wrapper {
     /* display: flex; */
     justify-content: center;
-    /* horizontal center */
     align-items: flex-start;
-    /* keeps it below header */
     /* padding: 130px 20px 40px; */
 }
 
 
-/* REPORT CARD */
 .report-container {
     background: #ffffff;
     border-radius: 16px;
@@ -240,7 +229,6 @@ body {
     margin-bottom: 24px;
 }
 
-/* CONTROLS */
 .controls {
     display: flex;
     gap: 12px;
@@ -265,7 +253,6 @@ body {
     cursor: pointer;
 }
 
-/* TABLE */
 .table-wrapper {
     overflow-x: auto;
 }
@@ -295,7 +282,6 @@ tbody tr {
     border-bottom: 1px solid #eee;
 }
 
-/* STATUS BADGES */
 .status {
     padding: 6px 14px;
     border-radius: 20px;
@@ -331,7 +317,6 @@ tbody tr {
     margin-top: 20px;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
     .report-container {
         margin-left: 0;

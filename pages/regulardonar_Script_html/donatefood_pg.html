@@ -44,7 +44,6 @@
   <section class="donation-section">
     <div class="container">
 
-      <!-- Left Text Content -->
       <div class="left-content">
         <h1>Donate Food Responsibly</h1>
         <p>
@@ -128,13 +127,10 @@
             </div> -->
 
 
-      <!-- RIGHT FORM CARD -->
       <div class="form-card">
         <div class="form-group">
           <form id="donationForm">
 
-            <!-- Type of Food (ONLY Packed + Raw) -->
-            <div class="form-block">
               <h3>Type of Food</h3>
 
 
@@ -155,7 +151,6 @@
               </div>
             </div>
 
-            <!-- Food Category -->
             <div class="form-block">
               <h3>Food Category</h3>
               <select id="foodCategory">
@@ -166,7 +161,6 @@
               </select>
             </div>
 
-            <!-- Donor Details -->
             <div class="form-block">
               <h3>Donor Details</h3>
 
@@ -186,11 +180,9 @@
               </div>
             </div>
 
-            <!-- Freshness / Expiry (Dynamic) -->
             <div class="form-block">
               <h3>Freshness / Expiry Details</h3>
 
-              <!-- Packed/Raw show Expiry -->
               <div class="grid-2" id="expiryBox">
                 <input type="date" id="expiryDate">
                 <input type="time" id="expiryTime" placeholder="Best before time (optional)">
@@ -199,7 +191,6 @@
               <p class="note">Expiry details help the admin approve only safe donations.</p>
             </div>
 
-            <!-- Quantity (Dynamic unit) -->
             <div class="form-block">
               <h3>Quantity of Food</h3>
 
@@ -212,7 +203,6 @@
                 placeholder="Explain about the food (example: item names, quantity details, any notes..">
             </div>
 
-            <!-- Sealed Option (ONLY for Packed) -->
             <div class="form-block hidden" id="sealedBox">
               <h3>Sealed Status</h3>
               <select id="sealedStatus">
@@ -221,7 +211,6 @@
                 <option value="no">No</option>
               </select>
             </div>
-            <!-- Packaging & Storage (ONLY 2 CHECKBOXES) -->
             <div class="form-block">
               <h3>Packaging & Storage Status</h3>
 
@@ -236,7 +225,6 @@
               </label>
             </div>
 
-            <!-- Pickup Availability -->
             <div class="form-block">
               <h3>Pickup Availability</h3>
 
@@ -246,7 +234,6 @@
               </div>
             </div>
 
-            <!-- Extra Contact Person -->
             <div class="form-block">
               <h3>Extra Contact (Optional)</h3>
               <div class="grid-2">
@@ -255,13 +242,11 @@
               </div>
             </div>
 
-            <!-- Upload Image -->
             <div class="form-block">
               <h3>Upload Food Image (Optional)</h3>
               <input type="file" id="foodImage" accept="image/*">
             </div>
 
-            <!-- Submit Button -->
             <button type="button" class="submit-btn" onclick="window.location.href='formsubmit.html'">Donate Food
               Responsibly</button>
           </form>

@@ -8,7 +8,6 @@
 body {
     min-height: 100vh;
     background: linear-gradient(120deg, #4e025f, #831b9a);
-    /* display: flex; */
     align-items: center;
     justify-content: space-between;
 }
@@ -30,7 +29,6 @@ body {
     justify-content: center;
 }
 
-/* Left Text */
 .text-content {
     max-width: 460px;
     color: #ffffff;
@@ -46,7 +44,6 @@ body {
     opacity: 0.9;
 }
 
-/* Donation Card */
 .form-card {
     width: 460px;
     background: #ffffff;
@@ -74,7 +71,6 @@ body {
     display: block;
 }
 
-/* Amount Buttons */
 .amount-buttons {
     display: flex;
     gap: 10px;
@@ -94,7 +90,6 @@ body {
     background: #f2f2f2;
 }
 
-/* Inputs */
 .currency-input {
     display: flex;
     align-items: center;
@@ -130,13 +125,11 @@ small {
     color: #777;
 }
 
-/* Confirmation */
 .confirm label {
     font-size: 14px;
     color: #444;
 }
 
-/* Button */
 /* .submit-btn {
     width: 100%;
     padding: 14px;
@@ -168,9 +161,6 @@ small {
   transform: translateY(-1px);
 }
 
-/* ===========================
-   MOBILE RESPONSIVENESS
-=========================== */
 @media (max-width: 768px) {
     .donation-section {
         padding: 80px 20px 40px;
@@ -185,7 +175,6 @@ small {
         width: 100%;
     }
 
-    /* Left Text */
     .text-content {
         max-width: 100%;
         text-align: center;
@@ -200,7 +189,6 @@ small {
         font-size: 16px;
     }
 
-    /* Form Card */
     .form-card {
         width: 100%;
         padding: 25px;

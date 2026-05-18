@@ -8,7 +8,6 @@
 body {
   min-height: 100vh;
   background: linear-gradient(120deg, #4e025f, #831b9a);
-  /* display: flex; */
   align-items: center;
   justify-content: center;
 }
@@ -32,7 +31,6 @@ body {
 
 }
 
-/* Left Content */
 .left-content {
   color: #fff;
   max-width: 450px;
@@ -50,7 +48,6 @@ body {
   margin-bottom: 400px;
 }
 
-/* Form Card */
 /* .form-card {
     background: #fff;
     width: 420px;
@@ -145,9 +142,6 @@ small {
 
 
 
-/* ===========================
-   FORM CARD
-=========================== */
 
 .form-card {
   background: #fff;
@@ -166,7 +160,6 @@ small {
   border: 2;
 }
 
-/* Form blocks */
 .form-block {
   padding-bottom: 18px;
   margin-bottom: 18px;
@@ -186,9 +179,6 @@ small {
   margin-bottom: 10px;
 }
 
-/* ===========================
-   INPUTS
-=========================== */
 input,
 select {
   width: 100%;
@@ -211,21 +201,16 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(131, 27, 154, 0.16);
 }
 
-/* 2 column grid */
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-/* spacing helper */
 .mt-10 {
   margin-top: 10px;
 }
 
-/* ===========================
-   CHECKBOX STYLE
-=========================== */
 .row-check {
   display: flex;
   flex-wrap: wrap;
@@ -246,7 +231,6 @@ select:focus {
   height: 16px;
 }
 
-/* confirm line */
 .confirm {
   display: flex;
   align-items: flex-start;
@@ -263,7 +247,6 @@ select:focus {
   margin-top: 2px;
 }
 
-/* note text */
 .note {
   margin-top: 8px;
   font-size: 12px;
@@ -271,9 +254,6 @@ select:focus {
   line-height: 1.4;
 }
 
-/* ===========================
-   BUTTON
-=========================== */
 .submit-btn {
   width: 100%;
   margin-top: 8px;
@@ -298,14 +278,10 @@ select:focus {
   display: none;
 }
 
-/* ===========================
-   MOBILE RESPONSIVENESS
-=========================== */
 @media (max-width: 768px) {
   .donation-section {
     padding: 120px 20px;
     height: auto;
-    /* Allow height to adjust */
   }
 
   .donation-section .container {
@@ -315,15 +291,12 @@ select:focus {
     margin-top: 20px;
     width: 100%;
     padding: 0 15px;
-    /* Add side padding */
   }
 
-  /* Left Content */
   .left-content {
     max-width: 100%;
     text-align: center;
     margin-bottom: 20px;
-    /* Reduced from 400px */
   }
 
   .left-content h1 {
@@ -337,28 +310,21 @@ select:focus {
     margin-bottom: 20px;
   }
 
-  /* Form Card */
   .form-card {
     width: 100%;
     max-width: 100%;
-    /* Ensure it doesn't overflow */
     padding: 20px;
   }
 
-  /* Adjust Grid for Mobile */
   .grid-2 {
     grid-template-columns: 1fr;
-    /* Stack inputs */
   }
 
-  /* Form Inputs */
   input,
   select {
     width: 100%;
-    /* Ensure full width */
   }
 
-  /* Checkbox Rows */
   .checkbox-row {
     flex-direction: column;
     align-items: flex-start;

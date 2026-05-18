@@ -17,14 +17,12 @@ body {
 }
 
 
-/* COMMON */
 .container {
     width: 90%;
     max-width: 1200px;
     margin: auto;
 }
 
-/* HEADER */
 /* .header {
     background: transparent;
     position: absolute;
@@ -74,7 +72,6 @@ nav a.active {
     border-radius: 5px;
 }  */
 
-/* HERO */
 .hero {
     background: linear-gradient(120deg, #4e025f, #831b9a);
     min-height: 100vh;
@@ -130,7 +127,6 @@ nav a.active {
     color: #ffcc00;
 }
 
-/* HERO IMAGES */
 .hero-images {
     position: relative;
     width: 430px;
@@ -182,7 +178,6 @@ nav a.active {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* DONATION */
 .donation {
     background: #fff;
     color: #333;
@@ -239,15 +234,12 @@ nav a.active {
 
 
 
-/* RESPONSIVE LAYOUT */
 
-/* HERO SECTION RESPONSIVENESS */
 @media (max-width: 1024px) {
     .hero-content {
         flex-direction: column;
         text-align: center;
         padding-top: 100px;
-        /* Space for fixed header/nav */
     }
 
     .hero-text {
@@ -321,10 +313,8 @@ nav a.active {
         width: 150px;
     }
 
-    /* Donation Section */
     .donation h2 {
         margin: 0 auto 40px auto;
-        /* Centered, remove big margins */
         width: 80%;
         max-width: 400px;
     }
@@ -337,7 +327,6 @@ nav a.active {
 
     .donation-items .item {
         width: 80%;
-        /* Wider on mobile */
         max-width: 300px;
     }
 }

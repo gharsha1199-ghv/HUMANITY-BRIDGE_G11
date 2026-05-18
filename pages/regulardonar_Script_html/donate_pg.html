@@ -46,7 +46,6 @@
   <section class="donation-section">
     <div class="container-split">
       
-      <!-- Left Content -->
       <div class="left-content">
         <h1>Make a Meaningful Contribution</h1>
         <p>
@@ -54,11 +53,9 @@
         </p>
       </div>
 
-      <!-- Right Form Card -->
       <div class="form-card">
         <form id="unifiedDonationForm">
           
-          <!-- Donation Type Selection -->
           <div class="donation-type-selection">
             <label>Select Donation Type</label>
             <div class="type-radio-group">
@@ -77,9 +74,7 @@
             </div>
           </div>
 
-          <!-- ========================================== -->
-          <!-- DYNAMIC SECTION: MONEY                     -->
-          <!-- ========================================== -->
+        
           <div id="fields_money" class="dynamic-fields">
             <div class="form-block">
               <h3>Donation Amount</h3>
@@ -115,9 +110,7 @@
           </div>
 
 
-          <!-- ========================================== -->
-          <!-- DYNAMIC SECTION: FOOD                      -->
-          <!-- ========================================== -->
+        
           <div id="fields_food" class="dynamic-fields hidden">
             
             <div class="form-block">
@@ -175,7 +168,6 @@
               </div>
             </div>
             
-            <!-- Donor Details (Shared with Clothes in reality, but replicated here for structure) -->
             <div class="form-block">
               <h3>Pickup Address</h3>
               <div class="grid-2">
@@ -198,9 +190,7 @@
           </div>
 
 
-          <!-- ========================================== -->
-          <!-- DYNAMIC SECTION: CLOTHES                   -->
-          <!-- ========================================== -->
+         
           <div id="fields_clothes" class="dynamic-fields hidden">
             
             <div class="form-block">
@@ -255,7 +245,6 @@
             </div>
           </div>
 
-          <!-- SUBMIT -->
           <button type="submit" class="submit-btn" id="submitDonationBtn">Donate Now</button>
 
         </form>
@@ -279,16 +268,13 @@
       const moneyInput = document.getElementById('moneyAmount');
       const amountBtns = document.querySelectorAll('.amount-buttons button');
 
-      // Update form fields based on selection
       const updateDynamicFields = () => {
         const selectedType = document.querySelector('input[name="donationType"]:checked').value;
         
-        // Hide all
         fieldsMoney.classList.add('hidden');
         fieldsFood.classList.add('hidden');
         fieldsClothes.classList.add('hidden');
         
-        // Disable required attributes for hidden sections (prevent form submit blocking)
         document.getElementById('moneyConfirm').required = false;
         
         if (selectedType === 'money') {
@@ -304,19 +290,14 @@
         }
       };
 
-      // Listen to radio changes
       typeRadios.forEach(radio => {
         radio.addEventListener('change', updateDynamicFields);
       });
 
-      // Money buttons logic
       amountBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-          // Remove active class from all
           amountBtns.forEach(b => b.classList.remove('active'));
-          // Add active class to clicked
           e.target.classList.add('active');
-          // Set value in input
           moneyInput.value = e.target.innerText;
         });
       });
@@ -325,7 +306,6 @@
          amountBtns.forEach(b => b.classList.remove('active'));
       });
 
-      // Form Submit
       document.getElementById('unifiedDonationForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const selectedType = document.querySelector('input[name="donationType"]:checked').value;
@@ -342,11 +322,10 @@
         alert("Donation request for " + selectedType + " submitted successfully!\nThank you for your responsible contribution.");
         
         setTimeout(() => {
-            window.location.href = 'formsubmit.html'; // Assuming this exists as per previous links
+            window.location.href = 'formsubmit.html'; 
         }, 1000);
       });
 
-      // Init
       updateDynamicFields();
     });
   </script>

@@ -49,7 +49,6 @@
             </div>
 
             <form id="volunteerSignupForm">
-                <!-- PERSONAL INFORMATION -->
                 <div class="form-section">
                     <h2 class="section-title">Personal Information</h2>
                     
@@ -93,7 +92,6 @@
                     </div>
                 </div>
 
-                <!-- ADDRESS INFORMATION -->
                 <div class="form-section">
                     <h2 class="section-title">Address Information</h2>
                     
@@ -125,7 +123,6 @@
                     </div>
                 </div>
 
-                <!-- VOLUNTEER DETAILS -->
                 <div class="form-section">
                     <h2 class="section-title">Volunteer Details</h2>
                     
@@ -153,7 +150,6 @@
                     </div>
                 </div>
 
-                <!-- AVAILABILITY -->
                 <div class="form-section">
                     <h2 class="section-title">Availability</h2>
                     
@@ -191,7 +187,6 @@
                     </div>
                 </div>
 
-                <!-- SKILLS & CAPABILITIES -->
                 <div class="form-section">
                     <h2 class="section-title">Skills & Capabilities</h2>
                     
@@ -223,7 +218,6 @@
                     </div>
                 </div>
 
-                <!-- IMPORTANT INFORMATION -->
                 <div class="info-box">
                     <h4><i class="fa-solid fa-info-circle"></i> Volunteer Requirements</h4>
                     <p>• Must be at least 18 years old</p>
@@ -238,7 +232,6 @@
                     <p>As a volunteer, you'll be handling donations and delivering them to recipients. This requires responsibility, punctuality, and dedication to helping others. All volunteers undergo a basic verification process.</p>
                 </div>
 
-                <!-- TERMS AND CONDITIONS -->
                 <div class="terms-section">
                     <div class="terms-checkbox">
                         <input type="checkbox" id="terms" name="terms" required>
@@ -254,7 +247,6 @@
                     </div>
                 </div>
 
-                <!-- SUBMIT BUTTON -->
                 <button type="submit" class="btn btn-primary">
                     <i class="fa-solid fa-user-plus"></i> Complete Volunteer Registration
                 </button>
@@ -271,7 +263,6 @@
         document.getElementById('volunteerSignupForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Basic validation
             const requiredFields = this.querySelectorAll('[required]');
             let isValid = true;
             
@@ -289,14 +280,12 @@
                 return;
             }
             
-            // Check if at least one availability is selected
             const availabilitySelected = document.querySelectorAll('input[name="availability"]:checked').length > 0;
             if (!availabilitySelected) {
                 alert('Please select at least one availability time slot.');
                 return;
             }
             
-            // Check if terms are accepted
             const termsAccepted = document.getElementById('terms').checked;
             const privacyAccepted = document.getElementById('privacy').checked;
             
@@ -305,16 +294,13 @@
                 return;
             }
             
-            // Success message
             alert('Volunteer registration submitted successfully!\n\nThank you for joining Humanity Bridge!\n\nNext steps:\n1. We will review your application\n2. You\'ll receive a verification email within 24-48 hours\n3. Complete the verification process\n4. Start receiving delivery opportunities\n\nLogin credentials:\nEmail: ' + document.getElementById('email').value + '\nPassword: humanitybridge\n\nYou can use these to login once your account is verified.');
             
-            // Redirect to login page
             setTimeout(() => {
                 window.location.href = 'login_pg.html';
             }, 5000);
         });
 
-        // Add interactive styling for time slots
         document.querySelectorAll('.time-slot').forEach(slot => {
             slot.addEventListener('click', function() {
                 const checkbox = this.querySelector('input[type="checkbox"]');

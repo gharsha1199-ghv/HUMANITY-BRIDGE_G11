@@ -17,13 +17,11 @@ body {
     padding: 100px 20px 20px;
 }
 
-/* HEADER FIXES */
-.header .container {
+ .header .container {
     padding: 20px;
 }
 
-/* PAGE HEADER */
-.page-header {
+ .page-header {
     text-align: center;
     margin-bottom: 40px;
 }
@@ -39,16 +37,14 @@ body {
     font-size: 1.1rem;
 }
 
-/* PROFILE CONTAINER */
-.profile-container {
+ .profile-container {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 30px;
     margin-bottom: 40px;
 }
 
-/* PROFILE CARD */
-.profile-card {
+ .profile-card {
     background: white;
     border-radius: 10px;
     padding: 30px;
@@ -110,8 +106,7 @@ body {
     color: #666;
 }
 
-/* DETAILS CARD */
-.details-card {
+ .details-card {
     background: white;
     border-radius: 10px;
     padding: 30px;
@@ -190,8 +185,7 @@ body {
     background: #5a6268;
 }
 
-/* ACHIEVEMENTS */
-.achievements-section {
+ .achievements-section {
     background: white;
     border-radius: 10px;
     padding: 30px;
@@ -236,8 +230,7 @@ body {
     color: #666;
 }
 
-/* AVAILABILITY */
-.availability-section {
+ .availability-section {
     background: white;
     border-radius: 10px;
     padding: 30px;
@@ -270,8 +263,7 @@ body {
     color: #333;
 }
 
-/* RESPONSIVE */
-@media (max-width: 968px) {
+ @media (max-width: 968px) {
     .profile-container {
         grid-template-columns: 1fr;
         gap: 20px;

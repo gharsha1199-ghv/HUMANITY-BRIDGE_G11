@@ -17,13 +17,11 @@ body {
     padding: 100px 20px 20px;
 }
 
-/* HEADER FIXES */
-.header .container {
+ .header .container {
     padding: 20px;
 }
 
-/* PAGE HEADER */
-.page-header {
+ .page-header {
     text-align: center;
     margin-bottom: 40px;
 }
@@ -39,8 +37,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* FILTERS */
-.filters {
+ .filters {
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -91,8 +88,7 @@ body {
     background: #e6b800;
 }
 
-/* ORDERS GRID */
-.orders-container {
+ .orders-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
@@ -239,8 +235,7 @@ body {
     background: #5a6268;
 }
 
-/* EMPTY STATE */
-.empty-state {
+ .empty-state {
     text-align: center;
     padding: 60px 20px;
     color: #666;
@@ -262,8 +257,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
+ @media (max-width: 768px) {
     .container {
         width: 95%;
         padding: 100px 10px 20px;

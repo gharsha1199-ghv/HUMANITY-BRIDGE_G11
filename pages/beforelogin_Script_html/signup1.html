@@ -52,7 +52,6 @@
 
             <form class="signup-form" id="unifiedSignupForm">
                 
-                <!-- ROLE SELECTION -->
                 <div class="role-selection">
                     <label>Select Your Role:</label>
                     <div class="role-radio-group">
@@ -68,7 +67,6 @@
                     </div>
                 </div>
 
-                <!-- COMMON FIELDS -->
                 <div class="input-group">
                     <i class="fa-solid fa-user"></i>
                     <input type="text" id="commonName" placeholder="Name" required>
@@ -91,7 +89,6 @@
 
 
 
-                <!-- DYNAMIC FIELDS: VOLUNTEER -->
                 <div id="fields_volunteer" class="dynamic-fields" style="display: none;">
                     <div class="input-group">
                         <i class="fa-solid fa-car"></i>
@@ -109,7 +106,6 @@
                     </div>
                 </div>
 
-                <!-- COMMON PASSWORDS -->
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" id="commonPassword" placeholder="Password" required>
@@ -137,32 +133,25 @@
         document.addEventListener("DOMContentLoaded", () => {
             const roleRadios = document.querySelectorAll('input[name="role"]');
             
-            // Dynamic field containers
             const fieldsVolunteer = document.getElementById('fields_volunteer');
             
-            // Function to update visibility of dynamic fields based on selected role
             const updateDynamicFields = () => {
                 const selectedRole = document.querySelector('input[name="role"]:checked').value;
                 
-                // Hide all dynamic fields first
                 fieldsVolunteer.style.display = 'none';
                 
-                // Remove required attribute from dynamic inputs when hidden
                 document.getElementById('volVehicle').required = false;
                 
-                // Show specific fields based on selection
                 if (selectedRole === 'volunteer') {
                     fieldsVolunteer.style.display = 'block';
                     document.getElementById('volVehicle').required = true;
                 }
             };
             
-            // Attach event listeners to radios
             roleRadios.forEach(radio => {
                 radio.addEventListener('change', updateDynamicFields);
             });
             
-            // Form submission logic
             document.getElementById('unifiedSignupForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -182,7 +171,6 @@
                 }, 1500);
             });
             
-            // Initialize fields on load
             updateDynamicFields();
         });
     </script>

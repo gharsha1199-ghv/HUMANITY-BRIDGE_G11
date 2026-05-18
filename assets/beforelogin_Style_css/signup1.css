@@ -1,4 +1,3 @@
-/* === RESET & GLOBAL === */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     flex-direction: column;
 }
 
-/* === SIGN UP CARD STYLES === */
 .signup-wrapper {
     flex: 1;
     display: flex;
@@ -29,14 +27,13 @@ body {
 .signup-card {
     background: white;
     width: 100%;
-    max-width: 550px; /* Slightly wider to accommodate role selection */
+    max-width: 550px; 
     padding: 40px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Card Header Section */
 .card-logo {
     display: flex;
     justify-content: center;
@@ -70,7 +67,6 @@ body {
     margin-bottom: 25px;
 }
 
-/* Role Selection Styles */
 .role-selection {
     text-align: left;
     margin-bottom: 25px;
@@ -130,7 +126,6 @@ body {
     }
 }
 
-/* Form Styling */
 .input-group {
     position: relative;
     margin-bottom: 15px;
@@ -178,7 +173,6 @@ body {
     box-shadow: 0 0 5px rgba(72, 52, 138, 0.1);
 }
 
-/* Checkbox specific styles for receiver */
 .form-label-group {
     text-align: left;
     margin-bottom: 15px;
@@ -214,7 +208,6 @@ body {
     cursor: pointer;
 }
 
-/* Button & Links */
 .submit-btn {
     width: 100%;
     padding: 14px;
@@ -254,7 +247,6 @@ body {
     text-decoration: underline;
 }
 
-/* Dynamic fields animation */
 .dynamic-fields {
     animation: fadeIn 0.4s ease forwards;
 }

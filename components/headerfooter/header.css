@@ -71,14 +71,12 @@ nav a.active {
     margin-left: 25px;
 }
 
-/* HAMBURGER MENU */
 .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
     gap: 5px;
     z-index: 1001;
-    /* Ensure it's above the nav */
 }
 
 .hamburger span {
@@ -89,7 +87,6 @@ nav a.active {
     transition: all 0.3s ease;
 }
 
-/* USER DROPDOWN */
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -128,7 +125,6 @@ nav a.active {
     display: block;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .header {
         top: 10px;
@@ -171,7 +167,6 @@ nav a.active {
         margin-left: 0;
     }
 
-    /* Hamburger Animation to 'X' */
     .hamburger.active span:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }

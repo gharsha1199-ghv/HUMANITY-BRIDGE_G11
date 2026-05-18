@@ -1,4 +1,3 @@
-/* === RESET & GLOBAL === */
 * {
     margin: 0;
     padding: 0;
@@ -7,17 +6,14 @@
 }
 
 body {
-    /* Purple Gradient Background matching images */
     background: linear-gradient(120deg, #4e025f, #831b9a);
     background-attachment: fixed;
-    /* Ensures background stays while scrolling */
     color: #333;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 
-/* === HEADER CSS (User Provided + Toggle Button Style) === */
 /* .header {
     background: transparent;
     position: absolute;
@@ -45,7 +41,6 @@ body {
     color: white; 
 } */
 
-/* Toggle Button Styling */
 .toggle-btn {
     background: transparent;
     border: none;
@@ -60,10 +55,8 @@ body {
     color: white;
 }
 
-/* Profile Toggle Icon (Dashboard) */
 .profile-toggle {
     display: none;
-    /* Hidden on Desktop by default if desired, or visible */
     font-size: 24px;
     color: white;
     cursor: pointer;
@@ -85,7 +78,6 @@ body {
     .profile-toggle {
         display: flex;
         margin-left: auto;
-        /* Push to right */
     }
 }
 
@@ -95,12 +87,10 @@ body {
 
 
 
-/* === LAYOUT CONTAINER === */
 .dashboard-wrapper {
     display: flex;
     min-height: 100vh;
     padding-top: 100px;
-    /* Space for absolute header */
     position: relative;
     width: 100%;
 }
@@ -115,11 +105,9 @@ body {
     margin-bottom: 10px;
 }
 
-/* === SIDEBAR STYLES === */
 .sidebar {
     position: fixed;
     left: -280px;
-    /* Hidden on Left (Desktop Default) */
     top: 0;
     bottom: 0;
     width: 260px;
@@ -130,7 +118,6 @@ body {
     padding-top: 100px;
     transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
-    /* Shadow to right */
 }
 
 .sidebar.open {
@@ -175,36 +162,26 @@ body {
     color: #ffcc00;
 }
 
-/* === MAIN CONTENT AREA === */
 .main-content {
     flex: 1;
     margin-left: 0;
-    /* Default full width */
     padding: 20px 246px;
     transition: all 0.4s ease;
-    /* Smooth resizing */
     width: 100%;
 }
 
 
-/* When Sidebar is Open: Push content and squeeze it */
 .main-content.shrunk {
     margin-left: 260px;
-    /* Sidebar width */
     padding: 20px 40px;
-    /* Reduce side padding to fit cards nicely */
 
-    /* Optional: Blur effect on content wrapper as requested */
-    /* filter: blur(1px); */
 }
 
-/* Optional: Blur the background when sidebar is active */
 /* body.sidebar-active {
     This simulates the 'page bit blurred' request on the texture
     background-color: #2e084a;
 } */
 
-/* === PAGE TITLES & STATS === */
 .page-title {
     text-align: center;
     color: white;
@@ -214,7 +191,6 @@ body {
 
 .stats-grid {
     display: grid;
-    /* Auto-fit makes cards responsive to the available width */
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 40px;
     margin-bottom: 40px;
@@ -244,7 +220,6 @@ body {
     font-weight: 700;
 }
 
-/* Orange bottom bar */
 .stat-bar {
     height: 10px;
     width: 100%;
@@ -254,7 +229,6 @@ body {
     left: 0;
 }
 
-/* === SECTIONS & CARDS === */
 .section-container {
     margin-bottom: 30px;
 }
@@ -271,7 +245,6 @@ body {
     gap: 20px;
 }
 
-/* Responsive Columns */
 .two-col {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
@@ -306,7 +279,6 @@ body {
     padding: 20px;
 }
 
-/* Centered content styles */
 .center-text {
     text-align: center;
 }
@@ -328,7 +300,6 @@ body {
     margin-left: 5px;
 }
 
-/* Flex rows for verification cards */
 .row-flex {
     display: flex;
     justify-content: space-between;
@@ -340,7 +311,6 @@ body {
     color: #333;
 }
 
-/* Buttons & Badges */
 .action-btn {
     padding: 10px 20px;
     border: none;
@@ -432,7 +402,6 @@ body {
     background: #4a126b;
 }
 
-/* Settings List */
 .full-width {
     width: 100%;
 }
@@ -466,7 +435,6 @@ body {
     color: #666;
 }
 
-/* Scroll Arrow */
 .scroll-indicator {
     text-align: center;
     color: rgba(255, 255, 255, 0.3);
@@ -489,11 +457,8 @@ body {
     position: relative;
     z-index: 101;
 } */
-/* =====================================================
-   NEW RESPONSIVE SYSTEM (CLEAN & CONTROLLED)
-===================================================== */
 
-/* RESPONSIVE DESIGN */
+
 @media (max-width: 1024px) {
     .main-content {
         padding: 20px 60px;
@@ -519,7 +484,6 @@ body {
     .main-content.shrunk {
         padding: 20px;
         margin-left: 0;
-        /* Sidebar overlays content on mobile, doesn't shrink it */
     }
 
     .stats-grid {
@@ -530,7 +494,6 @@ body {
         grid-template-columns: 1fr;
     }
 
-    /* Toggle button visibility is handled in header.css/html but ensuring here */
     .toggle-btn {
         display: block;
     }
@@ -538,9 +501,7 @@ body {
     .sidebar {
         width: 250px;
         left: auto;
-        /* Reset left */
         right: -280px;
-        /* Hidden on Right */
         border-right: none;
         border-left: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
@@ -549,11 +510,9 @@ body {
     .sidebar.open {
         left: auto;
         right: 0;
-        /* Slide in from right */
     }
 
     .toggle-btn {
         display: none;
-        /* Hide Desktop Toggle */
     }
 }

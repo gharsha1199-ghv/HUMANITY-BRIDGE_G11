@@ -119,7 +119,6 @@ button {
     }
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 600px) {
     .card {
         padding: 20px;

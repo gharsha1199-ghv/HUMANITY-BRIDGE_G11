@@ -10,7 +10,6 @@ body {
     min-height: 100vh;
 }
 
-/* NAVBAR */
 /* header {
     color: white;
     padding: 20px 50px;
@@ -35,14 +34,12 @@ nav a.active {
     border-bottom: 2px solid gold;
 } */
 
-/* LAYOUT */
 .main {
     display: flex;
     padding: 40px 250px;
     gap: 40px;
 }
 
-/* LEFT PANEL */
 .left {
     width: 40%;
     color: white;
@@ -78,7 +75,6 @@ nav a.active {
     font-size: 16px;
 }
 
-/* FORM CARD */
 .card {
     width: 60%;
     background: #fff;
@@ -93,7 +89,6 @@ h3 {
     margin: 20px 0 10px;
 }
 
-/* FORM GRID */
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -138,7 +133,6 @@ button:hover {
   transform: translateY(-1px);
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
     .main {
         flex-direction: column;

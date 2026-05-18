@@ -37,7 +37,7 @@ nav a.active {
     color: gold;
 } */
 
-/* MAIN CONTAINER */
+
 .main-content {
     display: flex;
     padding: 40px;
@@ -45,7 +45,7 @@ nav a.active {
 
 }
 
-/* LEFT SIDE */
+
 .left {
     width: 40%;
     color: white;
@@ -79,7 +79,7 @@ nav a.active {
     margin: 10px 0;
 }
 
-/* FORM */
+
 .form-box {
     background: white;
     padding: 30px;
@@ -151,7 +151,7 @@ button:hover {
 
 
 
-/* Hide mobile inputs by default (Desktop view) */
+
 .mobile-input {
     display: none;
 }
@@ -173,14 +173,14 @@ button:hover {
         text-align: center;
     }
 
-    /* Toggle inputs for mobile */
+   
     .desktop-input {
         display: none;
     }
 
     .mobile-input {
         display: block;
-        /* or inline-block depending on layout, block mimics width:100% usually */
+        
     }
 
     .steps {

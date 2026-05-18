@@ -27,28 +27,23 @@ body {
   color: white;
 }
 
-/* === SIDEBAR STYLES === */
 .sidebar {
   position: fixed;
   left: -280px;
-  /* Hidden by default */
   top: 0;
   bottom: 0;
   width: 260px;
   background: rgba(42, 4, 74, 0.95);
-  /* Dark purple glass */
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 99;
   padding-top: 100px;
-  /* Clear header */
   transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.open {
   left: 0;
-  /* Slide in */
 }
 
 .sidebar-header h3 {
@@ -127,7 +122,6 @@ h1 {
 
 }
 
-/* Header controls */
 .table-header {
   display: flex;
   justify-content: space-between;
@@ -165,7 +159,6 @@ h1 {
   border: 1px solid #ddd;
 }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -193,7 +186,6 @@ td {
   font-weight: 600;
 }
 
-/* Status pills */
 .status {
   padding: 6px 16px;
   border-radius: 20px;
@@ -216,7 +208,6 @@ td {
   color: #fff;
 }
 
-/* Buttons */
 .btn {
   border: none;
   padding: 6px 12px;
@@ -254,7 +245,6 @@ td {
   background: #c62828;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .container {
     width: 100%;
@@ -262,7 +252,6 @@ td {
   }
 }
 
-/* Profile Toggle Icon */
 .profile-toggle {
   display: none;
   font-size: 24px;

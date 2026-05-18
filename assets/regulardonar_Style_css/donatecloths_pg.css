@@ -8,7 +8,6 @@
 body {
     min-height: 100vh;
     background: linear-gradient(120deg, #4e025f, #831b9a);
-    /* display: flex; */
     align-items: center;
     justify-content: center;
 }
@@ -28,7 +27,6 @@ body {
     gap: 50px;
 }
 
-/* Left text */
 .text-content {
     color: #ffffff;
     max-width: 450px;
@@ -46,7 +44,6 @@ body {
     margin-bottom: 250px;
 }
 
-/* Form Card */
 .form-card {
     background: #ffffff;
     width: 420px;
@@ -152,9 +149,6 @@ small {
     color: black;
 } */
 
-/* ===========================
-   MOBILE RESPONSIVENESS
-=========================== */
 @media (max-width: 768px) {
     .donation-section {
         padding: 80px 20px;
@@ -169,7 +163,6 @@ small {
         padding: 0 10px;
     }
 
-    /* Left Text */
     .text-content {
         max-width: 100%;
         text-align: center;
@@ -183,10 +176,8 @@ small {
     .text-content p {
         font-size: 16px;
         margin-bottom: 30px;
-        /* Reduced margin from 250px */
     }
 
-    /* Form Card */
     .form-card {
         width: 100%;
         padding: 25px;

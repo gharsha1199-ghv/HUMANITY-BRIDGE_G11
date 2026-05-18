@@ -32,7 +32,7 @@ body {
     transform: translateY(-8px);
 }
 
-/* General Reset */
+
 * {
     margin: 0;
     padding: 0;
@@ -41,7 +41,7 @@ body {
 }
 
 body {
-    /* Purple Textured Background */
+   
     background: linear-gradient(120deg, #4e025f, #831b9a);
     color: white;
     min-height: 100vh;
@@ -99,11 +99,11 @@ nav a.active {
     border-radius: 5px;
 } */
 
-/* --- OUR WORK PAGE STYLES --- */
+
 .work-container {
     flex: 1;
     padding: 160px 10% 80px 10%;
-    /* Top padding clears the absolute header */
+    
     text-align: center;
 }
 
@@ -114,7 +114,7 @@ nav a.active {
 
 .intro-text h1 span {
     color: #ffcc00;
-    /* Yellow highlight */
+   
 }
 
 .intro-text p {
@@ -126,19 +126,10 @@ nav a.active {
     margin-right: auto;
 }
 
-/* Grid Layout */
+
 .work-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* Responsive columns */
-    gap: 40px;
-    justify-content: center;
-}
-
-/* Card Styles */
-.work-card {
-    background: #fdf5ff;
-    /* Slightly off-white pinkish tint like image */
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -171,23 +162,19 @@ nav a.active {
 .card-content {
     padding: 40px 25px 30px 25px;
     position: relative;
-    /* Needed for absolute positioning of icon */
     color: #2a044a;
-    /* Dark purple text */
+
 }
 
-/* The Floating Yellow Icon Box */
+
 .icon-box {
     position: absolute;
     top: -30px;
-    /* Moves it up to overlap image */
     left: 25px;
     width: 60px;
     height: 60px;
     background: #ffcc00;
-    /* Yellow background */
     color: #2a044a;
-    /* Icon color */
     border-radius: 12px;
     display: flex;
     justify-content: center;
@@ -209,17 +196,13 @@ nav a.active {
     color: #555;
 }
 
-/* --- YOUR FOOTER STYLES --- */
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .work-container {
         padding: 100px 5% 40px;
-        /* Reduced padding */
     }
 
     .work-grid {
         grid-template-columns: 1fr;
-        /* Stack vertically on small screens */
         gap: 30px;
     }
 
@@ -231,7 +214,6 @@ nav a.active {
         font-size: 1rem;
     }
 
-    /* Adjust Card Image Height for Mobile */
     .card-image {
         height: 180px;
     }

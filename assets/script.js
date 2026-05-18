@@ -1,4 +1,3 @@
-// Hamburger Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const nav = document.querySelector('nav');
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
             nav.classList.toggle('active');
         });
 
-        // Close menu when a link is clicked
         const navLinks = nav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.header')) {
                 hamburger.classList.remove('active');
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Smooth scroll behavior
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();

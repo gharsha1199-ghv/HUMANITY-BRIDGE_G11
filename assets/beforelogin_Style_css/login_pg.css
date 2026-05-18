@@ -1,4 +1,3 @@
-/* === RESET & GLOBAL === */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,6 @@
 }
 
 body {
-    /* Matches the deep purple background in the screenshot */
     background: linear-gradient(120deg, #4e025f, #831b9a);
     color: white;
     height: 100vh;
@@ -16,28 +14,21 @@ body {
     overflow: hidden;
 }
 
-/* Header is provided by Style_css/header.css — no header rules here to avoid conflicts */
 
 
 
-/* === LOGIN PAGE STYLES === */
 
 .login-section {
     flex: 1;
-    /* Pushes footer to bottom */
     display: flex;
     align-items: center;
-    /* Vertically centers the content */
     justify-content: center;
     padding: 20px 0;
-    /* Reduced padding to fit in fixed height */
     overflow-y: auto;
     margin-top: 50px;
-    /* Allow scrolling if content is too large */
 }
 
 .main-content {
-    /* Match the margins from your nav to keep alignment */
     margin-left: 246px;
     margin-right: 246px;
     width: 100%;
@@ -45,11 +36,9 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    /* Responsive wrapping */
     gap: 30px;
 }
 
-/* --- Left Side: Info --- */
 .info-side {
     flex: 1;
     max-width: 600px;
@@ -78,7 +67,6 @@ body {
 .icon-circle {
     background: white;
     color: #48348a;
-    /* Purple icon color */
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -90,18 +78,15 @@ body {
 
 .volunteer-img img {
     height: 80px;
-    /* Reduced from 100px to fit better */
     border-radius: 8px;
     object-fit: cover;
     opacity: 0.9;
 }
 
-/* --- Right Side: Login Form --- */
 .form-side {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    /* Aligns card to the right */
 }
 
 .login-card {
@@ -143,14 +128,12 @@ body {
 
 .input-group select {
     background-color: white;
-    /* Fix for some browsers */
 }
 
 .submit-btn {
     width: 100%;
     padding: 12px;
     background-color: #fccb56;
-    /* The golden yellow color */
     border: none;
     border-radius: 6px;
     font-size: 1rem;
@@ -184,7 +167,6 @@ body {
     font-weight: 400 !important;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 900px) {
     .main-content {
         margin: 0;
@@ -217,7 +199,6 @@ body {
 @media (max-width: 600px) {
     .login-section {
         padding-top: 80px;
-        /* Reduced top padding */
     }
 
     .info-side h1 {
@@ -229,11 +210,9 @@ body {
     }
 }
 
-/* === YOUR FOOTER CSS START === */
 /* footer {
     background: #2a044a;
     text-align: center;
     padding: 20px;
     width: 100%;
 } */
-/* === YOUR FOOTER CSS END === */

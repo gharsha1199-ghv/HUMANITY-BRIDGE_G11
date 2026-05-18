@@ -1,4 +1,3 @@
-/* === RESET & GLOBAL === */
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +14,6 @@ body {
     flex-direction: column;
 }
 
-/* === REQUEST SECTION LAYOUT === */
 .request-section {
     flex: 1;
     display: flex;
@@ -36,7 +34,6 @@ body {
     gap: 50px;
 }
 
-/* --- Left Column: Info --- */
 .info-column {
     flex: 1;
     max-width: 500px;
@@ -64,7 +61,6 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* --- Right Column: Form --- */
 .form-column {
     flex: 1;
     display: flex;
@@ -90,7 +86,6 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-/* User Profile Details (Read-only lines) */
 .user-details {
     margin-bottom: 20px;
 }
@@ -112,7 +107,6 @@ body {
     font-weight: 500;
 }
 
-/* Form Groups */
 .form-group {
     margin-bottom: 15px;
 }
@@ -125,7 +119,6 @@ body {
     display: block;
 }
 
-/* Toggle Buttons (Food, Clothes, Money) */
 .toggle-group {
     display: flex;
     gap: 10px;
@@ -166,7 +159,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Active Toggle Style */
 .toggle-btn.active {
     background: #48348a;
     color: white;
@@ -175,7 +167,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Inputs */
 .input-field {
     width: 100%;
     padding: 10px 15px;
@@ -210,7 +201,6 @@ body {
     outline: none;
 }
 
-/* Checkbox */
 .checkbox-group {
     display: flex;
     align-items: flex-start;
@@ -226,7 +216,6 @@ body {
     accent-color: #48348a;
 }
 
-/* Submit Button */
  .submit-btn {
   width: 100%;
   margin-top: 8px;
@@ -248,7 +237,6 @@ body {
 }
 
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
     .content-wrapper {
         flex-direction: column;
@@ -284,7 +272,6 @@ body {
         flex-wrap: wrap;
     }
 }
-/* === SELECTION MENU PAGE === */
 .selection-card {
     text-align: center;
 }
