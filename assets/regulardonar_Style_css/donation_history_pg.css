@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #4e025f, #831b9a);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    flex: 1;
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.title-section {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.title-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.shining-line {
+    height: 3px;
+    width: 400px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, #ffcc00, #fff, #ffcc00, transparent);
+    box-shadow: 0 0 15px #ffcc00;
+    border-radius: 10px;
+}
+
+.history-content-wrapper {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Months Grid & History */
+.months-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    z-index: 10;
+}
+
+.months-grid {
+    background: rgb(48, 0, 48);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+}
+
+.month-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.month-btn:hover, .month-btn.active {
+    background: orange;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+}
+
+.history-table-container {
+    background: rgb(48, 0, 48);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 30px;
+    display: none;
+    width: 100%;
+}
+
+.history-table-container h3 {
+    text-align: center;
+    color: orange;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+.history-table th, .history-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-table th {
+    color: orange;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.history-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+    .months-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .shining-line {
+        width: 80%;
+    }
+    
+    .title-section h1 {
+        font-size: 2rem;
+    }
+}
