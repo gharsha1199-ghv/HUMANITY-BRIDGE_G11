@@ -252,15 +252,12 @@
             const carousel = document.querySelector('.carousel-viewport');
             const cards = document.querySelectorAll('.impact-card-wrapper');
 
-            // Scroll to the middle card initially
-            const centerCardIndex = 1; // 2nd card (index 1)
-            const cardWidth = 400; // Approximate card width + margin
+            const centerCardIndex = 1; 
+            const cardWidth = 400; 
             carousel.scrollLeft = cardWidth * centerCardIndex;
 
             const options = {
                 root: carousel,
-                // These margins define a narrow "center zone" in the scroll container
-                // Only the element exactly in the middle will trigger
                 rootMargin: '0px -40% 0px -40%',
                 threshold: 0.1
             };

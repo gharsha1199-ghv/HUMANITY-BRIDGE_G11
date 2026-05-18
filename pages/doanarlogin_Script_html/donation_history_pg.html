@@ -64,7 +64,6 @@
                             </tr>
                         </thead>
                         <tbody id="history-table-body">
-                            <!-- Populated dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -81,13 +80,11 @@
             const selectedMonthTitle = document.getElementById("selected-month-title");
             const historyTableBody = document.getElementById("history-table-body");
 
-            // Parse URL params
             const urlParams = new URLSearchParams(window.location.search);
             const monthName = urlParams.get('month') || 'All Time';
 
             selectedMonthTitle.innerText = `${monthName} History`;
 
-            // Dummy history data for demonstration
             const donationHistory = {
                 "January": [
                     { sno: 1, date: "12 Jan 2026", donation: "Food", quantity: "50 Meals", socialImpact: "Fed 50 families", ecoImpact: "Reduced 10kg food waste" },

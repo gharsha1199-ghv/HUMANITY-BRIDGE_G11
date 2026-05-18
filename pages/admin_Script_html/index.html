@@ -276,12 +276,10 @@
             body.classList.toggle('sidebar-active');
         });
 
-        // Toggle sidebar with Profile Icon (Mobile / Tablet)
         const profileToggle = document.getElementById('profileToggle');
         if (profileToggle) {
             profileToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('open');
-                // On mobile, we might not want to shrink content, just overlay
                 if (window.innerWidth > 768) {
                     mainContent.classList.toggle('shrunk');
                 }

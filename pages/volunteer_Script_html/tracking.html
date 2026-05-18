@@ -51,7 +51,6 @@
             <p>Monitor your active deliveries and update their status</p>
         </div>
 
-        <!-- QUICK STATS -->
         <div class="quick-stats">
             <div class="stat-card">
                 <div class="number">2</div>
@@ -72,14 +71,12 @@
         </div>
 
         <div class="tracking-container">
-            <!-- ACTIVE DELIVERIES -->
             <div class="active-deliveries">
                 <h2 class="section-title">
                     <i class="fa-solid fa-truck-fast"></i>
                     Active Deliveries
                 </h2>
 
-                <!-- Delivery 1 -->
                 <div class="delivery-card">
                     <div class="delivery-header">
                         <div class="delivery-id">Order #V003</div>
@@ -112,7 +109,6 @@
                     </div>
                 </div>
 
-                <!-- Delivery 2 -->
                 <div class="delivery-card">
                     <div class="delivery-header">
                         <div class="delivery-id">Order #V005</div>
@@ -146,7 +142,6 @@
                 </div>
             </div>
 
-            <!-- MAP CONTAINER -->
             <div class="map-container">
                 <h2 class="section-title">
                     <i class="fa-solid fa-map-marked-alt"></i>
@@ -168,7 +163,6 @@
             </div>
         </div>
 
-        <!-- DELIVERY HISTORY -->
         <div class="delivery-history">
             <h2 class="section-title">
                 <i class="fa-solid fa-history"></i>
@@ -257,7 +251,6 @@ In a real application, this would:
                 const rating = prompt("Please rate this delivery experience (1-5):");
                 if (rating && rating >= 1 && rating <= 5) {
                     alert(`Order ${orderId} marked as completed!\n\nThank you for your service!\nYour rating: ${rating}/5`);
-                    // In a real app, this would update the backend
                     location.reload();
                 } else if (rating !== null) {
                     alert("Please provide a valid rating between 1 and 5.");
@@ -265,7 +258,6 @@ In a real application, this would:
             }
         }
 
-        // Simulate real-time updates
         setInterval(() => {
             const progressBars = document.querySelectorAll('.progress-fill');
             progressBars.forEach(bar => {
@@ -274,14 +266,13 @@ In a real application, this would:
                     const newWidth = Math.min(currentWidth + Math.random() * 2, 100);
                     bar.style.width = newWidth + '%';
                     
-                    // Update progress text
                     const progressText = bar.closest('.delivery-card').querySelector('.info-row span');
                     if (progressText && progressText.textContent.includes('Complete')) {
                         progressText.textContent = `${Math.round(newWidth)}% Complete`;
                     }
                 }
             });
-        }, 5000); // Update every 5 seconds
+        }, 5000);
     </script>
 </body>
 
