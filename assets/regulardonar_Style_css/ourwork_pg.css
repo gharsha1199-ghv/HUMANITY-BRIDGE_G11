@@ -32,7 +32,6 @@ body {
     transform: translateY(-8px);
 }
 
-
 * {
     margin: 0;
     padding: 0;
@@ -41,7 +40,6 @@ body {
 }
 
 body {
-   
     background: linear-gradient(120deg, #4e025f, #831b9a);
     color: white;
     min-height: 100vh;
@@ -49,7 +47,6 @@ body {
     flex-direction: column;
 }
 
-/* --- YOUR HEADER STYLES --- */
 /* .header {
     background: transparent;
     position: absolute;
@@ -99,11 +96,9 @@ nav a.active {
     border-radius: 5px;
 } */
 
-
 .work-container {
     flex: 1;
     padding: 160px 10% 80px 10%;
-    
     text-align: center;
 }
 
@@ -114,7 +109,6 @@ nav a.active {
 
 .intro-text h1 span {
     color: #ffcc00;
-   
 }
 
 .intro-text p {
@@ -126,10 +120,15 @@ nav a.active {
     margin-right: auto;
 }
 
-
 .work-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    justify-content: center;
+}
+
+.work-card {
+    background: #fdf5ff;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -163,9 +162,7 @@ nav a.active {
     padding: 40px 25px 30px 25px;
     position: relative;
     color: #2a044a;
-
 }
-
 
 .icon-box {
     position: absolute;
