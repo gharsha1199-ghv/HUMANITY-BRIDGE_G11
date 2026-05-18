@@ -42,6 +42,7 @@
                     <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
                     <div class="dropdown-content">
                         <a href="index.html">View Dashboard</a>
+                        <a href="admin_history_pg.html">System History</a>
                         <a href="myaccount_pg.html">My Account</a>
                         <a href="../../pages/beforelogin_Script_html/login_pg.html">logout</a>
 
@@ -275,12 +276,10 @@
             body.classList.toggle('sidebar-active');
         });
 
-        // Toggle sidebar with Profile Icon (Mobile / Tablet)
         const profileToggle = document.getElementById('profileToggle');
         if (profileToggle) {
             profileToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('open');
-                // On mobile, we might not want to shrink content, just overlay
                 if (window.innerWidth > 768) {
                     mainContent.classList.toggle('shrunk');
                 }

@@ -37,6 +37,7 @@
                     <a href="#" class="login-btn user-toggle">Harsha &#9662;</a>
                     <div class="dropdown-content">
                         <a href="donardashboard_pg.html">View Dashboard</a>
+                        <a href="donation_history_pg.html">Donation History</a>
                         <a href="myaccount_pg.html">My Account</a>
                         <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
                     </div>
@@ -251,15 +252,12 @@
             const carousel = document.querySelector('.carousel-viewport');
             const cards = document.querySelectorAll('.impact-card-wrapper');
 
-            // Scroll to the middle card initially
-            const centerCardIndex = 1; // 2nd card (index 1)
-            const cardWidth = 400; // Approximate card width + margin
+            const centerCardIndex = 1; 
+            const cardWidth = 400; 
             carousel.scrollLeft = cardWidth * centerCardIndex;
 
             const options = {
                 root: carousel,
-                // These margins define a narrow "center zone" in the scroll container
-                // Only the element exactly in the middle will trigger
                 rootMargin: '0px -40% 0px -40%',
                 threshold: 0.1
             };

@@ -34,6 +34,7 @@
                     <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
                     <div class="dropdown-content">
                         <a href="donardashboard_pg.html">View Dashboard</a>
+                        <a href="donation_history_pg.html">Donation History</a>
                         <a href="myaccount_pg.html">My Account</a>
                         <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
                     </div>
@@ -133,10 +134,13 @@
                     </div>
 
                     <div style="display: flex; gap: 15px; margin-top: 25px;">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" id="editProfileBtn" onclick="enableEditing('profileForm')">
+                            <i class="fa-solid fa-edit"></i> Edit Profile
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">
                             <i class="fa-solid fa-save"></i> Save Changes
                         </button>
-                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <button type="button" class="btn btn-secondary" id="resetBtn" onclick="resetForm()" style="display: none;">
                             <i class="fa-solid fa-undo"></i> Reset
                         </button>
                     </div>
@@ -199,9 +203,40 @@
 
     <script src="../../components/headerfooter/nav.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            disableEditing('profileForm');
+        });
+
+        function disableEditing(formId) {
+            const formInputs = document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`);
+            formInputs.forEach(input => {
+                input.setAttribute('readonly', 'readonly');
+                if(input.tagName === 'SELECT' || input.type === 'checkbox' || input.type === 'radio') {
+                    input.setAttribute('disabled', 'disabled');
+                }
+            });
+            document.getElementById('editProfileBtn').style.display = 'block';
+            document.getElementById('saveChangesBtn').style.display = 'none';
+            document.getElementById('resetBtn').style.display = 'none';
+        }
+
+        function enableEditing(formId) {
+            const formInputs = document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`);
+            formInputs.forEach(input => {
+                input.removeAttribute('readonly');
+                if(input.tagName === 'SELECT' || input.type === 'checkbox' || input.type === 'radio') {
+                    input.removeAttribute('disabled');
+                }
+            });
+            document.getElementById('editProfileBtn').style.display = 'none';
+            document.getElementById('saveChangesBtn').style.display = 'block';
+            document.getElementById('resetBtn').style.display = 'block';
+        }
+
         document.getElementById('profileForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Business profile updated successfully!\n\nIn a real application, this would save to the database and update your donation preferences.');
+            alert('profile updated successfully!');
+            disableEditing('profileForm');
         });
 
         function resetForm() {

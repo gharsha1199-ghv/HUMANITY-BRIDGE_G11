@@ -35,6 +35,7 @@
                         <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
                         <div class="dropdown-content">
                             <a href="index.html">View Dashboard</a>
+                            <a href="volunteer_history_pg.html">Delivery History</a>
                             <a href="myaccount_pg.html">My Account</a>
                             <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
                         </div>
@@ -50,7 +51,6 @@
             <p>Help deliver donations to those in need</p>
         </div>
 
-        <!-- FILTERS -->
         <div class="filters">
             <div class="filters-row">
                 <div class="filter-group">
@@ -88,9 +88,7 @@
             </div>
         </div>
 
-        <!-- ORDERS GRID -->
         <div class="orders-container" id="ordersContainer">
-            <!-- Order 1 - Urgent Food Delivery -->
             <div class="order-card urgent" data-status="pending" data-type="food" data-priority="urgent" data-location="downtown">
                 <div class="order-header">
                     <div class="order-id">
@@ -138,7 +136,6 @@
                 </div>
             </div>
 
-            <!-- Order 2 - Clothes Donation -->
             <div class="order-card" data-status="pending" data-type="clothes" data-priority="normal" data-location="suburb">
                 <div class="order-header">
                     <div class="order-id">Order #V002</div>
@@ -183,7 +180,6 @@
                 </div>
             </div>
 
-            <!-- Order 3 - Money Collection -->
             <div class="order-card urgent" data-status="assigned" data-type="money" data-priority="urgent" data-location="business">
                 <div class="order-header">
                     <div class="order-id">
@@ -231,7 +227,6 @@
                 </div>
             </div>
 
-            <!-- Order 4 - Mixed Donation -->
             <div class="order-card" data-status="pending" data-type="food" data-priority="normal" data-location="north">
                 <div class="order-header">
                     <div class="order-id">Order #V004</div>
@@ -320,7 +315,6 @@
         function acceptOrder(orderId) {
             if (confirm(`Are you sure you want to accept Order ${orderId}?`)) {
                 alert(`Order ${orderId} has been assigned to you!`);
-                // In a real app, this would update the backend
                 location.reload();
             }
         }
@@ -328,7 +322,6 @@
         function startDelivery(orderId) {
             if (confirm(`Start delivery for Order ${orderId}?`)) {
                 alert(`Delivery started for Order ${orderId}!`);
-                // In a real app, this would update the backend and redirect to tracking
                 window.location.href = 'tracking.html';
             }
         }
