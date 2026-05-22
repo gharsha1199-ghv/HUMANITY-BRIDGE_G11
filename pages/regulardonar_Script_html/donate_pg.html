@@ -68,10 +68,6 @@
                 <input type="radio" name="donationType" value="food">
                 <span><i class="fa-solid fa-utensils"></i> Food</span>
               </label>
-              <label class="type-radio">
-                <input type="radio" name="donationType" value="clothes">
-                <span><i class="fa-solid fa-shirt"></i> Clothes</span>
-              </label>
             </div>
           </div>
 
@@ -191,60 +187,7 @@
           </div>
 
 
-         
-          <div id="fields_clothes" class="dynamic-fields hidden">
-            
-            <div class="form-block">
-              <h3>Target Group</h3>
-              <div class="row-check">
-                <label class="check"><input type="checkbox" value="men"> <span>Men</span></label>
-                <label class="check"><input type="checkbox" value="women"> <span>Women</span></label>
-                <label class="check"><input type="checkbox" value="children"> <span>Children</span></label>
-              </div>
-            </div>
 
-            <div class="form-block">
-              <h3>Clothing Category</h3>
-              <select id="clothesCategory">
-                <option value="" disabled selected>Select Category</option>
-                <option value="tops">Tops</option>
-                <option value="bottoms">Bottoms</option>
-                <option value="outerwear">Outerwear</option>
-                <option value="mixed">Mixed Bundle</option>
-              </select>
-            </div>
-
-            <div class="form-block">
-              <h3>Condition of Clothes</h3>
-              <div class="row-check" style="flex-direction: column; gap: 8px;">
-                <label class="check"><input type="radio" name="clothesCondition" value="new"> <span>New (unused)</span></label>
-                <label class="check"><input type="radio" name="clothesCondition" value="good" checked> <span>Gently used (good condition)</span></label>
-                <label class="check"><input type="radio" name="clothesCondition" value="heavy"> <span>Heavily used (not accepted)</span></label>
-              </div>
-              <p class="note">We accept only wearable clothes to maintain dignity.</p>
-            </div>
-
-            <div class="form-block">
-              <h3>Quantity</h3>
-              <input type="number" id="clothesQuantity" placeholder="Approximate number of items">
-            </div>
-
-            <div class="form-block">
-              <h3>Pickup Address</h3>
-              <div class="grid-2">
-                <input type="text" id="clothesCity" placeholder="City">
-                <input type="number" id="clothesPincode" placeholder="Pincode">
-              </div>
-              <input type="text" class="mt-10" id="clothesAddress" placeholder="Full Pickup Address">
-            </div>
-
-            <div class="form-block confirm" style="border: none;">
-              <label class="confirm">
-                <input type="checkbox" id="clothesConfirm">
-                <span>I confirm the clothes are clean, washed, and ready to wear.</span>
-              </label>
-            </div>
-          </div>
 
           <button type="submit" class="submit-btn" id="submitDonationBtn">Donate Now</button>
 
@@ -264,7 +207,6 @@
       const typeRadios = document.querySelectorAll('input[name="donationType"]');
       const fieldsMoney = document.getElementById('fields_money');
       const fieldsFood = document.getElementById('fields_food');
-      const fieldsClothes = document.getElementById('fields_clothes');
       const submitBtn = document.getElementById('submitDonationBtn');
       const moneyInput = document.getElementById('moneyAmount');
       const amountBtns = document.querySelectorAll('.amount-buttons button');
@@ -274,7 +216,6 @@
         
         fieldsMoney.classList.add('hidden');
         fieldsFood.classList.add('hidden');
-        fieldsClothes.classList.add('hidden');
         
         document.getElementById('moneyConfirm').required = false;
         
@@ -285,9 +226,6 @@
         } else if (selectedType === 'food') {
           fieldsFood.classList.remove('hidden');
           submitBtn.innerText = "Donate Food Responsibly";
-        } else if (selectedType === 'clothes') {
-          fieldsClothes.classList.remove('hidden');
-          submitBtn.innerText = "Donate Clothes Responsibly";
         }
       };
 
@@ -313,10 +251,6 @@
         
         if(selectedType === 'food' && !document.getElementById('foodConfirm').checked) {
             alert("Please confirm that the food is safe and stored hygienically.");
-            return;
-        }
-        if(selectedType === 'clothes' && !document.getElementById('clothesConfirm').checked) {
-            alert("Please confirm the clothes are clean, washed, and ready to wear.");
             return;
         }
 
