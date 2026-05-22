@@ -102,6 +102,100 @@
               </select>
             </div>
 
+            <div class="form-block">
+              <h3>Select Payment Method</h3>
+              <div class="payment-methods-grid">
+                <label class="payment-method-card">
+                  <input type="radio" name="paymentMethod" value="gpay" checked>
+                  <div class="method-card-content">
+                    <i class="fa-brands fa-google-pay"></i>
+                    <span>GPay</span>
+                  </div>
+                </label>
+                <label class="payment-method-card">
+                  <input type="radio" name="paymentMethod" value="phonepe">
+                  <div class="method-card-content">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <span>PhonePe</span>
+                  </div>
+                </label>
+                <label class="payment-method-card">
+                  <input type="radio" name="paymentMethod" value="netbanking">
+                  <div class="method-card-content">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>Net Banking</span>
+                  </div>
+                </label>
+                <label class="payment-method-card">
+                  <input type="radio" name="paymentMethod" value="card">
+                  <div class="method-card-content">
+                    <i class="fa-regular fa-credit-card"></i>
+                    <span>Card</span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Payment details sub-forms -->
+              <div id="details_gpay" class="payment-sub-form mt-15">
+                <div class="form-group-custom">
+                  <label for="gpayUpi">GPay UPI ID</label>
+                  <input type="text" id="gpayUpi" placeholder="username@okaxis or 9876543210@okbiz">
+                  <small class="error-text" id="gpayUpiError"></small>
+                </div>
+              </div>
+
+              <div id="details_phonepe" class="payment-sub-form mt-15 hidden">
+                <div class="form-group-custom">
+                  <label for="phonepeUpi">PhonePe UPI ID</label>
+                  <input type="text" id="phonepeUpi" placeholder="username@ybl or 9876543210@axl">
+                  <small class="error-text" id="phonepeUpiError"></small>
+                </div>
+              </div>
+
+              <div id="details_netbanking" class="payment-sub-form mt-15 hidden">
+                <div class="form-group-custom">
+                  <label for="bankSelect">Choose your Bank</label>
+                  <select id="bankSelect">
+                    <option value="" disabled selected>-- Select a Bank --</option>
+                    <option value="sbi">State Bank of India (SBI)</option>
+                    <option value="hdfc">HDFC Bank</option>
+                    <option value="icici">ICICI Bank</option>
+                    <option value="axis">Axis Bank</option>
+                    <option value="kotak">Kotak Mahindra Bank</option>
+                  </select>
+                  <small class="error-text" id="bankSelectError"></small>
+                </div>
+              </div>
+
+              <div id="details_card" class="payment-sub-form mt-15 hidden">
+                <div class="card-inputs-grid">
+                  <div class="form-group-custom span-full">
+                    <label for="cardNumber">Card Number</label>
+                    <div class="input-icon-wrapper">
+                      <input type="text" id="cardNumber" placeholder="4111 1111 1111 1111" maxlength="19">
+                      <span class="card-brand-icon"><i class="fa-solid fa-credit-card" id="cardBrandIcon"></i></span>
+                    </div>
+                    <small class="error-text" id="cardNumberError"></small>
+                  </div>
+                  <div class="form-group-custom">
+                    <label for="cardExpiry">Expiry Date</label>
+                    <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                    <small class="error-text" id="cardExpiryError"></small>
+                  </div>
+                  <div class="form-group-custom">
+                    <label for="cardCvv">CVV</label>
+                    <input type="password" id="cardCvv" placeholder="***" maxlength="4">
+                    <small class="error-text" id="cardCvvError"></small>
+                  </div>
+                  <div class="form-group-custom span-full">
+                    <label for="cardHolder">Name on Card</label>
+                    <input type="text" id="cardHolder" placeholder="Name as printed on card">
+                    <small class="error-text" id="cardHolderError"></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="form-block confirm" style="border: none;">
               <label class="confirm">
                 <input type="checkbox" id="moneyConfirm" required>
@@ -238,6 +332,89 @@
     </div>
   </section>
 
+  <!-- Modern Checkout Simulation Modal -->
+  <div id="paymentModalOverlay" class="payment-modal-overlay hidden">
+    <div class="payment-modal-card">
+      <div class="modal-header">
+        <div class="modal-secure-badge">
+          <i class="fa-solid fa-shield-halved"></i> Secure 256-bit Payment
+        </div>
+        <button type="button" class="modal-close-btn" id="closePaymentModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Step 1: Processing Loader -->
+        <div id="step_processing" class="modal-step-content">
+          <div class="loader-spinner"></div>
+          <h2>Contacting Bank Gateway...</h2>
+          <p>Please do not refresh this page or click back.</p>
+        </div>
+
+        <!-- Step 2-UPI: UPI App Simulation -->
+        <div id="step_upi_simulation" class="modal-step-content hidden">
+          <div class="upi-phone-mock">
+            <div class="upi-logo-row">
+              <i class="fa-solid fa-mobile-screen"></i>
+              <span id="upiAppName">Google Pay</span>
+            </div>
+            <div class="upi-amount-pulsing">
+              <span>Requesting</span>
+              <h1 id="upiModalAmount">Rs. 0</h1>
+            </div>
+            <p>We've sent a payment request notification to your UPI ID <strong id="upiModalTarget">username@okaxis</strong>.</p>
+            <div class="countdown-timer">Approval window: <span id="upiTimer">60s</span></div>
+            <button type="button" class="simulation-btn" id="approveUpiBtn">Simulate Pay in UPI App</button>
+          </div>
+        </div>
+
+        <!-- Step 2-Netbanking: Netbanking Portal Mock -->
+        <div id="step_netbanking_simulation" class="modal-step-content hidden">
+          <div class="nb-portal-mock">
+            <div class="nb-logo-row">
+              <i class="fa-solid fa-building-columns"></i>
+              <span id="nbBankName">State Bank of India</span>
+            </div>
+            <p>Please enter your online banking credentials to authorize payment of <strong id="nbModalAmount">Rs. 0</strong>.</p>
+            <div class="nb-inputs">
+              <input type="text" id="nbUser" placeholder="Net Banking User ID">
+              <input type="password" id="nbPass" placeholder="Password">
+            </div>
+            <button type="button" class="simulation-btn" id="approveNbBtn">Confirm & Authorize</button>
+          </div>
+        </div>
+
+        <!-- Step 2-Card: Card 3D Secure OTP Mock -->
+        <div id="step_card_simulation" class="modal-step-content hidden">
+          <div class="card-otp-mock">
+            <div class="card-logo-row">
+              <i class="fa-solid fa-shield-check"></i>
+              <span>3D Secure Verification</span>
+            </div>
+            <p>An OTP has been sent to your registered mobile number for card ending in <strong id="cardModalEnd">xxxx</strong>.</p>
+            <div class="amount-row">Amount: <strong id="cardModalAmount">Rs. 0</strong></div>
+            <div class="otp-input-row">
+              <input type="text" id="cardOtp" placeholder="Enter 6-Digit OTP" maxlength="6">
+            </div>
+            <small class="note mt-5" style="color: #666;">Hint: Enter 123456 to approve payment</small>
+            <button type="button" class="simulation-btn" id="approveCardBtn">Submit OTP</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Success Screen -->
+        <div id="step_success" class="modal-step-content hidden">
+          <div class="payment-success-badge">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h2>Payment Authorized!</h2>
+          <p>Transaction ID: <span id="txId">TXN928374928</span></p>
+          <p>Redirecting to completion screen...</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
   </footer>
@@ -252,6 +429,28 @@
       const submitBtn = document.getElementById('submitDonationBtn');
       const moneyInput = document.getElementById('moneyAmount');
       const amountBtns = document.querySelectorAll('.amount-buttons button');
+
+      // Payment Gateway Selectors
+      const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+      const subForms = {
+        gpay: document.getElementById('details_gpay'),
+        phonepe: document.getElementById('details_phonepe'),
+        netbanking: document.getElementById('details_netbanking'),
+        card: document.getElementById('details_card')
+      };
+
+      // Modal Selectors
+      const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+      const closePaymentModalBtn = document.getElementById('closePaymentModalBtn');
+      const modalSteps = {
+        processing: document.getElementById('step_processing'),
+        upi: document.getElementById('step_upi_simulation'),
+        netbanking: document.getElementById('step_netbanking_simulation'),
+        card: document.getElementById('step_card_simulation'),
+        success: document.getElementById('step_success')
+      };
+
+      let upiTimerInterval = null;
 
       const updateDynamicFields = () => {
         const selectedType = document.querySelector('input[name="donationType"]:checked').value;
@@ -279,6 +478,7 @@
         radio.addEventListener('change', updateDynamicFields);
       });
 
+      // Amount selection buttons
       amountBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
           amountBtns.forEach(b => b.classList.remove('active'));
@@ -291,24 +491,288 @@
          amountBtns.forEach(b => b.classList.remove('active'));
       });
 
+      // Toggle Payment Methods
+      paymentMethodRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const selectedMethod = e.target.value;
+          Object.keys(subForms).forEach(key => {
+            if (key === selectedMethod) {
+              subForms[key].classList.remove('hidden');
+            } else {
+              subForms[key].classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // Format Credit Card Inputs
+      const cardNumInput = document.getElementById('cardNumber');
+      const cardExpiryInput = document.getElementById('cardExpiry');
+      const cardCvvInput = document.getElementById('cardCvv');
+      const cardBrandIcon = document.getElementById('cardBrandIcon');
+
+      cardNumInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = '';
+        for (let i = 0; i < value.length; i++) {
+          if (i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+          }
+          formattedValue += value[i];
+        }
+        e.target.value = formattedValue;
+
+        // Change card icon based on brand
+        if (value.startsWith('4')) {
+          cardBrandIcon.className = 'fa-brands fa-cc-visa';
+          cardBrandIcon.style.color = '#1a1f71';
+        } else if (value.startsWith('5')) {
+          cardBrandIcon.className = 'fa-brands fa-cc-mastercard';
+          cardBrandIcon.style.color = '#eb001b';
+        } else if (value.startsWith('3')) {
+          cardBrandIcon.className = 'fa-brands fa-cc-amex';
+          cardBrandIcon.style.color = '#016fd0';
+        } else {
+          cardBrandIcon.className = 'fa-solid fa-credit-card';
+          cardBrandIcon.style.color = '#666';
+        }
+      });
+
+      cardExpiryInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^0-9]/g, '');
+        if (value.length > 2) {
+          e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        } else {
+          e.target.value = value;
+        }
+      });
+
+      cardCvvInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      });
+
+      // Clear Validation Errors
+      const clearErrors = () => {
+        document.querySelectorAll('.error-text').forEach(el => el.innerText = '');
+        document.querySelectorAll('.form-group-custom input, .form-group-custom select').forEach(el => el.classList.remove('input-error'));
+      };
+
+      const setValidationError = (id, msg) => {
+        const errorEl = document.getElementById(id + 'Error');
+        const inputEl = document.getElementById(id);
+        if (errorEl) errorEl.innerText = msg;
+        if (inputEl) inputEl.classList.add('input-error');
+      };
+
+      // Modal Helper: Switch Steps
+      const switchModalStep = (stepName) => {
+        Object.keys(modalSteps).forEach(key => {
+          if (key === stepName) {
+            modalSteps[key].classList.remove('hidden');
+          } else {
+            modalSteps[key].classList.add('hidden');
+          }
+        });
+      };
+
+      // Close modal cancel logic
+      const closeModal = () => {
+        paymentModalOverlay.classList.add('hidden');
+        if (upiTimerInterval) {
+          clearInterval(upiTimerInterval);
+          upiTimerInterval = null;
+        }
+      };
+
+      closePaymentModalBtn.addEventListener('click', closeModal);
+      paymentModalOverlay.addEventListener('click', (e) => {
+        if (e.target === paymentModalOverlay) {
+          closeModal();
+        }
+      });
+
+      // Simulate Successful Payment Completion
+      const completePaymentSimulation = () => {
+        switchModalStep('success');
+        document.getElementById('txId').innerText = 'TXN' + Math.floor(1000000000 + Math.random() * 9000000000);
+        setTimeout(() => {
+          window.location.href = 'formsubmit.html';
+        }, 2200);
+      };
+
+      // Approve Simulated Actions
+      document.getElementById('approveUpiBtn').addEventListener('click', completePaymentSimulation);
+      
+      document.getElementById('approveNbBtn').addEventListener('click', () => {
+        const user = document.getElementById('nbUser').value.trim();
+        const pass = document.getElementById('nbPass').value.trim();
+        if (!user || !pass) {
+          alert('Please enter your mock Username and Password.');
+          return;
+        }
+        completePaymentSimulation();
+      });
+
+      document.getElementById('approveCardBtn').addEventListener('click', () => {
+        const otp = document.getElementById('cardOtp').value.trim();
+        if (otp.length < 6) {
+          alert('Please enter a 6-digit OTP.');
+          return;
+        }
+        completePaymentSimulation();
+      });
+
+      // Unified Form Submission Handler
       document.getElementById('unifiedDonationForm').addEventListener('submit', (e) => {
         e.preventDefault();
+        clearErrors();
+
         const selectedType = document.querySelector('input[name="donationType"]:checked').value;
         
-        if(selectedType === 'food' && !document.getElementById('foodConfirm').checked) {
+        if (selectedType === 'food') {
+          if (!document.getElementById('foodConfirm').checked) {
             alert("Please confirm that the food is safe and stored hygienically.");
             return;
-        }
-        if(selectedType === 'clothes' && !document.getElementById('clothesConfirm').checked) {
-            alert("Please confirm the clothes are clean, washed, and ready to wear.");
-            return;
+          }
+          alert("Donation request for food submitted successfully!\nThank you for your responsible contribution.");
+          setTimeout(() => {
+            window.location.href = 'formsubmit.html';
+          }, 1000);
+          return;
         }
 
-        alert("Donation request for " + selectedType + " submitted successfully!\nThank you for your responsible contribution.");
-        
-        setTimeout(() => {
+        if (selectedType === 'clothes') {
+          if (!document.getElementById('clothesConfirm').checked) {
+            alert("Please confirm the clothes are clean, washed, and ready to wear.");
+            return;
+          }
+          alert("Donation request for clothes submitted successfully!\nThank you for your responsible contribution.");
+          setTimeout(() => {
             window.location.href = 'formsubmit.html';
-        }, 1000);
+          }, 1000);
+          return;
+        }
+
+        if (selectedType === 'money') {
+          // Validate amount
+          const amtValue = parseFloat(moneyInput.value);
+          if (isNaN(amtValue) || amtValue < 10) {
+            alert("Please enter a donation amount of at least Rs. 10.");
+            moneyInput.focus();
+            return;
+          }
+
+          // Validate payment details
+          const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+          let isValid = true;
+
+          if (paymentMethod === 'gpay') {
+            const upi = document.getElementById('gpayUpi').value.trim();
+            const upiPattern = /^[a-zA-Z0-9.\-_]{2,49}@[a-zA-Z]{2,10}$/;
+            if (!upi) {
+              setValidationError('gpayUpi', 'GPay UPI ID is required.');
+              isValid = false;
+            } else if (!upiPattern.test(upi)) {
+              setValidationError('gpayUpi', 'Please enter a valid UPI ID (e.g., username@okaxis).');
+              isValid = false;
+            }
+          } else if (paymentMethod === 'phonepe') {
+            const upi = document.getElementById('phonepeUpi').value.trim();
+            const upiPattern = /^[a-zA-Z0-9.\-_]{2,49}@[a-zA-Z]{2,10}$/;
+            if (!upi) {
+              setValidationError('phonepeUpi', 'PhonePe UPI ID is required.');
+              isValid = false;
+            } else if (!upiPattern.test(upi)) {
+              setValidationError('phonepeUpi', 'Please enter a valid UPI ID (e.g., username@ybl).');
+              isValid = false;
+            }
+          } else if (paymentMethod === 'netbanking') {
+            const bank = document.getElementById('bankSelect').value;
+            if (!bank) {
+              setValidationError('bankSelect', 'Please select a bank from the dropdown.');
+              isValid = false;
+            }
+          } else if (paymentMethod === 'card') {
+            const num = cardNumInput.value.replace(/\s/g, '');
+            const expiry = cardExpiryInput.value.trim();
+            const cvv = cardCvvInput.value.trim();
+            const holder = document.getElementById('cardHolder').value.trim();
+
+            if (!num || num.length < 15 || num.length > 19) {
+              setValidationError('cardNumber', 'Please enter a valid 15-16 digit card number.');
+              isValid = false;
+            }
+            if (!expiry || !/^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(expiry)) {
+              setValidationError('cardExpiry', 'Use MM/YY format.');
+              isValid = false;
+            } else {
+              // Simple validation for past expiry
+              const parts = expiry.split('/');
+              const expMonth = parseInt(parts[0], 10);
+              const expYear = parseInt('20' + parts[1], 10);
+              const now = new Date();
+              const currMonth = now.getMonth() + 1;
+              const currYear = now.getFullYear();
+              if (expYear < currYear || (expYear === currYear && expMonth < currMonth)) {
+                setValidationError('cardExpiry', 'Card is expired.');
+                isValid = false;
+              }
+            }
+            if (!cvv || cvv.length < 3 || cvv.length > 4) {
+              setValidationError('cardCvv', 'Enter 3 or 4 digits.');
+              isValid = false;
+            }
+            if (!holder) {
+              setValidationError('cardHolder', 'Cardholder name is required.');
+              isValid = false;
+            }
+          }
+
+          if (!isValid) return;
+
+          // Start Simulation Flow
+          paymentModalOverlay.classList.remove('hidden');
+          switchModalStep('processing');
+
+          setTimeout(() => {
+            if (paymentMethod === 'gpay' || paymentMethod === 'phonepe') {
+              switchModalStep('upi');
+              document.getElementById('upiAppName').innerText = paymentMethod === 'gpay' ? 'Google Pay' : 'PhonePe';
+              document.getElementById('upiModalAmount').innerText = 'Rs. ' + amtValue;
+              const upiVal = paymentMethod === 'gpay' ? document.getElementById('gpayUpi').value : document.getElementById('phonepeUpi').value;
+              document.getElementById('upiModalTarget').innerText = upiVal;
+              
+              let timeLeft = 60;
+              document.getElementById('upiTimer').innerText = timeLeft + 's';
+              upiTimerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('upiTimer').innerText = timeLeft + 's';
+                if (timeLeft <= 0) {
+                  clearInterval(upiTimerInterval);
+                  alert('Payment request timed out. Please try again.');
+                  closeModal();
+                }
+              }, 1000);
+
+            } else if (paymentMethod === 'netbanking') {
+              switchModalStep('netbanking');
+              const bankSelectEl = document.getElementById('bankSelect');
+              const bankNameText = bankSelectEl.options[bankSelectEl.selectedIndex].text;
+              document.getElementById('nbBankName').innerText = bankNameText;
+              document.getElementById('nbModalAmount').innerText = 'Rs. ' + amtValue;
+              document.getElementById('nbUser').value = '';
+              document.getElementById('nbPass').value = '';
+
+            } else if (paymentMethod === 'card') {
+              switchModalStep('card');
+              const rawCard = cardNumInput.value.replace(/\s/g, '');
+              const lastDigits = rawCard.substring(rawCard.length - 4);
+              document.getElementById('cardModalEnd').innerText = lastDigits;
+              document.getElementById('cardModalAmount').innerText = 'Rs. ' + amtValue;
+              document.getElementById('cardOtp').value = '';
+            }
+          }, 1500);
+        }
       });
 
       updateDynamicFields();
