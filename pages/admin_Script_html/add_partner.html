@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity Bridge | Add Partner</title>
+    <link rel="stylesheet" href="../../components/headerfooter/header.css" />
+    <link rel="stylesheet" href="../../components/headerfooter/footer.css" />
+    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #4e025f, #831b9a);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signup-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 20px 60px 20px;
+        }
+
+        .signup-card {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-logo img {
+            width: 40px;
+        }
+
+        .card-logo h3 {
+            color: #2a044a;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .card-header h2 {
+            color: #4e025f;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #831b9a;
+            font-size: 1rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1.5px solid #e0d4fc;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+            color: #333;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        .input-group select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #831b9a;
+            box-shadow: 0 0 8px rgba(131, 27, 154, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background: #ffc107;
+            color: #2a044a;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+        }
+
+        .dynamic-fields {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <span>Humanity Bridge</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav>
+                <a href="add_partner.html" class="login-btn active">Add Partners</a>
+                <a href="view_partners.html" class="login-btn">View Partners</a>
+                <div class="user-dropdown">
+                    <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="index.html">View Dashboard</a>
+                        <a href="admin_history_pg.html">System History</a>
+                        <a href="myaccount_pg.html">My Account</a>
+                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="signup-wrapper">
+        <div class="signup-card">
+            <div class="card-header">
+                <div class="card-logo">
+                    <img src="../../assets/images/projectlogo.png" alt="Logo">
+                    <h3>Humanity Bridge</h3>
+                </div>
+                <h2>Add Partner</h2>
+                <p>Register a new Regular Donor or NGO/Receiver account.</p>
+            </div>
+
+            <form class="signup-form" id="addPartnerForm">
+                <div class="input-group">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <select id="partnerType" required onchange="togglePartnerFields()">
+                        <option value="" disabled selected>Select Partner Type</option>
+                        <option value="donor">Regular Donor</option>
+                        <option value="ngo">NGO / Receiver</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="partnerName" placeholder="Name" required>
+                </div>
+
+                <div class="input-group dynamic-fields" id="donorTypeGroup" style="display: none;">
+                    <i class="fa-solid fa-building"></i>
+                    <select id="donorOrgType">
+                        <option value="" disabled selected>Select Organization Type</option>
+                        <option value="Function Hall">Function Hall</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Restaurant">Restaurant</option>
+                        <option value="Hostel">Hostel</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="text" id="partnerPhone" placeholder="Phone / Email" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" id="partnerCity" placeholder="City" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <input type="text" id="partnerArea" placeholder="Area / Pincode" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <input type="text" id="partnerRegNum" placeholder="Registration Number">
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="partnerPassword" placeholder="Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="partnerConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const defaultPartners = [
+            {
+                name: "Reddy Hostel",
+                type: "donor",
+                orgType: "Hostel",
+                contact: "+91 9876543210",
+                city: "Mumbai",
+                area: "400001",
+                regNum: "REG123",
+                status: "Approved"
+            },
+            {
+                name: "Hope Community Center",
+                type: "ngo",
+                orgType: "",
+                contact: "+91 8765432109",
+                city: "Delhi",
+                area: "110001",
+                regNum: "NGO567",
+                status: "Approved"
+            },
+            {
+                name: "Archana",
+                type: "donor",
+                orgType: "Restaurant",
+                contact: "archana@gmail.com",
+                city: "Nizamabad",
+                area: "503001",
+                regNum: "REG789",
+                status: "Approved"
+            },
+            {
+                name: "Srujan NGO",
+                type: "ngo",
+                orgType: "",
+                contact: "+91 9963318973",
+                city: "Nirmal",
+                area: "504106",
+                regNum: "NGO999",
+                status: "Approved"
+            }
+        ];
+
+        // Ensure partners array exists in localStorage
+        function getPartners() {
+            let list = localStorage.getItem('partners');
+            if (!list) {
+                localStorage.setItem('partners', JSON.stringify(defaultPartners));
+                return defaultPartners;
+            }
+            return JSON.parse(list);
+        }
+
+        function savePartners(partnersList) {
+            localStorage.setItem('partners', JSON.stringify(partnersList));
+        }
+
+        // Initialize localStorage state
+        getPartners();
+
+        // Toggles Organization Type dropdown visibility
+        function togglePartnerFields() {
+            const type = document.getElementById('partnerType').value;
+            const donorGroup = document.getElementById('donorTypeGroup');
+            const donorOrgType = document.getElementById('donorOrgType');
+
+            if (type === 'donor') {
+                donorGroup.style.display = 'block';
+                donorOrgType.setAttribute('required', 'true');
+            } else {
+                donorGroup.style.display = 'none';
+                donorOrgType.removeAttribute('required');
+            }
+        }
+
+        // Form Submit handler
+        document.getElementById('addPartnerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const type = document.getElementById('partnerType').value;
+            const name = document.getElementById('partnerName').value;
+            const orgType = type === 'donor' ? document.getElementById('donorOrgType').value : '';
+            const contact = document.getElementById('partnerPhone').value;
+            const city = document.getElementById('partnerCity').value;
+            const area = document.getElementById('partnerArea').value;
+            const regNum = document.getElementById('partnerRegNum').value || 'N/A';
+            const pwd = document.getElementById('partnerPassword').value;
+            const confirmPwd = document.getElementById('partnerConfirmPassword').value;
+
+            if (pwd !== confirmPwd) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            const currentList = getPartners();
+            currentList.push({
+                name: name,
+                type: type,
+                orgType: orgType,
+                contact: contact,
+                city: city,
+                area: area,
+                regNum: regNum,
+                status: "Approved"
+            });
+
+            savePartners(currentList);
+
+            alert((type === 'donor' ? "Regular Donor" : "NGO/Receiver") + " account created successfully!");
+            window.location.href = "view_partners.html";
+        });
+    </script>
+    <script src="../../components/headerfooter/nav.js"></script>
+</body>
+
+</html>
