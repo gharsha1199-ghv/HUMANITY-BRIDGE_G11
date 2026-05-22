@@ -126,7 +126,7 @@ nav a.active {
 }
 
 .history-table-container {
-    background: white;
+    background: rgb(48, 0, 48);
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     padding: 30px;
@@ -138,7 +138,7 @@ nav a.active {
 
 .history-table-container h3 {
     text-align: center;
-    color: #4e025f;
+    color: orange;
     margin-bottom: 20px;
     font-size: 1.5rem;
     font-weight: 700;
@@ -147,28 +147,28 @@ nav a.active {
 .history-table {
     width: 100%;
     border-collapse: collapse;
-    color: #333;
+    color: white;
 }
 
 .history-table th, .history-table td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .history-table th {
-    color: #831b9a;
+    color: orange;
     font-weight: 700;
     font-size: 1.1rem;
-    border-bottom: 2px solid #831b9a;
+    border-bottom: 2px solid orange;
 }
 
 .history-table td {
-    color: #444;
+    color: white;
 }
 
 .history-table tbody tr:hover {
-    background: rgba(78, 2, 95, 0.05);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .bottom-subtitle {
