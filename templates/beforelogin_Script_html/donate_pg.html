@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <title>Humanity Bridge | Donate</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
-  <link rel="stylesheet" href="../../components/headerfooter/header.css" />
-  <link rel="stylesheet" href="../../assets/beforelogin_Style_css/donate_pg.css">
-  <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+  <link rel="stylesheet" href="{{url_for('static',filename='headerfooter/footer.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='headerfooter/header.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='beforelogin_Style_css/donate_pg.css')}}"/>
+  <link rel="shortcut icon" href="{{url_for('static',filename='images/faviconlogo.jpeg')}}" type="image/x-icon">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
   <header class="header">
     <div class="container nav">
       <div class="logo">
-        <img src="../../assets/images/projectlogo.png"> Humanity Bridge
+        <img src= "{{url_for('static',filename='images/projectlogo.png')}}"> Humanity Bridge
       </div>
       <div class="hamburger">
         <span></span>
@@ -24,11 +24,11 @@
         <span></span>
       </div>
       <nav>
-        <a href="../../index.html">Home</a>
-        <a href="about_pg.html">About</a>
-        <a href="ourwork_pg.html">Our Work</a>
-        <a href="gallery_pg.html">Gallery</a>
-        <a href="login_pg.html" class="login-btn">Login / SignUp</a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/ourwork">Our Work</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/login" class="login-btn">Login / SignUp</a>
       </nav>
     </div>
   </header>
@@ -40,20 +40,20 @@
       <p class="subtitle">Make a responsible and meaningful contribution.</p>
 
       <div class="card-container">
-        <a href="login_pg.html">
+        <a href="/login">
           <div class="donation-card">
             <i class="fa-solid fa-utensils"></i>
             <h3>Food</h3>
           </div>
         </a>
 
-        <a href="login_pg.html">
+        <a href="/login">
           <div class="donation-card">
             <i class="fa-solid fa-shirt"></i>
             <h3>Clothes</h3>
           </div>
         </a>
-        <a href="login_pg.html">
+        <a href="/login">
           <div class="donation-card">
             <i class="fa-solid fa-book"></i>
             <h3>Money</h3>
@@ -71,7 +71,7 @@
     <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
   </footer>
 
-  <script src="../../components/headerfooter/nav.js"></script>
+  <script src="{{url_for('static',filename='headerfooter/nav.js')}}"></script>
 </body>
 
 </html>

@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humanity Bridge | Donor SignUp</title>
-    <link rel="stylesheet" href="../../assets/beforelogin_Style_css/signupdonar.css">
-  <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
-  <link rel="stylesheet" href="../../components/headerfooter/header.css" />
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <title>Humanity Bridge | RegularDonor SignUp</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='')}}" />
+    <link rel="shortcut icon" href="{{url_for('static',filename='')}}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet">   
 </head>
 
 <body>
@@ -19,23 +19,22 @@
     <header class="header">
         <div class="container nav">
             <div class="logo">
-                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <img src="{{url_for('static',filename='images/projectlogo.png')}}" alt="logo">
                 <span>Humanity Bridge</span>
             </div>
-            <div class="hamburger">
+
+<div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
-
-
             <nav>
-        <a href="../../index.html">Home</a>
-                <a href="about_pg.html">About</a>
-                <a href="ourwork_pg.html">Our work</a>
-                <a href="gallery_pg.html">Gallery</a>
-                <a href="login_pg.html" class="login-btn">Login / SignUp</a>
+        <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/ourwork">Our work</a>
+                <a href="/gallery">Gallery</a>
+                <a href="/login" class="login-btn">Login / SignUp</a>
             </nav>
         </div>
     </header>
@@ -45,7 +44,7 @@
 
             <div class="card-header">
                 <div class="card-logo">
-                    <img src="../../assets/images/projectlogo.png" alt="Logo">
+                    <img src="{{url_for('static',filename='images/projectlogo.png')}}" alt="Logo">
                     <h3>Humanity Bridge</h3>
                 </div>
                 <h2>Create Your Account</h2>
@@ -57,6 +56,16 @@
                 <div class="input-group">
                     <i class="fa-solid fa-user"></i>
                     <input type="text" placeholder="Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-shop"></i>
+                    <select required>
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="restaurant">Restaurant</option>
+                        <option value="hall">Function Hall</option>
+                    </select>
                 </div>
 
                 <div class="input-group">
@@ -85,7 +94,7 @@
                 </div>
 
                 <button type="submit" class="submit-btn">Sign Up</button>
-                <p>Already have an account? <a href="login_pg.html">Login</a></p>
+                <p>Already have an account? <a href="/login">Login</a></p>
 
             </form>
 
@@ -96,7 +105,7 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{url_for('static',filename='headerfooter/nav.js')}}"></script>
 </body>
 
 </html>

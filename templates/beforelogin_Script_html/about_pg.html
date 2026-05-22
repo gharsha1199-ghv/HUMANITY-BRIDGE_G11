@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <title>Humanity Bridge | About</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../../components/headerfooter/footer.css"/>
-  <link rel="stylesheet" href="../../components/headerfooter/header.css" />
-  <link rel="stylesheet" href="../../assets/beforelogin_Style_css/about_pg.css" />
-  <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon" />
+  <link rel="stylesheet" href="{{url_for('static',filename='headerfooter/footer.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='headerfooter/header.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='beforelogin_Style_css/about_pg.css')}}"/>
+  <link rel="shortcut icon" href="{{url_for('static',filename='images/faviconlogo.jpeg')}}" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
@@ -17,7 +17,7 @@
   <header class="header">
     <div class="container nav">
       <div class="logo">
-        <img src="../../assets/images/projectlogo.png"> Humanity Bridge
+        <img src="{{url_for('static',filename='images/projectlogo.png')}}"> Humanity Bridge
       </div>
       <div class="hamburger">
                 <span></span>
@@ -25,11 +25,11 @@
                 <span></span>
             </div>
       <nav>
-        <a href="../../index.html">Home</a>
+        <a href="/">Home</a>
         <a class="active" href="#">About</a>
-        <a href="ourwork_pg.html">Our Work</a>
-        <a href="gallery_pg.html">Gallery</a>
-        <a href="login_pg.html" class="login-btn">Login / SignUp</a>
+        <a href="/ourwork">Our Work</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/login" class="login-btn">Login / SignUp</a>
       </nav>
 
     </div>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="image-circle">
-        <img src="../../assets/images/our team.png" alt="team image placeholder" />
+        <img src="{{url_for('static',filename='images/our team.png')}}" alt="team image placeholder" />
       </div>
     </section>
 
@@ -67,7 +67,7 @@
       </div>
 
       <div class="image-circle">
-        <img src="../../assets/images/projectlogo.png" alt="mission image placeholder" />
+        <img src="{{url_for('static',filename='images/projectlogo.png')}}" alt="mission image placeholder" />
       </div>
     </section>
 
@@ -85,7 +85,7 @@
       </div>
 
       <div class="image-circle">
-        <img src="../../assets/images/problem.png" alt="problem solving image placeholder" />
+        <img src="{{url_for('static',filename='images/problem.png')}}" alt="problem solving image placeholder" />
       </div>
     </section>
 
@@ -126,7 +126,7 @@
     <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
   </footer>
 
-  <script src="../../components/headerfooter/nav.js"></script>
+  <script src="{{url_for('static',filename='headerfooter/nav.js')}}"></script>
 </body>
 
 </html>
