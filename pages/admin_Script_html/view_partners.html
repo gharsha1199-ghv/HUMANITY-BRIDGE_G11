@@ -289,7 +289,6 @@
                         </tr>
                     </thead>
                     <tbody id="partnerTableBody">
-                        <!-- Dynamic partners rows will load here -->
                     </tbody>
                 </table>
             </div>
@@ -301,7 +300,6 @@
     </footer>
 
     <script>
-        // Seed default partners array
         const defaultPartners = [
             {
                 name: "Reddy Hostel",
@@ -347,7 +345,6 @@
 
         let currentFilter = 'all';
 
-        // Load partners array from localStorage
         function getPartners() {
             let list = localStorage.getItem('partners');
             if (!list) {
@@ -357,7 +354,6 @@
             return JSON.parse(list);
         }
 
-        // Render partners rows in table
         function renderPartnersTable(searchText = '') {
             const tbody = document.getElementById('partnerTableBody');
             tbody.innerHTML = '';
@@ -365,10 +361,8 @@
             const partners = getPartners();
 
             const filtered = partners.filter(p => {
-                // Type filter
                 if (currentFilter !== 'all' && p.type !== currentFilter) return false;
 
-                // Search filter
                 if (searchText) {
                     const search = searchText.toLowerCase();
                     return p.name.toLowerCase().includes(search) ||
@@ -403,7 +397,6 @@
             });
         }
 
-        // Filter tab selection trigger
         function filterPartners(type, btnElement) {
             currentFilter = type;
 
@@ -415,13 +408,11 @@
             renderPartnersTable();
         }
 
-        // Live search input handler
         function handlePartnerSearch() {
             const searchText = document.getElementById('partnerSearchInput').value;
             renderPartnersTable(searchText);
         }
 
-        // Initial table load
         window.addEventListener('DOMContentLoaded', () => {
             renderPartnersTable();
         });
