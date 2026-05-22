@@ -206,6 +206,7 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .stat-card h4 {
@@ -443,6 +444,15 @@ body {
 }
 .graph {
     text-decoration: none;
+}
+
+.stat-card-link {
+    cursor: pointer;
+}
+
+.stat-card-link .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* #logout{

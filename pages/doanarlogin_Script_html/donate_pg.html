@@ -114,26 +114,14 @@
    
           <div id="fields_food" class="dynamic-fields hidden">
             
-            <div class="form-block">
-              <h3>Type of Food</h3>
-              <div class="row-check">
-                <label class="check">
-                  <input type="radio" name="foodType" value="packed" checked>
-                  <span>Packed / Sealed Food</span>
-                </label>
-                <label class="check">
-                  <input type="radio" name="foodType" value="raw">
-                  <span>Raw Ingredients</span>
-                </label>
-              </div>
-            </div>
+            
 
             <div class="form-block">
               <h3>Food Category</h3>
               <select id="foodCategory">
                 <option value="" disabled selected>Select Category</option>
-                <option value="veg">Vegetarian</option>
-                <option value="nonveg">Non-Vegetarian</option>
+                <option value="veg">Raw Ingredients</option>
+                <option value="nonveg">Packed Food</option>
                 <option value="mixed">Mixed</option>
               </select>
             </div>
@@ -148,11 +136,8 @@
             </div>
 
             <div class="form-block">
-              <h3>Quantity & Description</h3>
-              <div class="grid-2">
-                <input type="number" id="foodQuantity" placeholder="Quantity">
-                <input type="text" value="Items / Servings" readonly>
-              </div>
+              <h3>Description</h3>
+              
               <input type="text" class="mt-10" id="foodDesc" placeholder="Brief description of the items...">
             </div>
 
