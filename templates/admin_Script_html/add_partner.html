@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humanity Bridge | Add Partner</title>
-    <link rel="stylesheet" href="../../components/headerfooter/header.css" />
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css" />
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -163,7 +163,7 @@
     <header class="header">
         <div class="container nav">
             <div class="logo">
-                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <img src="{{ url_for('static', filename='images/projectlogo.png') }}" alt="logo">
                 <span>Humanity Bridge</span>
             </div>
             <div class="hamburger">
@@ -173,15 +173,15 @@
             </div>
 
             <nav>
-                <a href="add_partner.html" class="login-btn active">Add Partners</a>
-                <a href="view_partners.html" class="login-btn">View Partners</a>
+                <a href="/adminadd_partner" class="login-btn active">Add Partners</a>
+                <a href="/adminview_partners" class="login-btn">View Partners</a>
                 <div class="user-dropdown">
                     <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
                     <div class="dropdown-content">
-                        <a href="index.html">View Dashboard</a>
-                        <a href="admin_history_pg.html">System History</a>
-                        <a href="myaccount_pg.html">My Account</a>
-                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                        <a href="/adminhome">View Dashboard</a>
+                        <a href="/adminadmin_history">System History</a>
+                        <a href="/adminmyaccount">My Account</a>
+                        <a href="/login">Logout</a>
                     </div>
                 </div>
             </nav>
@@ -192,7 +192,7 @@
         <div class="signup-card">
             <div class="card-header">
                 <div class="card-logo">
-                    <img src="../../assets/images/projectlogo.png" alt="Logo">
+                    <img src="{{ url_for('static', filename='images/projectlogo.png') }}" alt="Logo">
                     <h3>Humanity Bridge</h3>
                 </div>
                 <h2>Add Partner</h2>
@@ -374,10 +374,10 @@
             savePartners(currentList);
 
             alert((type === 'donor' ? "Regular Donor" : "NGO/Receiver") + " account created successfully!");
-            window.location.href = "view_partners.html";
+            window.location.href = "/adminview_partners";
         });
     </script>
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 
 </html>

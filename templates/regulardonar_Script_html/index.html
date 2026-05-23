@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Humanity Bridge | Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../components/headerfooter/header.css">
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
-    <link rel="stylesheet" href="../../assets/regulardonar_Style_css/homepage.css">
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='regulardonar_Style_css/homepage.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
     <header class="header">
         <div class="container nav">
             <div class="logo">
-                <img src="../../assets/images/projectlogo.png">
+                <img src="{{ url_for('static', filename='images/projectlogo.png') }}">
                 Humanity Bridge
             </div>
             <div class="hamburger">
@@ -27,16 +27,16 @@
 
             <nav>
                 <a class="active" href="#">Home</a>
-                <a href="about_pg.html">About</a>
-                <a href="ourwork_pg.html">Our Work</a>
-                <a href="gallery_pg.html">Gallery</a>
+                <a href="/regulardonorabout">About</a>
+                <a href="/regulardonorourwork">Our Work</a>
+                <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
                     <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
                     <div class="dropdown-content">
-                        <a href="donardashboard_pg.html">View Dashboard</a>
-                        <a href="donation_history_pg.html">Donation History</a>
-                        <a href="myaccount_pg.html">My Account</a>
-                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                        <a href="/regulardonordashboard">View Dashboard</a>
+                        <a href="/regulardonordonation_history">Donation History</a>
+                        <a href="/regulardonormyaccount">My Account</a>
+                        <a href="/login">Logout</a>
                     </div>
                 </div>
             </nav>
@@ -52,14 +52,14 @@
                 </p>
 
                 <div class="buttons">
-                    <a href="donate_pg.html" class="btn primary">Donate now</a>
+                    <a href="/regulardonordonate" class="btn primary">Donate now</a>
                 </div>
             </div>
 
             <div class="hero-images">
-                <img src="../../assets/images/cropped_circle_image (7).png" class="circle-img img1" alt="Circle graphic 1">
-                <img src="../../assets/images/cropped_circle_image (8).png" class="circle-img img2" alt="Circle graphic 2">
-                <img src="../../assets/images/cropped_circle_image (9).png" class="circle-img img3" alt="Circle graphic 3">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (7).png') }}" class="circle-img img1" alt="Circle graphic 1">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (8).png') }}" class="circle-img img2" alt="Circle graphic 2">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (9).png') }}" class="circle-img img3" alt="Circle graphic 3">
             </div>
         </div>
     </section>
@@ -70,15 +70,15 @@
         <h2>What Can Be Donated </h2>
         <div class="donation-items container">
             <div class="item">
-                <img src="../../assets/images/food.png">
+                <img src="{{ url_for('static', filename='images/food.png') }}">
                 <p>Food</p>
             </div>
             <div class="item">
-                <img src="../../assets/images/cloths.png">
+                <img src="{{ url_for('static', filename='images/cloths.png') }}">
                 <p>Clothes</p>
             </div>
             <div class="item">
-                <img src="../../assets/images/money.png">
+                <img src="{{ url_for('static', filename='images/money.png') }}">
                 <p>Money</p>
             </div>
 
@@ -89,7 +89,7 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 
 </html>

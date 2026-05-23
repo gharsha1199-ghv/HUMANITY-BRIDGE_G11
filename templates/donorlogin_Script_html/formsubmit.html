@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Submitted - Humanity Bridge</title>
 
-    <link rel="stylesheet" href="../../assets/donarlogin_Style_css/formsubmit.css">
-    <link rel="stylesheet" href="../../components/headerfooter/header.css">
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='donarlogin_Style_css/formsubmit.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -21,7 +21,7 @@
     <header class="header">
         <div class="container nav">
             <div class="logo">
-                <img src="../../assets/images/projectlogo.png">
+                <img src="{{ url_for('static', filename='images/projectlogo.png') }}">
                 Humanity Bridge
             </div>
             <div class="hamburger">
@@ -31,16 +31,16 @@
             </div>
             <nav>
                 <a class="active" href="#">Home</a>
-                <a href="about_pg.html">About</a>
-                <a href="ourwork_pg.html">Our Work</a>
-                <a href="gallery_pg.html">Gallery</a>
+                <a href="/donorabout">About</a>
+                <a href="/donorourwork">Our Work</a>
+                <a href="/donorgallery">Gallery</a>
                 <div class="user-dropdown">
                     <a href="#" class="login-btn user-toggle">Harsha &#9662;</a>
                     <div class="dropdown-content">
-                        <a href="donardashboard_pg.html">View Dashboard</a>
-                        <a href="donation_history_pg.html">Donation History</a>
-                        <a href="myaccount_pg.html">My Account</a>
-                        <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                        <a href="/donardashboard">View Dashboard</a>
+                        <a href="/donordonation_history">Donation History</a>
+                        <a href="/donarmyaccount">My Account</a>
+                        <a href="/login">Logout</a>
                     </div>
                 </div>
             </nav>
@@ -61,14 +61,14 @@
             <p>Your response has been recorded successfully.<br>
                 Our team will review the details and update you shortly.</p>
 
-            <a href="index.html" class="home-btn">Back to Home</a>
+            <a href="/donorhome" class="home-btn">Back to Home</a>
         </div>
     </section>
 
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 
 </body>
 

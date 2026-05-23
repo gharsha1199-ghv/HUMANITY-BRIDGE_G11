@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Humanity Bridge | Volunteer My Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../components/headerfooter/header.css">
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
-    <link rel="stylesheet" href="../../assets/volunteer_Style_css/myaccount.css">
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='volunteer_Style_css/myaccount.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -18,7 +18,7 @@
         <div class="container">
             <div class="nav">
                 <div class="logo">
-                    <img src="../../assets/images/projectlogo.png">
+                    <img src="{{ url_for('static', filename='images/projectlogo.png') }}">
                     Humanity Bridge
                 </div>
                 <div class="hamburger">
@@ -27,17 +27,17 @@
                     <span></span>
                 </div>
                 <nav>
-                    <a href="index.html">Home</a>
-                    <a href="orders.html">Orders</a>
-                    <a href="tracking.html">Tracking</a>
+                    <a href="/volunteerhome">Home</a>
+                    <a href="/volunteerorders">Orders</a>
+                    <a href="/volunteertracking">Tracking</a>
                     <a class="active" href="#">My Account</a>
                     <div class="user-dropdown">
                         <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
                         <div class="dropdown-content">
-                            <a href="index.html">View Dashboard</a>
-                            <a href="volunteer_history_pg.html">Delivery History</a>
-                            <a href="myaccount_pg.html">My Account</a>
-                            <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                            <a href="/volunteerhome">View Dashboard</a>
+                            <a href="/volunteervolunteer_history">Delivery History</a>
+                            <a href="/volunteermyaccount">My Account</a>
+                            <a href="/login">Logout</a>
                         </div>
                     </div>
                 </nav>
@@ -232,7 +232,7 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             disableEditing('profileForm');

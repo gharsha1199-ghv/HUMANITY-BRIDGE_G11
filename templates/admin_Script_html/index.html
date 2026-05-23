@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humanity Bridge | Admin Dashboard</title>
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
-    <link rel="stylesheet" href="../../components/headerfooter/header.css">
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
-    <link rel="stylesheet" href="../../assets/admin_Style_css/admin.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_Style_css/admin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -22,7 +22,7 @@
             <div class="logo">
                 <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
 
-                <img src="../../assets/images/projectlogo.png" alt="logo">
+                <img src="{{ url_for('static', filename='images/projectlogo.png') }}" alt="logo">
                 <span>Humanity Bridge</span>
             </div>
             <div class="hamburger">
@@ -36,15 +36,15 @@
             </div>
 
             <nav>
-                <a href="add_partner.html" class="login-btn">Add Partners</a>
-                <a href="view_partners.html" class="login-btn">View Partners</a>
+                <a href="/adminadd_partner" class="login-btn">Add Partners</a>
+                <a href="/adminview_partners" class="login-btn">View Partners</a>
                     <div class="user-dropdown">
                     <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
                     <div class="dropdown-content">
-                        <a href="index.html">View Dashboard</a>
-                        <a href="admin_history_pg.html">System History</a>
-                        <a href="myaccount_pg.html">My Account</a>
-                        <a href="../../pages/beforelogin_Script_html/login_pg.html">logout</a>
+                        <a href="/adminhome">View Dashboard</a>
+                        <a href="/adminadmin_history">System History</a>
+                        <a href="/adminmyaccount">My Account</a>
+                        <a href="/login">logout</a>
 
                     </div>
                 </div>
@@ -61,11 +61,11 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="#"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
-                <li><a href="verification.html"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+                <li><a href="/adminverification"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
 
-                <li><a href="donations.html"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
-                <li><a href="tracking.html"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
-                <li><a href="requestpage.html"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+                <li><a href="/admindonations"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+                <li><a href="/admintracking"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+                <li><a href="/adminrequestpage"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
                 &nbsp; <br>
                 &nbsp; <br>
                 &nbsp;<br>
@@ -78,7 +78,7 @@
                 &nbsp;<br>
                 &nbsp;<br>
                 &nbsp;<br>
-                <li id="logout"><a href="../../pages/beforelogin_Script_html/login_pg.html"><i
+                <li id="logout"><a href="/login"><i
                             class="fa-solid fa-right-from-bracket"></i>logout</a></li>
             </ul>
         </aside>
@@ -93,7 +93,7 @@
             <h3 class="section-title">Overview</h3>
 
             <div class="stats-grid">
-                <a href="donations_pie.html" class="graph stat-card-link">
+                <a href="/admindonations_pie" class="graph stat-card-link">
 
                     <div class="stat-card">
                         <h4>Total Donations</h4>
@@ -101,21 +101,21 @@
                         <div class="stat-bar"></div>
                     </div>
                 </a>
-                <a href="../admin_Script_html/graph.html" class="graph">
+                <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Successful Receivers</h4>
                         <h2>27,480</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
-                <a href="../admin_Script_html/graph.html" class="graph">
+                <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Meals Served</h4>
                         <h2>145,300</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
-                <a href="../admin_Script_html/graph.html" class="graph">
+                <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Funds Utilised</h4>
                         <h2>289,700</h2>
@@ -123,7 +123,7 @@
                     </div>
                 </a>
 
-                <a href="../admin_Script_html/graph.html" class="graph">
+                <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Clothes Donated</h4>
                         <h2>18,900</h2>
@@ -291,7 +291,7 @@
 
 
     </script>
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 
 </body>
 

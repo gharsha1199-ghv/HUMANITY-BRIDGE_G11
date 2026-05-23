@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Humanity Bridge | Volunteer Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../components/headerfooter/header.css">
-    <link rel="stylesheet" href="../../components/headerfooter/footer.css">
-    <link rel="stylesheet" href="../../assets/volunteer_Style_css/homepage.css">
-    <link rel="shortcut icon" href="../../assets/images/faviconlogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='volunteer_Style_css/homepage.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -18,7 +18,7 @@
         <div class="container">
             <div class="nav">
                 <div class="logo">
-                    <img src="../../assets/images/projectlogo.png">
+                    <img src="{{ url_for('static', filename='images/projectlogo.png') }}">
                     Humanity Bridge
                 </div>
                 <div class="hamburger">
@@ -28,16 +28,16 @@
                 </div>
                 <nav>
                     <a class="active" href="#">Home</a>
-                    <a href="orders.html">Orders</a>
-                    <a href="tracking.html">Tracking</a>
-                    <a href="myaccount_pg.html">My Account</a>
+                    <a href="/volunteerorders">Orders</a>
+                    <a href="/volunteertracking">Tracking</a>
+                    <a href="/volunteermyaccount">My Account</a>
                     <div class="user-dropdown">
                         <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
                         <div class="dropdown-content">
-                            <a href="index.html">View Dashboard</a>
-                            <a href="volunteer_history_pg.html">Delivery History</a>
-                            <a href="myaccount_pg.html">My Account</a>
-                            <a href="../../pages/beforelogin_Script_html/login_pg.html">Logout</a>
+                            <a href="/volunteerhome">View Dashboard</a>
+                            <a href="/volunteervolunteer_history">Delivery History</a>
+                            <a href="/volunteermyaccount">My Account</a>
+                            <a href="/login">Logout</a>
                         </div>
                     </div>
                 </nav>
@@ -54,15 +54,15 @@
                 </p>
 
                 <div class="buttons">
-                    <a href="orders.html" class="btn primary">View Orders</a>
-                    <a href="tracking.html" class="btn outline">Track Deliveries</a>
+                    <a href="/volunteerorders" class="btn primary">View Orders</a>
+                    <a href="/volunteertracking" class="btn outline">Track Deliveries</a>
                 </div>
             </div>
 
             <div class="hero-images">
-                <img src="../../assets/images/cropped_circle_image (7).png" class="circle-img img1">
-                <img src="../../assets/images/cropped_circle_image (8).png" class="circle-img img2">
-                <img src="../../assets/images/cropped_circle_image (9).png" class="circle-img img3">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (7).png') }}" class="circle-img img1">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (8).png') }}" class="circle-img img2">
+                <img src="{{ url_for('static', filename='images/cropped_circle_image (9).png') }}" class="circle-img img3">
             </div>
     </section>
 
@@ -98,19 +98,19 @@
         <div class="container">
             <h2>Quick Actions</h2>
             <div class="actions-grid">
-                <a href="orders.html" class="action-btn">
+                <a href="/volunteerorders" class="action-btn">
                     <i class="fa-solid fa-list-check"></i>
                     <span>Available Orders</span>
                 </a>
-                <a href="tracking.html" class="action-btn">
+                <a href="/volunteertracking" class="action-btn">
                     <i class="fa-solid fa-truck-fast"></i>
                     <span>Active Deliveries</span>
                 </a>
-                <a href="myaccount_pg.html" class="action-btn">
+                <a href="/volunteermyaccount" class="action-btn">
                     <i class="fa-solid fa-user"></i>
                     <span>My Profile</span>
                 </a>
-                <a href="orders.html" class="action-btn">
+                <a href="/volunteerorders" class="action-btn">
                     <i class="fa-solid fa-history"></i>
                     <span>Delivery History</span>
                 </a>
@@ -122,7 +122,7 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script src="../../components/headerfooter/nav.js"></script>
+    <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 
 </html>
