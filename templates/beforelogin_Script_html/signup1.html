@@ -50,6 +50,12 @@
                 <p>Join us in making a difference through responsible giving.</p>
             </div>
 
+            {% if message %}
+            <div class="alert-message {% if 'Successful' in message %}success{% else %}error{% endif %}">
+                {{ message }}
+            </div>
+            {% endif %}
+
             <form class="signup-form" id="unifiedSignupForm" method="post" action="/signup" enctype="multipart/form-data">
                 
                 <div class="role-selection">
@@ -137,7 +143,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const roleRadios = document.querySelectorAll('input[name="role"]');
-            
             const fieldsVolunteer = document.getElementById('fields_volunteer');
             
             const updateDynamicFields = () => {
@@ -145,11 +150,16 @@
                 
                 fieldsVolunteer.style.display = 'none';
                 
-                document.getElementById('volVehicle').required = false;
+                const vehicleSelect = document.getElementById('Vehicle');
+                if (vehicleSelect) {
+                    vehicleSelect.required = false;
+                }
                 
                 if (selectedRole === 'volunteer') {
                     fieldsVolunteer.style.display = 'block';
-                    document.getElementById('volVehicle').required = true;
+                    if (vehicleSelect) {
+                        vehicleSelect.required = true;
+                    }
                 }
             };
             
@@ -158,25 +168,23 @@
             });
             
             document.getElementById('unifiedSignupForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const pwd = document.getElementById('commonPassword').value;
-                const confirmPwd = document.getElementById('commonConfirmPassword').value;
+                const pwd = document.getElementById('Password').value;
+                const confirmPwd = document.getElementById('ConfirmPassword').value;
                 
                 if (pwd !== confirmPwd) {
+                    e.preventDefault();
                     alert("Passwords do not match!");
                     return;
                 }
-                
-                const selectedRole = document.querySelector('input[name="role"]:checked').value;
-                alert("Sign Up successful as " + selectedRole + "!\n\nRedirecting to login...");
-                
-                setTimeout(() => {
-                    window.location.href = '/login';
-                }, 1500);
             });
             
             updateDynamicFields();
+
+            {% if message == "Signup Successful" %}
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 2000);
+            {% endif %}
         });
     </script>
 </body>

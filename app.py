@@ -368,13 +368,13 @@ from flask import request, redirect, render_template
 @app.route('/signup', methods=['POST'])
 def signup():
     role = request.form['role']
-    name = request.form['Name']
-    phone = request.form['Phone']
-    email = request.form['Email']
-    city = request.form['City']
-    pincode = request.form['Pincode']
-    password = request.form['Password']
-    confirm_password = request.form['ConfirmPassword']
+    name = request.form['name']
+    phone = request.form['phone']
+    email = request.form['email']
+    city = request.form['city']
+    pincode = request.form['pincode']
+    password = request.form['password']
+    confirm_password = request.form['confirm_password']
 
     if password != confirm_password:
         return render_template('beforelogin_Script_html/signup1.html', message="Passwords do not match")
@@ -398,6 +398,7 @@ def signup():
         """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
 
     db.commit()
+    cursor.close()
 
     return render_template('beforelogin_Script_html/signup1.html', message="Signup Successful")
 
