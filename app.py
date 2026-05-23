@@ -385,7 +385,7 @@ def signup():
 
     if role == "donor":
         cursor.execute("""
-            INSERT INTO donor_signup (name, phone, email, city, pincode, password)
+            INSERT INTO donors (name, phone, email, city, pincode, password)
             VALUES (%s, %s, %s, %s, %s, %s)
         """, (name, phone, email, city, pincode, hashed_password))
 
@@ -393,7 +393,7 @@ def signup():
         vehicle_type = request.form.get('vehicle_type')
 
         cursor.execute("""
-            INSERT INTO volunteer_signup (name, phone, email, city, pincode, vehicle_type, password)
+            INSERT INTO volunteers (name, phone, email, city, pincode, vehicle_type, password)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
 
