@@ -381,24 +381,29 @@ def signup():
 
     hashed_password = generate_password_hash(password)
 
-    cursor = db.cursor()
+    try:
+        cursor = db.cursor()
 
-    if role == "donor":
-        cursor.execute("""
-            INSERT INTO donors (name, phone, email, city, pincode, password)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, (name, phone, email, city, pincode, hashed_password))
+        if role == "donor":
+            cursor.execute("""
+                INSERT INTO donors (name, phone, email, city, pincode, password)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (name, phone, email, city, pincode, hashed_password))
 
-    elif role == "volunteer":
-        vehicle_type = request.form.get('vehicle_type')
+        elif role == "volunteer":
+            vehicle_type = request.form.get('vehicle_type')
 
-        cursor.execute("""
-            INSERT INTO volunteers (name, phone, email, city, pincode, vehicle_type, password)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
+            cursor.execute("""
+                INSERT INTO volunteers (name, phone, email, city, pincode, vehicle_type, password)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
 
-    db.commit()
-    cursor.close()
+        db.commit()
+        cursor.close()
+    except mysql.connector.Error as err:
+        if err.errno == 1062:
+            return render_template('beforelogin_Script_html/signup1.html', message="Email or phone number already registered")
+        return render_template('beforelogin_Script_html/signup1.html', message=f"Database error: {err.msg}")
 
     return render_template('beforelogin_Script_html/signup1.html', message="Signup Successful")
 
