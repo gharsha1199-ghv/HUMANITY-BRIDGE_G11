@@ -1,4 +1,15 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request, redirect
+import mysql.connector
+from werkzeug.security import generate_password_hash
+
+db=mysql.connector.connect(
+    host='127.0.0.1',
+    user='root',
+    password='Sharjina@74802',
+    database='humanity_bridge'
+)
+
+
 
 app = Flask(__name__)
 
@@ -350,9 +361,45 @@ def admin_view_partners():
 
 
 
+# sending data to database
+from flask import request, redirect, render_template
 
 
+@app.route('/signup', methods=['POST'])
+def signup():
+    role = request.form['role']
+    name = request.form['Name']
+    phone = request.form['Phone']
+    email = request.form['Email']
+    city = request.form['City']
+    pincode = request.form['Pincode']
+    password = request.form['Password']
+    confirm_password = request.form['ConfirmPassword']
 
+    if password != confirm_password:
+        return render_template('beforelogin_Script_html/signup1.html', message="Passwords do not match")
+
+    hashed_password = generate_password_hash(password)
+
+    cursor = db.cursor()
+
+    if role == "donor":
+        cursor.execute("""
+            INSERT INTO donor_signup (name, phone, email, city, pincode, password)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (name, phone, email, city, pincode, hashed_password))
+
+    elif role == "volunteer":
+        vehicle_type = request.form.get('vehicle_type')
+
+        cursor.execute("""
+            INSERT INTO volunteer_signup (name, phone, email, city, pincode, vehicle_type, password)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
+
+    db.commit()
+
+    return render_template('beforelogin_Script_html/signup1.html', message="Signup Successful")
 
 
 
