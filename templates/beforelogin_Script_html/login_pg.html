@@ -57,29 +57,21 @@
             <div class="form-side">
                 <div class="login-card">
                     <h2>Login</h2>
-                    <form id="loginForm" action="#">
-                        <!-- <div id="emailInput" class="input-group">
-                            <input type="email" placeholder="Email" required>
-                        </div>
-                        <div id="passwordInput" class="input-group">
-                            <input type="password" placeholder="Password" required>
-                        </div> -->
+                    
+                    {% if error %}
+                    <div class="alert-message error">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <form id="loginForm" method="POST" action="/login">
                         <div class="input-group">
-                            <input type="email" id="emailInput" placeholder="Email" required>
+                            <input type="email" id="emailInput" name="email" placeholder="Email" required>
                         </div>
 
                         <div class="input-group">
-                            <input type="password" id="passwordInput" placeholder="Password" required>
+                            <input type="password" id="passwordInput" name="password" placeholder="Password" required>
                         </div>
-
-                        <!-- <div class="input-group">
-                            <select required>
-                                <option value="" disabled selected>Select User Type</option>
-                                <option value="volunteer">Volunteer</option>
-                                <option value="donor">Donor</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div> -->
 
                         <button type="submit" class="submit-btn">Login</button>
                     </form>
@@ -104,43 +96,7 @@
     </footer>
 
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const email = document.getElementById("emailInput").value;
-            const password = document.getElementById("passwordInput").value;
-
-            if (email === "admin@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/adminhome";
-            }
-            else if (email === "ngo@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/ngohome";
-            }
-            else if (email === "donar@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/donorhome";
-            }
-            else if (email === "regulardonar@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/regulardonorhome";
-            }
-            else if (email === "volunteer@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/volunteerhome";
-            }
-            else if (email === "b4login@gmail.com" && password === "humanitybridge") {
-                window.location.href = "/";
-            }
-            else {
-                alert("Invalid Email or Password!");
-            }
-        });
-
-        // const hamburger = document.querySelector('.hamburger');
-        // const nav = document.querySelector('nav');
-
-        // if (hamburger) {
-        //     hamburger.addEventListener('click', () => {
-        //         hamburger.classList.toggle('active');
-        //         nav.classList.toggle('active');
-        //     });
-        // }
+        // Form submits naturally to the POST /login Flask backend
     </script>
         <script src="{{url_for('static',filename='headerfooter/nav.js')}}"></script>
 

@@ -1,6 +1,6 @@
 from flask import Flask, render_template,request, redirect
 import mysql.connector
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db=mysql.connector.connect(
     host='127.0.0.1',
@@ -406,6 +406,56 @@ def signup():
         return render_template('beforelogin_Script_html/signup1.html', message=f"Database error: {err.msg}")
 
     return render_template('beforelogin_Script_html/signup1.html', message="Signup Successful")
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+
+    # Hardcoded fallbacks
+    if email == "admin@gmail.com" and password == "humanitybridge":
+        return redirect('/adminhome')
+    elif email == "ngo@gmail.com" and password == "humanitybridge":
+        return redirect('/ngohome')
+    elif email == "donar@gmail.com" and password == "humanitybridge":
+        return redirect('/donorhome')
+    elif email == "regulardonar@gmail.com" and password == "humanitybridge":
+        return redirect('/regulardonorhome')
+    elif email == "volunteer@gmail.com" and password == "humanitybridge":
+        return redirect('/volunteerhome')
+    elif email == "b4login@gmail.com" and password == "humanitybridge":
+        return redirect('/')
+
+    # Check database tables
+    cursor = db.cursor()
+
+    # 1. Check donors table
+    cursor.execute("SELECT password FROM donors WHERE email = %s", (email,))
+    row = cursor.fetchone()
+    if row:
+        hashed_password = row[0]
+        if check_password_hash(hashed_password, password):
+            cursor.close()
+            return redirect('/donorhome')
+        else:
+            cursor.close()
+            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+
+    # 2. Check volunteers table
+    cursor.execute("SELECT password FROM volunteers WHERE email = %s", (email,))
+    row = cursor.fetchone()
+    if row:
+        hashed_password = row[0]
+        if check_password_hash(hashed_password, password):
+            cursor.close()
+            return redirect('/volunteerhome')
+        else:
+            cursor.close()
+            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+
+    cursor.close()
+    return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
 
 
