@@ -353,17 +353,15 @@ def admin_verification():
 def admin_view():
     return render_template('admin_Script_html/view_pg.html')
 
-@app.route('/adminview_partners')
-def admin_view_partners():
-    return render_template('admin_Script_html/view_partners.html')
+
 
 
 
 
 
 # sending data to database
-from flask import request, redirect, render_template
-
+# from flask import request, redirect, render_template
+# signup donor & volunteer
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -413,7 +411,7 @@ def login():
     email = request.form['email']
     password = request.form['password']
 
-    # Hardcoded fallbacks
+# static values for testing
     if email == "admin@gmail.com" and password == "humanitybridge":
         return redirect('/adminhome')
     elif email == "ngo@gmail.com" and password == "humanitybridge":
@@ -427,10 +425,10 @@ def login():
     elif email == "b4login@gmail.com" and password == "humanitybridge":
         return redirect('/')
 
-    # Check database tables
+    #database tables
     cursor = db.cursor()
 
-    # 1. Check donors table
+    #donors table
     cursor.execute("SELECT password FROM donors WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
@@ -442,7 +440,7 @@ def login():
             cursor.close()
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
-    # 2. Check volunteers table
+    #volunteers table
     cursor.execute("SELECT password FROM volunteers WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
@@ -454,8 +452,112 @@ def login():
             cursor.close()
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
+    #regulardonors table
+    cursor.execute("SELECT password FROM regulardonors WHERE email = %s", (email,))
+    row = cursor.fetchone()
+    if row:
+        hashed_password = row[0]
+        if check_password_hash(hashed_password, password):
+            cursor.close()
+            return redirect('/regulardonorhome')
+        else:
+            cursor.close()
+            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+
+    #ngo_receivers table
+    cursor.execute("SELECT password FROM ngo_receivers WHERE email = %s", (email,))
+    row = cursor.fetchone()
+    if row:
+        hashed_password = row[0]
+        if check_password_hash(hashed_password, password):
+            cursor.close()
+            return redirect('/ngohome')
+        else:
+            cursor.close()
+            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+
     cursor.close()
     return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+
+
+
+
+
+
+# admin add partners
+
+
+@app.route('/adminadd_partner', methods=['POST'])
+def admin_add_partner_post():
+    partner_type = request.form.get('partner_Type') or request.form.get('partner_type')
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    city = request.form.get('city')
+    pincode = request.form.get('pincode')
+    registration_number = request.form.get('registration_number')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if password != confirm_password:
+        return render_template('admin_Script_html/add_partner.html', message="Passwords do not match")
+
+    hashed_password = generate_password_hash(password)
+
+    try:
+        cursor = db.cursor()
+
+        if partner_type == "donor" or partner_type == "Regular donor":
+            organization_type = request.form.get('organization_type')
+            cursor.execute("""
+                INSERT INTO regulardonors (partner_type, name, organization_type, phone, email, city, pincode, registration_number, password)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ("Regular donor", name, organization_type, phone, email, city, pincode, registration_number, hashed_password))
+
+        elif partner_type == "ngo" or partner_type == "NGO/Receiver":
+            cursor.execute("""
+                INSERT INTO ngo_receivers (partner_type, name, phone, email, city, pincode, registration_no, password)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, ("NGO/Receiver", name, phone, email, city, pincode, registration_number, hashed_password))
+
+        db.commit()
+        cursor.close()
+    except mysql.connector.Error as err:
+        if err.errno == 1062:
+            return render_template('admin_Script_html/add_partner.html', message="Email or phone number already registered")
+        return render_template('admin_Script_html/add_partner.html', message=f"Database error: {err.msg}")
+    except Exception as e:
+        print("General Exception in admin_add_partner_post:", e)
+        return render_template('admin_Script_html/add_partner.html', message=f"Error: {e}")
+
+    return render_template('admin_Script_html/add_partner.html', message="Partner Added Successfully")
+
+
+@app.route('/adminview_partners')
+def admin_view_partners():
+    try:
+        cursor = db.cursor(dictionary=True)
+        # Fetch from regulardonors table
+        cursor.execute("SELECT name, 'donor' as type, organization_type as orgType, phone as contact, email, city, pincode as area, registration_number as regNum, 'Approved' as status FROM regulardonors")
+        regulardonors_data = cursor.fetchall()
+        
+        # Fetch from ngo_receivers table
+        cursor.execute("SELECT name, 'ngo' as type, '' as orgType, phone as contact, email, city, pincode as area, registration_no as regNum, 'Approved' as status FROM ngo_receivers")
+        ngo_receivers_data = cursor.fetchall()
+        
+        partners = regulardonors_data + ngo_receivers_data
+        cursor.close()
+    except Exception as e:
+        partners = []
+        print("Database error in view partners:", e)
+        
+    return render_template('admin_Script_html/view_partners.html', db_partners=partners)
+
+
+
+
+
+
 
 
 
@@ -491,4 +593,4 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

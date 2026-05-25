@@ -300,58 +300,12 @@
     </footer>
 
     <script>
-        const defaultPartners = [
-            {
-                name: "Reddy Hostel",
-                type: "donor",
-                orgType: "Hostel",
-                contact: "+91 9876543210",
-                city: "Mumbai",
-                area: "400001",
-                regNum: "REG123",
-                status: "Approved"
-            },
-            {
-                name: "Hope Community Center",
-                type: "ngo",
-                orgType: "",
-                contact: "+91 8765432109",
-                city: "Delhi",
-                area: "110001",
-                regNum: "NGO567",
-                status: "Approved"
-            },
-            {
-                name: "Archana",
-                type: "donor",
-                orgType: "Restaurant",
-                contact: "archana@gmail.com",
-                city: "Nizamabad",
-                area: "503001",
-                regNum: "REG789",
-                status: "Approved"
-            },
-            {
-                name: "Srujan NGO",
-                type: "ngo",
-                orgType: "",
-                contact: "+91 9963318973",
-                city: "Nirmal",
-                area: "504106",
-                regNum: "NGO999",
-                status: "Approved"
-            }
-        ];
+        const dbPartners = {{ db_partners | tojson | safe }} || [];
 
         let currentFilter = 'all';
 
         function getPartners() {
-            let list = localStorage.getItem('partners');
-            if (!list) {
-                localStorage.setItem('partners', JSON.stringify(defaultPartners));
-                return defaultPartners;
-            }
-            return JSON.parse(list);
+            return dbPartners;
         }
 
         function renderPartnersTable(searchText = '') {
@@ -395,8 +349,17 @@
                 `;
                 tbody.appendChild(tr);
             });
+
+            // Add total row at the end of the table
+            const totalTr = document.createElement('tr');
+            totalTr.innerHTML = `
+                <td style="font-weight: bold; background: #f8f5fd; color: #4e025f;">Total Partners</td>
+                <td colspan="5" style="font-weight: bold; background: #f8f5fd; color: #831b9a;">${filtered.length}</td>
+            `;
+            tbody.appendChild(totalTr);
         }
 
+        // Toggles type filtering
         function filterPartners(type, btnElement) {
             currentFilter = type;
 
@@ -408,6 +371,7 @@
             renderPartnersTable();
         }
 
+        // Handles search input typing
         function handlePartnerSearch() {
             const searchText = document.getElementById('partnerSearchInput').value;
             renderPartnersTable(searchText);
