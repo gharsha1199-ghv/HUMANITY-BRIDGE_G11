@@ -230,3 +230,36 @@ body {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+
+/* Login Segmented Tabs Styles */
+.login-tabs {
+    display: flex;
+    background-color: #f1f0f6;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.tab-btn.active {
+    background-color: white;
+    color: #48348a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn:hover:not(.active) {
+    color: #48348a;
+}

@@ -58,6 +58,11 @@
                 <div class="login-card">
                     <h2>Login</h2>
                     
+                    <div class="login-tabs">
+                        <button type="button" class="tab-btn active" data-tab="individuals">Individuals</button>
+                        <button type="button" class="tab-btn" data-tab="partners">Partners</button>
+                    </div>
+                    
                     {% if error %}
                     <div class="alert-message error">
                         {{ error }}
@@ -66,7 +71,11 @@
 
                     <form id="loginForm" method="POST" action="/login">
                         <div class="input-group">
-                            <input type="email" id="emailInput" name="email" placeholder="Email" required>
+                            <input type="text" id="emailInput" name="email" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="input-group" id="regNoGroup" style="display: none;">
+                            <input type="text" id="regNoInput" name="reg_no" placeholder="Registration ID / Number">
                         </div>
 
                         <div class="input-group">
@@ -77,7 +86,12 @@
                     </form>
 
                     <div class="form-footer">
-                        <p>Don't have account? <a href="/signup">Sign up</a></p><br>
+                        <div id="signupFooter">
+                            <p>Don't have account? <a href="/signup">Sign up</a></p><br>
+                        </div>
+                        <div id="partnerNotice" style="display: none; margin-bottom: 20px; font-size: 0.88rem; color: #666; line-height: 1.4;">
+                            <p>NGOs and Regular Donors are registered by the administrator. Please contact the administrator for your login credentials.</p><br>
+                        </div>
                         <a href="#" class="forgot-pass">Forgot password?</a>
 
                         <div class="social-icons">
@@ -96,7 +110,36 @@
     </footer>
 
     <script>
-        // Form submits naturally to the POST /login Flask backend
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const emailInput = document.getElementById('emailInput');
+            const regNoGroup = document.getElementById('regNoGroup');
+            const regNoInput = document.getElementById('regNoInput');
+            const signupFooter = document.getElementById('signupFooter');
+            const partnerNotice = document.getElementById('partnerNotice');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const tabType = this.getAttribute('data-tab');
+                    if (tabType === 'individuals') {
+                        emailInput.placeholder = "Email Address";
+                        regNoGroup.style.display = 'none';
+                        regNoInput.removeAttribute('required');
+                        signupFooter.style.display = 'block';
+                        partnerNotice.style.display = 'none';
+                    } else {
+                        emailInput.placeholder = "Email Address";
+                        regNoGroup.style.display = 'block';
+                        regNoInput.setAttribute('required', 'required');
+                        signupFooter.style.display = 'none';
+                        partnerNotice.style.display = 'block';
+                    }
+                });
+            });
+        });
     </script>
         <script src="{{url_for('static',filename='headerfooter/nav.js')}}"></script>
 

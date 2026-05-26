@@ -412,6 +412,7 @@ def signup():
 def login():
     email = request.form['email']
     password = request.form['password']
+    reg_no = request.form.get('reg_no')
 
 # static values for testing
     if email == "admin@gmail.com" and password == "humanitybridge":
@@ -419,9 +420,9 @@ def login():
         session['email'] = email
         session['role'] = "admin"
         return redirect('/adminhome')
-    elif email == "ngo@gmail.com" and password == "humanitybridge":
+    elif email == "ngo@gmail.com" and reg_no == "123456" and password == "humanitybridge":
         session['name'] = "Sunshine Orphanage"
-        session['email'] = email
+        session['email'] = "ngo@gmail.com"
         session['phone'] = "+91 90123 45678"
         session['city'] = "Hyderabad"
         session['pincode'] = "500001"
@@ -435,9 +436,9 @@ def login():
         session['pincode'] = "500001"
         session['role'] = "donor"
         return redirect('/donorhome')
-    elif email == "regulardonar@gmail.com" and password == "humanitybridge":
+    elif email == "regulardonar@gmail.com" and reg_no == "123456" and password == "humanitybridge":
         session['name'] = "Santhosh Dhaba"
-        session['email'] = email
+        session['email'] = "regulardonar@gmail.com"
         session['phone'] = "+91 99999 88888"
         session['city'] = "Hyderabad"
         session['pincode'] = "500001"
@@ -497,40 +498,42 @@ def login():
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     #regulardonors table
-    cursor.execute("SELECT password, name, phone, email, city, pincode FROM regulardonors WHERE email = %s", (email,))
-    row = cursor.fetchone()
-    if row:
-        hashed_password = row[0]
-        if check_password_hash(hashed_password, password):
-            session['name'] = row[1]
-            session['phone'] = row[2]
-            session['email'] = row[3]
-            session['city'] = row[4]
-            session['pincode'] = row[5]
-            session['role'] = "regulardonor"
-            cursor.close()
-            return redirect('/regulardonorhome')
-        else:
-            cursor.close()
-            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+    if reg_no:
+        cursor.execute("SELECT password, name, phone, email, city, pincode FROM regulardonors WHERE email = %s AND registration_number = %s", (email, reg_no))
+        row = cursor.fetchone()
+        if row:
+            hashed_password = row[0]
+            if check_password_hash(hashed_password, password):
+                session['name'] = row[1]
+                session['phone'] = row[2]
+                session['email'] = row[3]
+                session['city'] = row[4]
+                session['pincode'] = row[5]
+                session['role'] = "regulardonor"
+                cursor.close()
+                return redirect('/regulardonorhome')
+            else:
+                cursor.close()
+                return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     #ngo_receivers table
-    cursor.execute("SELECT password, name, phone, email, city, pincode FROM ngo_receivers WHERE email = %s", (email,))
-    row = cursor.fetchone()
-    if row:
-        hashed_password = row[0]
-        if check_password_hash(hashed_password, password):
-            session['name'] = row[1]
-            session['phone'] = row[2]
-            session['email'] = row[3]
-            session['city'] = row[4]
-            session['pincode'] = row[5]
-            session['role'] = "ngo"
-            cursor.close()
-            return redirect('/ngohome')
-        else:
-            cursor.close()
-            return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
+    if reg_no:
+        cursor.execute("SELECT password, name, phone, email, city, pincode FROM ngo_receivers WHERE email = %s AND registration_no = %s", (email, reg_no))
+        row = cursor.fetchone()
+        if row:
+            hashed_password = row[0]
+            if check_password_hash(hashed_password, password):
+                session['name'] = row[1]
+                session['phone'] = row[2]
+                session['email'] = row[3]
+                session['city'] = row[4]
+                session['pincode'] = row[5]
+                session['role'] = "ngo"
+                cursor.close()
+                return redirect('/ngohome')
+            else:
+                cursor.close()
+                return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     cursor.close()
     return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
