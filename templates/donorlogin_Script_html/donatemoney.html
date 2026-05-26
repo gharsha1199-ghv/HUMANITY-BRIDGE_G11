@@ -56,50 +56,66 @@
 
             <div class="form-card">
                 <h2>Money Donation</h2>
-                <div class="form-group">
-                    <label class="section-title">Donation Amount</label>
+                <form id="moneyForm" method="POST" action="/donordonatemoney">
+                    <div class="form-group">
+                        <label class="section-title">Donation Amount</label>
 
-                    <div class="amount-buttons">
-                        <button>Rs. 10</button>
-                        <button>Rs. 50</button>
-                        <button>Rs. 100</button>
-                        <button>Rs. 250</button>
-                        <button>Rs. 500</button>
+                        <div class="amount-buttons">
+                            <button type="button" class="amt-btn" data-amount="10">Rs. 10</button>
+                            <button type="button" class="amt-btn" data-amount="50">Rs. 50</button>
+                            <button type="button" class="amt-btn" data-amount="100">Rs. 100</button>
+                            <button type="button" class="amt-btn" data-amount="250">Rs. 250</button>
+                            <button type="button" class="amt-btn" data-amount="500">Rs. 500</button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Other</label>
-                    <div class="currency-input">
-                        <span>Rs.</span>
-                        <input type="number" placeholder="">
+                    <div class="form-group">
+                        <label>Other</label>
+                        <div class="currency-input">
+                            <span>Rs.</span>
+                            <input type="number" id="customAmount" name="amount" min="10" placeholder="" required>
+                        </div>
+                        <small>Minimum donation Rs. 10</small>
                     </div>
-                    <small>Minimum donation Rs. 10</small>
-                </div>
 
-                <div class="form-group">
-                    <label class="section-title">Purpose of Contribution</label>
-                    <select>
-                        <option>Maintenance of collection and distribution</option>
-                        <option>Support for the needy</option>
-                        <option>Where it is most needed</option>
-                    </select>
-                    <small>
-                        All contributions are used responsibly and transparently.
-                    </small>
-                </div>
+                    <div class="form-group">
+                        <label class="section-title">Purpose of Contribution</label>
+                        <select name="purpose" required>
+                            <option value="Maintenance of collection and distribution">Maintenance of collection and distribution</option>
+                            <option value="Support for the needy">Support for the needy</option>
+                            <option value="Where it is most needed">Where it is most needed</option>
+                        </select>
+                        <small>
+                            All contributions are used responsibly and transparently.
+                        </small>
+                    </div>
 
-                <div class="form-group confirm">
-                    <label>
-                        <input type="checkbox" checked>
-                        I understand my contribution will be used
-                        <strong>responsibly</strong> for verified collection,
-                        distribution, and support.
-                    </label>
-                </div>
+                    <div class="form-group">
+                        <label class="section-title">Payment Method</label>
+                        <select name="payment_method" id="paymentMethod" required>
+                            <option value="gpay">GPay</option>
+                            <option value="phonepe">PhonePe</option>
+                            <option value="netbanking">Net Banking</option>
+                            <option value="card">Credit/Debit Card</option>
+                        </select>
+                    </div>
 
-                <a href="/donorformsubmit"><button class="submit-btn">Donate Money Responsibly</button></a>
+                    <div class="form-group" id="upiGroup">
+                        <label>UPI ID</label>
+                        <input type="text" name="upi_id" id="upiId" placeholder="yourname@upi" required style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; outline: none; color: #555;">
+                    </div>
 
+                    <div class="form-group confirm">
+                        <label>
+                            <input type="checkbox" required checked>
+                            I understand my contribution will be used
+                            <strong>responsibly</strong> for verified collection,
+                            distribution, and support.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Donate Money Responsibly</button>
+                </form>
             </div>
 
         </div>
@@ -108,6 +124,36 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
     <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Amount buttons handler
+            const amtButtons = document.querySelectorAll('.amt-btn');
+            const customAmount = document.getElementById('customAmount');
 
+            amtButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    customAmount.value = this.getAttribute('data-amount');
+                });
+            });
+
+            // Payment method dynamic fields handler
+            const paymentMethod = document.getElementById('paymentMethod');
+            const upiGroup = document.getElementById('upiGroup');
+            const upiId = document.getElementById('upiId');
+
+            function toggleUpi() {
+                if (paymentMethod.value === 'gpay' || paymentMethod.value === 'phonepe') {
+                    upiGroup.style.display = 'block';
+                    upiId.setAttribute('required', 'required');
+                } else {
+                    upiGroup.style.display = 'none';
+                    upiId.removeAttribute('required');
+                }
+            }
+
+            paymentMethod.addEventListener('change', toggleUpi);
+            toggleUpi(); // run initially
+        });
+    </script>
+</body>
 </html>

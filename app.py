@@ -95,16 +95,143 @@ def donorlogin_about():
 def donorlogin_donate():
     return render_template('donorlogin_Script_html/donate_pg.html')
 
-@app.route('/donordonatecloths')
+@app.route('/donordonatecloths', methods=['GET', 'POST'])
 def donorlogin_donatecloths():
+    if request.method == 'POST':
+        donor_name = request.form.get('donor_name') or session.get('name', 'Anonymous')
+        phone = request.form.get('phone') or session.get('phone', '0000000000')
+        city = request.form.get('city') or session.get('city', 'Hyderabad')
+        pincode = request.form.get('pincode') or session.get('pincode', '500001')
+        full_address = request.form.get('full_address') or session.get('address', 'Online Contribution')
+        
+        target_groups = request.form.getlist('target_group')
+        target_group_str = ','.join(target_groups)
+        
+        clothing_category = request.form.get('clothing_category')
+        condition_type = request.form.get('condition_type')
+        
+        quantity = request.form.get('quantity')
+        try:
+            quantity = int(quantity) if quantity else None
+        except ValueError:
+            quantity = None
+            
+        is_clean = 1 if request.form.get('is_clean') in ['1', 'true', 'on'] else 0
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO donor_donations (
+                    donation_type, donor_name, phone, city, pincode, full_address,
+                    target_group, clothing_category, condition_type, quantity, is_clean
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                'clothes', donor_name, phone, city, pincode, full_address,
+                target_group_str, clothing_category, condition_type, quantity, is_clean
+            ))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in clothes donation:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/donorformsubmit')
+        
     return render_template('donorlogin_Script_html/donatecloths_pg.html')
 
-@app.route('/donordonatefood')
+@app.route('/donordonatefood', methods=['GET', 'POST'])
 def donorlogin_donatefood():
+    if request.method == 'POST':
+        food_category = request.form.get('food_category')
+        donor_name = request.form.get('donor_name') or session.get('name', 'Anonymous')
+        phone = request.form.get('phone') or session.get('phone', '0000000000')
+        city = request.form.get('city') or session.get('city', 'Hyderabad')
+        pincode = request.form.get('pincode') or session.get('pincode', '500001')
+        full_address = request.form.get('full_address') or session.get('address', 'Online Contribution')
+        
+        expiry_date = request.form.get('expiry_date')
+        if not expiry_date:
+            expiry_date = None
+        expiry_time = request.form.get('expiry_time')
+        if not expiry_time:
+            expiry_time = None
+            
+        food_quantity = request.form.get('food_quantity')
+        food_unit = request.form.get('food_unit')
+        description_notes = request.form.get('description_notes')
+        if food_quantity and food_unit:
+            description = f"Quantity: {food_quantity} {food_unit}. Details: {description_notes or ''}"
+        else:
+            description = description_notes or ''
+        
+        is_hygienic = 1 if request.form.get('is_hygienic') in ['1', 'true', 'on'] else 0
+        prepared_time = request.form.get('prepared_time')
+        if not prepared_time:
+            prepared_time = None
+        pickup_time = request.form.get('pickup_time')
+        if not pickup_time:
+            pickup_time = None
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO donor_donations (
+                    donation_type, donor_name, phone, city, pincode, full_address,
+                    food_category, expiry_date, expiry_time, description, is_hygienic, 
+                    prepared_time, pickup_time
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                'food', donor_name, phone, city, pincode, full_address,
+                food_category, expiry_date, expiry_time, description, is_hygienic,
+                prepared_time, pickup_time
+            ))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in food donation:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/donorformsubmit')
+        
     return render_template('donorlogin_Script_html/donatefood_pg.html')
 
-@app.route('/donordonatemoney')
+@app.route('/donordonatemoney', methods=['GET', 'POST'])
 def donorlogin_donatemoney():
+    if request.method == 'POST':
+        amount = request.form.get('amount')
+        try:
+            amount = float(amount) if amount else None
+        except ValueError:
+            amount = None
+        purpose = request.form.get('purpose')
+        payment_method = request.form.get('payment_method')
+        upi_id = request.form.get('upi_id')
+        
+        donor_name = session.get('name', 'Anonymous')
+        phone = session.get('phone', '0000000000')
+        city = session.get('city', 'Hyderabad')
+        pincode = session.get('pincode', '500001')
+        full_address = session.get('address', 'Online Contribution')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO donor_donations (
+                    donation_type, donor_name, phone, city, pincode, full_address, 
+                    amount, purpose, payment_method, upi_id
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                'money', donor_name, phone, city, pincode, full_address,
+                amount, purpose, payment_method, upi_id
+            ))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in money donation:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/donorformsubmit')
+        
     return render_template('donorlogin_Script_html/donatemoney.html')
 
 @app.route('/donordonation_history')

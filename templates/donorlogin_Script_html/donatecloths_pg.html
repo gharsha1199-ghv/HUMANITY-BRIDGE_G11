@@ -56,59 +56,68 @@
 
             <div class="form-card">
                 <h2>Clothes Donation</h2>
-
-                <div class="form-group">
-                    <label>Type of Clothes</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox"> Men</label>
-                        <label><input type="checkbox"> Women</label>
-                        <label><input type="checkbox"> Children</label>
+                <form id="clothesForm" method="POST" action="/donordonatecloths">
+                    <div class="form-group">
+                        <label>Type of Clothes</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="target_group" value="men"> Men</label>
+                            <label><input type="checkbox" name="target_group" value="women"> Women</label>
+                            <label><input type="checkbox" name="target_group" value="children"> Children</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Clothing Category</label>
-                    <select>
-                        <option>Select Category</option>
-                        <option>Tops</option>
-                        <option>Bottoms</option>
-                        <option>Outerwear</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Condition of Clothes</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="condition"> New (unused)</label>
-                        <label><input type="radio" name="condition"> Gently used (good condition)</label>
-                        <label><input type="radio" name="condition" checked> Heavily used (not accepted)</label>
-                    </div>
-                    <small>We accept only wearable clothes to maintain dignity.</small>
-                </div>
-
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="number" placeholder="Approximate number of items">
-                </div>
-
-                <div class="form-group checkbox-confirm">
-                    <label>
-                        <input type="checkbox" checked>
-                        I confirm the clothes are clean, washed, and ready to wear.
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>Pickup Location</label>
-                    <div class="location-group">
-                        <input type="text" placeholder="City">
-                        <select>
-                            <option>Area / Pincode</option>
+                    <div class="form-group">
+                        <label>Clothing Category</label>
+                        <select name="clothing_category" required>
+                            <option value="">Select Category</option>
+                            <option value="Tops">Tops</option>
+                            <option value="Bottoms">Bottoms</option>
+                            <option value="Outerwear">Outerwear</option>
                         </select>
                     </div>
-                </div>
 
-                <a href="/donorformsubmit"><button class="submit-btn">Donate Clothes Responsibly</button></a>
+                    <div class="form-group">
+                        <label>Condition of Clothes</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="condition_type" value="new"> New (unused)</label>
+                            <label><input type="radio" name="condition_type" value="gently_used" checked> Gently used (good condition)</label>
+                        </div>
+                        <small>We accept only wearable clothes to maintain dignity.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" min="1" placeholder="Approximate number of items" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Donor Details</label>
+                        <div class="location-group" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="donorName" name="donor_name" placeholder="Name" required style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #555;">
+                            <input type="tel" id="donorPhone" name="phone" placeholder="Phone" required style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #555;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pickup Location</label>
+                        <div class="location-group" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="donorCity" name="city" placeholder="City" required style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #555;">
+                            <input type="text" id="donorPincode" name="pincode" placeholder="Pincode" required style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #555;">
+                        </div>
+                        <div>
+                            <input type="text" id="pickupAddress" name="full_address" placeholder="Pickup Address" required style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #555;">
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-confirm">
+                        <label>
+                            <input type="checkbox" name="is_clean" value="1" required checked>
+                            I confirm the clothes are clean, washed, and ready to wear.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Donate Clothes Responsibly</button>
+                </form>
             </div>
 
         </div>

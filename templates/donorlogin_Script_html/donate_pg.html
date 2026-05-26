@@ -310,6 +310,10 @@
             <div class="form-block">
               <h3>Pickup Address</h3>
               <div class="grid-2">
+                <input type="text" id="clothesDonorName" placeholder="Donor Name">
+                <input type="tel" id="clothesDonorPhone" placeholder="Phone Number">
+              </div>
+              <div class="grid-2 mt-10">
                 <input type="text" id="clothesCity" placeholder="City">
                 <input type="number" id="clothesPincode" placeholder="Pincode">
               </div>
@@ -422,6 +426,24 @@
   <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // Fetch user info to pre-fill donor details
+      fetch('/api/user-info')
+        .then(response => response.json())
+        .then(data => {
+          if (data.logged_in) {
+            if (document.getElementById('foodDonorName')) document.getElementById('foodDonorName').value = data.name || '';
+            if (document.getElementById('foodDonorPhone')) document.getElementById('foodDonorPhone').value = data.phone || '';
+            if (document.getElementById('foodCity')) document.getElementById('foodCity').value = data.city || '';
+            if (document.getElementById('foodPincode')) document.getElementById('foodPincode').value = data.pincode || '';
+
+            if (document.getElementById('clothesDonorName')) document.getElementById('clothesDonorName').value = data.name || '';
+            if (document.getElementById('clothesDonorPhone')) document.getElementById('clothesDonorPhone').value = data.phone || '';
+            if (document.getElementById('clothesCity')) document.getElementById('clothesCity').value = data.city || '';
+            if (document.getElementById('clothesPincode')) document.getElementById('clothesPincode').value = data.pincode || '';
+          }
+        })
+        .catch(err => console.error('Error fetching user info for pre-fill:', err));
+
       const typeRadios = document.querySelectorAll('input[name="donationType"]');
       const fieldsMoney = document.getElementById('fields_money');
       const fieldsFood = document.getElementById('fields_food');
@@ -593,11 +615,50 @@
 
       // Simulate Successful Payment Completion
       const completePaymentSimulation = () => {
+        // Collect form data
+        const amtValue = parseFloat(moneyInput.value);
+        const purpose = document.getElementById('moneyPurpose').value;
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        let upiId = '';
+        if (paymentMethod === 'gpay') {
+          upiId = document.getElementById('gpayUpi').value.trim();
+        } else if (paymentMethod === 'phonepe') {
+          upiId = document.getElementById('phonepeUpi').value.trim();
+        }
+
+        const formData = new URLSearchParams();
+        formData.append('amount', amtValue);
+        formData.append('purpose', purpose);
+        formData.append('payment_method', paymentMethod);
+        formData.append('upi_id', upiId);
+
+        // First transition modal step to show success authorization locally
         switchModalStep('success');
         document.getElementById('txId').innerText = 'TXN' + Math.floor(1000000000 + Math.random() * 9000000000);
-        setTimeout(() => {
-          window.location.href = '/donorformsubmit';
-        }, 2200);
+
+        // POST the donation to the backend
+        fetch('/donordonatemoney', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: formData
+        })
+        .then(response => {
+          if (response.ok) {
+            setTimeout(() => {
+              window.location.href = '/donorformsubmit';
+            }, 2200);
+          } else {
+            alert('Failed to record donation in database. Please try again.');
+            closeModal();
+          }
+        })
+        .catch(err => {
+          console.error('Error posting money donation:', err);
+          alert('Network error occurred. Please try again.');
+          closeModal();
+        });
       };
 
       // Approve Simulated Actions
@@ -634,10 +695,61 @@
             alert("Please confirm that the food is safe and stored hygienically.");
             return;
           }
-          alert("Donation request for food submitted successfully!\nThank you for your responsible contribution.");
-          setTimeout(() => {
-            window.location.href = '/donorformsubmit';
-          }, 1000);
+
+          const foodCategory = document.getElementById('foodCategory').value;
+          const expiryDate = document.getElementById('foodExpiryDate').value;
+          const expiryTime = document.getElementById('foodExpiryTime').value;
+          const foodDesc = document.getElementById('foodDesc').value;
+          const foodPackedProperly = document.getElementById('foodPackedProperly').checked ? '1' : '0';
+          const foodAvailableFrom = document.getElementById('foodAvailableFrom').value;
+          const foodAvailableTill = document.getElementById('foodAvailableTill').value;
+          const foodDonorName = document.getElementById('foodDonorName').value.trim();
+          const foodDonorPhone = document.getElementById('foodDonorPhone').value.trim();
+          const foodCity = document.getElementById('foodCity').value.trim();
+          const foodPincode = document.getElementById('foodPincode').value.trim();
+          const foodAddress = document.getElementById('foodAddress').value.trim();
+
+          // Validation of required fields
+          if (!foodCategory || !foodDonorName || !foodDonorPhone || !foodCity || !foodPincode || !foodAddress) {
+            alert("Please fill in all required fields (Category, Name, Phone, City, Pincode, Address).");
+            return;
+          }
+
+          const formData = new URLSearchParams();
+          formData.append('food_category', foodCategory);
+          formData.append('expiry_date', expiryDate);
+          formData.append('expiry_time', expiryTime);
+          formData.append('description_notes', foodDesc);
+          formData.append('is_hygienic', foodPackedProperly);
+          formData.append('prepared_time', foodAvailableFrom);
+          formData.append('pickup_time', foodAvailableTill);
+          formData.append('donor_name', foodDonorName);
+          formData.append('phone', foodDonorPhone);
+          formData.append('city', foodCity);
+          formData.append('pincode', foodPincode);
+          formData.append('full_address', foodAddress);
+
+          fetch('/donordonatefood', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+              alert("Donation request for food submitted successfully!\nThank you for your responsible contribution.");
+              window.location.href = '/donorformsubmit';
+            } else {
+              response.text().then(text => {
+                alert("Failed to submit food donation: " + text);
+              });
+            }
+          })
+          .catch(err => {
+            console.error('Error posting food donation:', err);
+            alert("Network error. Please try again.");
+          });
           return;
         }
 
@@ -646,10 +758,62 @@
             alert("Please confirm the clothes are clean, washed, and ready to wear.");
             return;
           }
-          alert("Donation request for clothes submitted successfully!\nThank you for your responsible contribution.");
-          setTimeout(() => {
-            window.location.href = '/donorformsubmit';
-          }, 1000);
+
+          const clothesConditionEl = document.querySelector('input[name="clothesCondition"]:checked');
+          const conditionType = clothesConditionEl ? clothesConditionEl.value : 'good';
+          if (conditionType === 'heavy') {
+            alert("We do not accept heavily used clothes.");
+            return;
+          }
+
+          const targetGroups = Array.from(document.querySelectorAll('#fields_clothes .row-check input[type="checkbox"]:checked')).map(el => el.value);
+          const clothingCategory = document.getElementById('clothesCategory').value;
+          const quantity = document.getElementById('clothesQuantity').value;
+          const clothesDonorName = document.getElementById('clothesDonorName').value.trim();
+          const clothesDonorPhone = document.getElementById('clothesDonorPhone').value.trim();
+          const clothesCity = document.getElementById('clothesCity').value.trim();
+          const clothesPincode = document.getElementById('clothesPincode').value.trim();
+          const clothesAddress = document.getElementById('clothesAddress').value.trim();
+
+          // Validation of required fields
+          if (!clothingCategory || !clothesDonorName || !clothesDonorPhone || !clothesCity || !clothesPincode || !clothesAddress) {
+            alert("Please fill in all required fields (Category, Name, Phone, City, Pincode, Address).");
+            return;
+          }
+
+          const formData = new URLSearchParams();
+          targetGroups.forEach(tg => formData.append('target_group', tg));
+          formData.append('clothing_category', clothingCategory);
+          formData.append('condition_type', conditionType === 'good' ? 'gently_used' : conditionType);
+          formData.append('quantity', quantity);
+          formData.append('is_clean', '1');
+          formData.append('donor_name', clothesDonorName);
+          formData.append('phone', clothesDonorPhone);
+          formData.append('city', clothesCity);
+          formData.append('pincode', clothesPincode);
+          formData.append('full_address', clothesAddress);
+
+          fetch('/donordonatecloths', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+              alert("Donation request for clothes submitted successfully!\nThank you for your responsible contribution.");
+              window.location.href = '/donorformsubmit';
+            } else {
+              response.text().then(text => {
+                alert("Failed to submit clothes donation: " + text);
+              });
+            }
+          })
+          .catch(err => {
+            console.error('Error posting clothes donation:', err);
+            alert("Network error. Please try again.");
+          });
           return;
         }
 
