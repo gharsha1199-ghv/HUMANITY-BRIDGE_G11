@@ -91,24 +91,35 @@
 
 
             <div class="controls">
-            <select>
-              <option>2026</option>
-              <option>2025</option>
-              <option>2024</option>
-            </select>
+             <select id="yearFilter">
+               <option value="all">All Years</option>
+               <option value="2026">2026</option>
+               <option value="2025">2025</option>
+               <option value="2024">2024</option>
+             </select>
 
-            <select>
-              <option>January </option>
-              <option>February</option>
-              <option>December </option>
-              <option>November </option>
-            </select>
+             <select id="monthFilter">
+               <option value="all">All Months</option>
+               <option value="January">January</option>
+               <option value="February">February</option>
+               <option value="March">March</option>
+               <option value="April">April</option>
+               <option value="May">May</option>
+               <option value="June">June</option>
+               <option value="July">July</option>
+               <option value="August">August</option>
+               <option value="September">September</option>
+               <option value="October">October</option>
+               <option value="November">November</option>
+               <option value="December">December</option>
+             </select>
 
-            <select>
-              <option>Food</option>
-              <option>Clothes</option>
-              <option>Money</option>
-            </select>
+             <select id="typeFilter">
+               <option value="all">All Types</option>
+               <option value="Food">Food</option>
+               <option value="Clothes">Clothes</option>
+               <option value="Money">Money</option>
+             </select>
                 <!-- <button class="export-btn">Export</button> -->
             </div>
 
@@ -124,47 +135,39 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Jan 30</td>
-                            <td>ABC Orphanage</td>
-                            <td>Groceries</td>
+                    <tbody id="requestsTableBody">
+                        {% for request in requests %}
+                        <tr data-year="{{ request.created_at.strftime('%Y') if request.created_at else '' }}" 
+                            data-month="{{ request.created_at.strftime('%B') if request.created_at else '' }}" 
+                            data-type="{{ request.request_type }}">
+                            <td>{{ request.formatted_date }}</td>
+                            <td>{{ request.ngo_name }}</td>
+                            <td>{{ request.requirement }}</td>
                             
-                            <td>Lokeshwaram</td>
-                            <td><span class="status pending">Pending</span></td>
+                            <td>{{ request.city }}</td>
+                            <td>
+                                <span class="status {{ request.status.lower().replace(' ', '').replace('the', '') }}">{{ request.status }}</span>
+                                <div class="status-actions" style="margin-top: 5px; font-size: 0.75rem; display: flex; gap: 6px; flex-wrap: wrap;">
+                                  {% if request.status != 'Approved' and request.status != 'Completed' %}
+                                    <a href="/admin/request/{{ request.id }}/approve" style="color: green; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-check"></i> Approve</a>
+                                  {% endif %}
+                                  {% if request.status == 'Approved' %}
+                                    <a href="/admin/request/{{ request.id }}/onway" style="color: blue; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-truck"></i> Ship</a>
+                                  {% endif %}
+                                  {% if request.status == 'On The Way' %}
+                                    <a href="/admin/request/{{ request.id }}/complete" style="color: purple; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Complete</a>
+                                  {% endif %}
+                                  {% if request.status == 'Pending' %}
+                                    <a href="/admin/request/{{ request.id }}/reject" style="color: red; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-xmark"></i> Reject</a>
+                                  {% endif %}
+                                </div>
+                            </td>
                         </tr>
+                        {% else %}
                         <tr>
-                            <td>Jan 28</td>
-                            <td>Vivekanandha ashram</td>
-                            <td>Rs. 100000</td>
-                            
-                            <td>Puspur</td>
-                            <td><span class="status approved">Approved</span></td>
+                            <td colspan="5" style="text-align: center; color: #aaa; padding: 20px;">No requests found in the database.</td>
                         </tr>
-                        <tr>
-                            <td>Jan 25</td>
-                            <td>Maya Patel children home</td>
-                            <td>75 Bags</td>
-                            
-                            <td>Kamol</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>Jan 24</td>
-                            <td>Vidhatreya old age home</td>
-                            <td>Groceries</td>
-                            
-                            <td>Kompally</td>
-                            <td><span class="status onway">On The Way</span></td>
-                        </tr>
-                        <tr>
-                            <td>Jan 20</td>
-                            <td>gandhi home</td>
-                            <td>Groceries</td>
-                            
-                            <td>Gadchandha</td>
-                            <td><span class="status approved">Approved</span></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -176,6 +179,30 @@
     </footer>
 
     <script>
+        function filterRequests() {
+            const yearVal = document.getElementById('yearFilter').value;
+            const monthVal = document.getElementById('monthFilter').value;
+            const typeVal = document.getElementById('typeFilter').value;
+            
+            const rows = document.querySelectorAll('#requestsTableBody tr');
+            rows.forEach(row => {
+                if (row.cells.length === 1) return;
+                const year = row.getAttribute('data-year');
+                const month = row.getAttribute('data-month');
+                const type = row.getAttribute('data-type');
+                
+                let show = true;
+                if (yearVal !== 'all' && year !== yearVal) show = false;
+                if (monthVal !== 'all' && month !== monthVal) show = false;
+                if (typeVal !== 'all' && type !== typeVal) show = false;
+                
+                row.style.display = show ? '' : 'none';
+            });
+        }
+        
+        document.getElementById('yearFilter').addEventListener('change', filterRequests);
+        document.getElementById('monthFilter').addEventListener('change', filterRequests);
+        document.getElementById('typeFilter').addEventListener('change', filterRequests);
         const toggleBtn = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');

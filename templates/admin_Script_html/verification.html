@@ -127,84 +127,39 @@
           </thead>
 
           <tbody>
+            {% for user in users %}
             <tr>
-              <td>01/02/2026</td>
-              <td>Individual Donor</td>
-              <td class="name">harsha</td>
-              <td>+91 9014815790</td>
-              <td>Hyderabad</td>
-              <td>500001</td>
-              <!-- <td><span class="status pending">Pending</span></td> -->
+              <td>{{ user.formatted_date }}</td>
+              <td>{{ user.user_type }}</td>
+              <td class="name">{{ user.name }}</td>
+              <td>{{ user.contact }}</td>
+              <td>{{ user.city }}</td>
+              <td>{{ user.pincode }}</td>
               <td>
-                <a href="/adminview"> <button class="btn view">View</button></a>
-                <!-- <button class="btn approve">Approve</button>
-                <button class="btn reject">Reject</button> -->
+                <div style="display: flex; gap: 5px; align-items: center; justify-content: center;">
+                  <a href="/adminview?type={{ user.user_type_raw }}&id={{ user.id }}">
+                    <button class="btn view" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
+                  </a>
+                  {% if user.status == 'Pending' %}
+                    <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/approve">
+                      <button class="btn approve" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Approve</button>
+                    </a>
+                    <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/reject">
+                      <button class="btn reject" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Reject</button>
+                    </a>
+                  {% elif user.status == 'Approved' %}
+                    <span style="color: #28a745; font-weight: 500; font-size: 0.9rem;"><i class="fa-solid fa-circle-check"></i> Approved</span>
+                  {% else %}
+                    <span style="color: #dc3545; font-weight: 500; font-size: 0.9rem;"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>
+                  {% endif %}
+                </div>
               </td>
             </tr>
-
+            {% else %}
             <tr>
-              <td>01/01/2026</td>
-              <td>Volunteer</td>
-              <td class="name">Archana</td>
-              <td>archana@gmail.com</td>
-              <td>nizamabad</td>
-              <td>503001</td>
-              <!-- <td><span class="status approved">Approved</span></td> -->
-              <!-- <td>
-              
-                <button class="btn approve">
-                  <i class="fa-solid fa-check"></i>
-                </button>
-              </td> -->
-
-              <td>
-                <!-- <a href="/adminview"> <button class="btn view">View</button></a> -->
-                <button class="btn approve">Approved</button>
-                <!-- <button class="btn reject">Reject</button> -->
-              </td>
+              <td colspan="7" style="text-align: center; color: #aaa; padding: 20px;">No registration records found in the database.</td>
             </tr>
-
-            <tr>
-              <td>01/04/2025</td>
-              <td>Volunteer</td>
-              <td class="name">Srujan</td>
-              <td>+91 9963318973</td>
-              <td>nirmal</td>
-              <td>504106</td>
-              <!-- <td><span class="status rejected">Rejected</span></td> -->
-              <td>
-                <button class="btn reject">Rejected</button>
-              </td>
-            </tr>
-            <tr>
-              <td>01/12/2025</td>
-              <td>Individual Donor</td>
-              <td class="name">Bharath</td>
-              <td>+91 7093704749 </td>
-              <td>Bhainsa</td>
-              <td>500001</td>
-              <!-- <td><span class="status pending">Pending</span></td> -->
-              <td>
-                <button class="btn view">View</button>
-                <!-- <button class="btn approve">Approve</button>
-                <button class="btn reject">Reject</button> -->
-              </td>
-            </tr>
-            <tr>
-              <td>01/12/2025</td>
-              <td>Individual Donor</td>
-              <td class="name">lahari</td>
-              <td>+91 8456945922</td>
-              <td>Medchal</td>
-              <td>500001</td>
-              <!-- <td><span class="status pending">Pending</span></td> -->
-              <td>
-                <button class="btn view">View</button>
-                <!-- <button class="btn approve">Approve</button>
-                <button class="btn reject">Reject</button> -->
-              </td>
-            </tr>
-
+            {% endfor %}
           </tbody>
         </table>
 

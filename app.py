@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 db=mysql.connector.connect(
     host='127.0.0.1',
@@ -19,8 +20,8 @@ app.secret_key = 'humanity_bridge_secret_key'
 
 
 
-
-# before login pages
+ 
+                                                         # before login pages
 
 @app.route('/')
 def home():
@@ -74,7 +75,7 @@ def beforelogin_signupvolunteer():
 
 
 
-# donor login pages
+                                                              # donor login pages
 
 
 @app.route('/donardashboard')
@@ -263,7 +264,7 @@ def donorlogin_ourwork():
 
 
 
-# regular donor login pages
+                                                      # regular donor login pages
 
 
 
@@ -416,7 +417,7 @@ def regulardonar_regulardonarverification():
 
 
 
-# ngo login pages
+                                                     # ngo login pages
 
 
 @app.route('/ngoabout')
@@ -439,14 +440,18 @@ def ngo_gethelp_clothes():
         additional_details = request.form.get('additional_details') or ''
         agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
         
+        ngo_name = session.get('name', 'Anonymous NGO')
+        city = session.get('city', 'Hyderabad')
+        pincode = session.get('pincode', '500001')
+        
         try:
             cursor = db.cursor()
             cursor.execute("""
                 INSERT INTO ngo_requests (
                     request_type, meals_needed, clothing_items, amount_needed,
-                    urgency, additional_details, agreement_checked
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, ('Clothes', '', clothing_items, 0.00, urgency, additional_details, agreement_checked))
+                    urgency, additional_details, agreement_checked, ngo_name, city, pincode
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Clothes', '', clothing_items, 0.00, urgency, additional_details, agreement_checked, ngo_name, city, pincode))
             db.commit()
             cursor.close()
         except mysql.connector.Error as err:
@@ -465,14 +470,18 @@ def ngo_gethelp_food():
         additional_details = request.form.get('additional_details') or ''
         agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
         
+        ngo_name = session.get('name', 'Anonymous NGO')
+        city = session.get('city', 'Hyderabad')
+        pincode = session.get('pincode', '500001')
+        
         try:
             cursor = db.cursor()
             cursor.execute("""
                 INSERT INTO ngo_requests (
                     request_type, meals_needed, clothing_items, amount_needed,
-                    urgency, additional_details, agreement_checked
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, ('Food', meals_needed, '', 0.00, urgency, additional_details, agreement_checked))
+                    urgency, additional_details, agreement_checked, ngo_name, city, pincode
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Food', meals_needed, '', 0.00, urgency, additional_details, agreement_checked, ngo_name, city, pincode))
             db.commit()
             cursor.close()
         except mysql.connector.Error as err:
@@ -495,14 +504,18 @@ def ngo_gethelp_money():
         additional_details = request.form.get('additional_details') or ''
         agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
         
+        ngo_name = session.get('name', 'Anonymous NGO')
+        city = session.get('city', 'Hyderabad')
+        pincode = session.get('pincode', '500001')
+        
         try:
             cursor = db.cursor()
             cursor.execute("""
                 INSERT INTO ngo_requests (
                     request_type, meals_needed, clothing_items, amount_needed,
-                    urgency, additional_details, agreement_checked
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, ('Money', '', '', amount_needed, urgency, additional_details, agreement_checked))
+                    urgency, additional_details, agreement_checked, ngo_name, city, pincode
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Money', '', '', amount_needed, urgency, additional_details, agreement_checked, ngo_name, city, pincode))
             db.commit()
             cursor.close()
         except mysql.connector.Error as err:
@@ -548,7 +561,7 @@ def ngo_recieverdash():
 
 
 
-# volunteer login pages
+                                                        # volunteer login pages
 
 
 @app.route('/volunteerhome')
@@ -575,7 +588,7 @@ def volunteer_volunteer_history():
 
 
 
-# admin login pages
+                                                         # admin login pages
 
 
 @app.route('/adminabout')
@@ -600,7 +613,52 @@ def admin_admin_history():
 
 @app.route('/admindonations')
 def admin_donations():
-    return render_template('admin_Script_html/donations.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, donation_type, donor_name, phone, city, pincode, full_address, amount, quantity, created_at, status FROM donor_donations")
+        donations1 = cursor.fetchall()
+        for d in donations1:
+            d['source'] = 'donor'
+            if d['created_at']:
+                d['formatted_date'] = d['created_at'].strftime('%d/%m/%Y')
+            else:
+                d['formatted_date'] = 'N/A'
+            d['formatted_type'] = d['donation_type'].capitalize()
+            if d['donation_type'] == 'money':
+                d['qty_details'] = f"Rs. {int(d['amount'] or 0)}"
+            elif d['donation_type'] == 'food':
+                q = d['quantity'] or 0
+                d['qty_details'] = f"{q} Meals"
+            else:
+                q = d['quantity'] or 0
+                d['qty_details'] = f"{q} Bags"
+                
+        cursor.execute("SELECT id, donation_type, donor_name, phone, city, pincode, full_address, amount, quantity, created_at, status FROM regular_donor_donations")
+        donations2 = cursor.fetchall()
+        for d in donations2:
+            d['source'] = 'regular'
+            if d['created_at']:
+                d['formatted_date'] = d['created_at'].strftime('%d/%m/%Y')
+            else:
+                d['formatted_date'] = 'N/A'
+            d['formatted_type'] = d['donation_type'].capitalize()
+            if d['donation_type'] == 'money':
+                d['qty_details'] = f"Rs. {int(d['amount'] or 0)}"
+            elif d['donation_type'] == 'food':
+                q = d['quantity'] or 0
+                d['qty_details'] = f"{q} Meals"
+            else:
+                q = d['quantity'] or 0
+                d['qty_details'] = f"{q} Bags"
+                
+        donations = donations1 + donations2
+        donations.sort(key=lambda x: x['created_at'] or datetime.min, reverse=True)
+        cursor.close()
+    except Exception as e:
+        donations = []
+        print("Error fetching admin donations:", e)
+        
+    return render_template('admin_Script_html/donations.html', donations=donations)
 
 @app.route('/admindonations_pie')
 def admin_donations_pie():
@@ -616,7 +674,108 @@ def admin_graph():
 
 @app.route('/adminhome')
 def admin_index():
-    return render_template('admin_Script_html/index.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        
+        # 1. Total donations (sum of money)
+        cursor.execute("SELECT SUM(amount) as s FROM donor_donations WHERE donation_type = 'money'")
+        sum1 = cursor.fetchone()['s'] or 0
+        cursor.execute("SELECT SUM(amount) as s FROM regular_donor_donations WHERE donation_type = 'money'")
+        sum2 = cursor.fetchone()['s'] or 0
+        total_donations_val = sum1 + sum2
+        total_donations = f"₹{total_donations_val:,.2f}"
+        
+        # 2. Successful Receivers (NGOs count)
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_receivers")
+        total_receivers = cursor.fetchone()['c']
+        
+        # 3. Meals Served
+        cursor.execute("SELECT SUM(quantity) as q FROM donor_donations WHERE donation_type = 'food'")
+        q1 = cursor.fetchone()['q'] or 0
+        cursor.execute("SELECT SUM(quantity) as q FROM regular_donor_donations WHERE donation_type = 'food'")
+        q2 = cursor.fetchone()['q'] or 0
+        meals_served = int(q1 + q2)
+        
+        # 4. Funds Utilised (Approved money requests)
+        cursor.execute("SELECT SUM(amount_needed) as s FROM ngo_requests WHERE request_type = 'Money' AND status = 'Approved'")
+        funds_utilised_val = cursor.fetchone()['s'] or 0
+        funds_utilised = f"₹{funds_utilised_val:,.2f}"
+        
+        # 5. Clothes Donated
+        cursor.execute("SELECT SUM(quantity) as q FROM donor_donations WHERE donation_type = 'clothes'")
+        clothes_donated = int(cursor.fetchone()['q'] or 0)
+        
+        # 6. Pending/Approved counts
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE status = 'Pending'")
+        pd1 = cursor.fetchone()['c']
+        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE status = 'Pending'")
+        pd2 = cursor.fetchone()['c']
+        pending_donations_count = pd1 + pd2
+        
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE status = 'Pending'")
+        pending_requests_count = cursor.fetchone()['c']
+        
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE status = 'Approved'")
+        ad1 = cursor.fetchone()['c']
+        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE status = 'Approved'")
+        ad2 = cursor.fetchone()['c']
+        approved_donations_count = ad1 + ad2
+        
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE status = 'Approved'")
+        approved_requests_count = cursor.fetchone()['c']
+        
+        # 7. Pending Verifications (list)
+        pending_verifications = []
+        cursor.execute("SELECT id, name, 'Individual Donor' as type, 'donor' as type_raw FROM donors WHERE status = 'Pending'")
+        pending_verifications.extend(cursor.fetchall())
+        cursor.execute("SELECT id, name, 'Volunteer' as type, 'volunteer' as type_raw FROM volunteers WHERE status = 'Pending'")
+        pending_verifications.extend(cursor.fetchall())
+        cursor.execute("SELECT id, name, 'Regular Donor' as type, 'regulardonor' as type_raw FROM regulardonors WHERE status = 'Pending'")
+        pending_verifications.extend(cursor.fetchall())
+        cursor.execute("SELECT id, name, 'NGO Receiver' as type, 'ngo' as type_raw FROM ngo_receivers WHERE status = 'Pending'")
+        pending_verifications.extend(cursor.fetchall())
+        
+        # 8. Tracking stats
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE status = 'Assigned'")
+        assigned_deliveries_count = cursor.fetchone()['c']
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE status IN ('On The Way', 'In Transit')")
+        transit_deliveries_count = cursor.fetchone()['c']
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE status = 'Delivered'")
+        delivered_deliveries_count = cursor.fetchone()['c']
+        
+        cursor.close()
+    except Exception as e:
+        print("Error in admin_index stats:", e)
+        total_donations = "₹0.00"
+        total_receivers = 0
+        meals_served = 0
+        funds_utilised = "₹0.00"
+        clothes_donated = 0
+        pending_donations_count = 0
+        pending_requests_count = 0
+        approved_donations_count = 0
+        approved_requests_count = 0
+        pending_verifications = []
+        assigned_deliveries_count = 0
+        transit_deliveries_count = 0
+        delivered_deliveries_count = 0
+        
+    return render_template(
+        'admin_Script_html/index.html',
+        total_donations=total_donations,
+        total_receivers=total_receivers,
+        meals_served=meals_served,
+        funds_utilised=funds_utilised,
+        clothes_donated=clothes_donated,
+        pending_donations_count=pending_donations_count,
+        pending_requests_count=pending_requests_count,
+        approved_donations_count=approved_donations_count,
+        approved_requests_count=approved_requests_count,
+        pending_verifications=pending_verifications,
+        assigned_deliveries_count=assigned_deliveries_count,
+        transit_deliveries_count=transit_deliveries_count,
+        delivered_deliveries_count=delivered_deliveries_count
+    )
 
 @app.route('/adminmyaccount')
 def admin_myaccount():
@@ -628,19 +787,186 @@ def admin_ourwork():
 
 @app.route('/adminrequestpage')
 def admin_requestpage():
-    return render_template('admin_Script_html/requestpage.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, request_type, meals_needed, clothing_items, amount_needed, urgency, additional_details, agreement_checked, created_at, status, ngo_name, city, pincode FROM ngo_requests ORDER BY created_at DESC")
+        requests_list = cursor.fetchall()
+        for r in requests_list:
+            if r['created_at']:
+                r['formatted_date'] = r['created_at'].strftime('%b %d')
+            else:
+                r['formatted_date'] = 'N/A'
+            if r['request_type'] == 'Food':
+                r['requirement'] = r['meals_needed'] or 'Groceries'
+            elif r['request_type'] == 'Clothes':
+                r['requirement'] = r['clothing_items'] or 'Clothes'
+            else:
+                r['requirement'] = f"Rs. {int(r['amount_needed'] or 0)}"
+        cursor.close()
+    except Exception as e:
+        requests_list = []
+        print("Error fetching NGO requests:", e)
+        
+    return render_template('admin_Script_html/requestpage.html', requests=requests_list)
 
 @app.route('/admintracking')
 def admin_tracking():
-    return render_template('admin_Script_html/tracking.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, delivery_id, date, receiver_name, location, donation_type, quantity_details, volunteer_name, status FROM deliveries ORDER BY created_at DESC")
+        deliveries = cursor.fetchall()
+        for d in deliveries:
+            if d['date']:
+                d['formatted_date'] = d['date'].strftime('%Y-%m-%d')
+            else:
+                d['formatted_date'] = 'N/A'
+        cursor.close()
+    except Exception as e:
+        deliveries = []
+        print("Error fetching deliveries:", e)
+        
+    return render_template('admin_Script_html/tracking.html', deliveries=deliveries)
 
 @app.route('/adminverification')
 def admin_verification():
-    return render_template('admin_Script_html/verification.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        users = []
+        
+        cursor.execute("SELECT id, name, phone, email, city, pincode, created_at, status FROM donors")
+        rows = cursor.fetchall()
+        for r in rows:
+            r['user_type'] = 'Individual Donor'
+            r['user_type_raw'] = 'donor'
+            r['contact'] = r['phone'] or r['email']
+            r['formatted_date'] = r['created_at'].strftime('%d/%m/%Y') if r['created_at'] else 'N/A'
+            users.append(r)
+            
+        cursor.execute("SELECT id, name, phone, email, city, pincode, created_at, status FROM volunteers")
+        rows = cursor.fetchall()
+        for r in rows:
+            r['user_type'] = 'Volunteer'
+            r['user_type_raw'] = 'volunteer'
+            r['contact'] = r['phone'] or r['email']
+            r['formatted_date'] = r['created_at'].strftime('%d/%m/%Y') if r['created_at'] else 'N/A'
+            users.append(r)
+            
+        cursor.execute("SELECT id, name, phone, email, city, pincode, created_at, status FROM regulardonors")
+        rows = cursor.fetchall()
+        for r in rows:
+            r['user_type'] = 'Regular Donor'
+            r['user_type_raw'] = 'regulardonor'
+            r['contact'] = r['phone'] or r['email']
+            r['formatted_date'] = r['created_at'].strftime('%d/%m/%Y') if r['created_at'] else 'N/A'
+            users.append(r)
+            
+        cursor.execute("SELECT id, name, phone, email, city, pincode, created_at, status FROM ngo_receivers")
+        rows = cursor.fetchall()
+        for r in rows:
+            r['user_type'] = 'NGO Receiver'
+            r['user_type_raw'] = 'ngo'
+            r['contact'] = r['phone'] or r['email']
+            r['formatted_date'] = r['created_at'].strftime('%d/%m/%Y') if r['created_at'] else 'N/A'
+            users.append(r)
+            
+        users.sort(key=lambda x: x['created_at'] or datetime.min, reverse=True)
+        cursor.close()
+    except Exception as e:
+        users = []
+        print("Error fetching verification users:", e)
+        
+    return render_template('admin_Script_html/verification.html', users=users)
 
 @app.route('/adminview')
 def admin_view():
-    return render_template('admin_Script_html/view_pg.html')
+    user_type = request.args.get('type')
+    user_id = request.args.get('id')
+    user_details = {}
+    
+    if user_type and user_id:
+        try:
+            cursor = db.cursor(dictionary=True)
+            table_map = {
+                'donor': 'donors',
+                'volunteer': 'volunteers',
+                'regulardonor': 'regulardonors',
+                'ngo': 'ngo_receivers'
+            }
+            table_name = table_map.get(user_type)
+            if table_name:
+                cursor.execute(f"SELECT * FROM {table_name} WHERE id = %s", (user_id,))
+                user_details = cursor.fetchone() or {}
+                if user_details:
+                    user_details['type_raw'] = user_type
+                    user_details['type_display'] = user_type.replace('regular', 'Regular ').replace('ngo', 'NGO Receiver').capitalize()
+            cursor.close()
+        except Exception as e:
+            print("Error fetching user view details:", e)
+            
+    return render_template('admin_Script_html/view_pg.html', user=user_details)
+
+@app.route('/admin/verify/<user_type>/<int:user_id>/<action>')
+def admin_verify_user(user_type, user_id, action):
+    table_map = {
+        'donor': 'donors',
+        'volunteer': 'volunteers',
+        'regulardonor': 'regulardonors',
+        'ngo': 'ngo_receivers'
+    }
+    table_name = table_map.get(user_type)
+    status_val = 'Approved' if action == 'approve' else 'Rejected'
+    
+    if table_name:
+        try:
+            cursor = db.cursor()
+            cursor.execute(f"UPDATE {table_name} SET status = %s WHERE id = %s", (status_val, user_id))
+            db.commit()
+            cursor.close()
+        except Exception as e:
+            print("Error verifying user:", e)
+            
+    return redirect('/adminverification')
+
+@app.route('/admin/donation/<source>/<int:donation_id>/<action>')
+def admin_update_donation(source, donation_id, action):
+    table_name = 'donor_donations' if source == 'donor' else 'regular_donor_donations'
+    status_map = {
+        'approve': 'Approved',
+        'onway': 'On The Way',
+        'complete': 'Completed',
+        'reject': 'Rejected'
+    }
+    status_val = status_map.get(action, 'Pending')
+    
+    try:
+        cursor = db.cursor()
+        cursor.execute(f"UPDATE {table_name} SET status = %s WHERE id = %s", (status_val, donation_id))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error updating donation status:", e)
+        
+    return redirect('/admindonations')
+
+@app.route('/admin/request/<int:request_id>/<action>')
+def admin_update_request(request_id, action):
+    status_map = {
+        'approve': 'Approved',
+        'onway': 'On The Way',
+        'complete': 'Completed',
+        'reject': 'Rejected'
+    }
+    status_val = status_map.get(action, 'Pending')
+    
+    try:
+        cursor = db.cursor()
+        cursor.execute("UPDATE ngo_requests SET status = %s WHERE id = %s", (status_val, request_id))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error updating request status:", e)
+        
+    return redirect('/adminrequestpage')
 
 
 
@@ -648,9 +974,8 @@ def admin_view():
 
 
 
-# sending data to database
-# from flask import request, redirect, render_template
-# signup donor & volunteer
+                                                      # sending data to database
+
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -701,7 +1026,7 @@ def login():
     password = request.form['password']
     reg_no = request.form.get('reg_no')
 
-# static values for testing
+                                              # static values for testing
     if email == "admin@gmail.com" and password == "humanitybridge":
         session['name'] = "Admin"
         session['email'] = email
@@ -745,10 +1070,9 @@ def login():
         session['role'] = "beforelogin"
         return redirect('/')
 
-    #database tables
     cursor = db.cursor()
 
-    #donors table
+                                                    #donors table
     cursor.execute("SELECT password, name, phone, email, city, pincode FROM donors WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
@@ -766,7 +1090,7 @@ def login():
             cursor.close()
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
-    #volunteers table
+                                                   #volunteers table
     cursor.execute("SELECT password, name, phone, email, city, pincode FROM volunteers WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
@@ -784,7 +1108,7 @@ def login():
             cursor.close()
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
-    #regulardonors table
+                                                     #regulardonors table
     if reg_no:
         cursor.execute("SELECT password, name, phone, email, city, pincode FROM regulardonors WHERE email = %s AND registration_number = %s", (email, reg_no))
         row = cursor.fetchone()
@@ -803,7 +1127,7 @@ def login():
                 cursor.close()
                 return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
-    #ngo_receivers table
+                                                         #ngo_receivers table
     if reg_no:
         cursor.execute("SELECT password, name, phone, email, city, pincode FROM ngo_receivers WHERE email = %s AND registration_no = %s", (email, reg_no))
         row = cursor.fetchone()
@@ -830,7 +1154,7 @@ def login():
 
 
 
-# admin add partners
+                                                    # admin add partners
 
 
 @app.route('/adminadd_partner', methods=['POST'])
@@ -883,12 +1207,10 @@ def admin_add_partner_post():
 def admin_view_partners():
     try:
         cursor = db.cursor(dictionary=True)
-        # Fetch from regulardonors table
-        cursor.execute("SELECT name, 'donor' as type, organization_type as orgType, phone as contact, email, city, pincode as area, registration_number as regNum, 'Approved' as status FROM regulardonors")
+        cursor.execute("SELECT name, 'donor' as type, organization_type as orgType, phone as contact, email, city, pincode as area, registration_number as regNum, status FROM regulardonors")
         regulardonors_data = cursor.fetchall()
         
-        # Fetch from ngo_receivers table
-        cursor.execute("SELECT name, 'ngo' as type, '' as orgType, phone as contact, email, city, pincode as area, registration_no as regNum, 'Approved' as status FROM ngo_receivers")
+        cursor.execute("SELECT name, 'ngo' as type, '' as orgType, phone as contact, email, city, pincode as area, registration_no as regNum, status FROM ngo_receivers")
         ngo_receivers_data = cursor.fetchall()
         
         partners = regulardonors_data + ngo_receivers_data

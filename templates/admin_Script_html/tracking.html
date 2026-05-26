@@ -95,10 +95,10 @@
         <div class="filter-box">
           <select id="statusFilter">
             <option value="all">Status: All</option>
-            <option value="On the Way">On the Way</option>
+            <option value="On The Way">On the Way</option>
             <option value="Delivered">Delivered</option>
           </select>
-          <button class="filter-btn">Filter</button>
+          <button class="filter-btn" onclick="filterTracking()">Filter</button>
         </div>
       </div>
 
@@ -117,58 +117,23 @@
           </tr>
         </thead>
 
-        <tbody>
-          <tr data-status="On the Way">
-            <td>DLV-10245</td>
-            <td>2026-04-24</td>
-            <td>Althamas</td>
-            <td>Nirmal /
-              504106</td>
-            <td><span class="tag food">Food</span></td>
-            <td>120 Meals</td>
-            <td>Venu Gopal</td>
-            <td><span class="status onway">OntheWay</span></td>
-            
+        <tbody id="trackingTableBody">
+          {% for delivery in deliveries %}
+          <tr data-status="{{ delivery.status }}">
+            <td>{{ delivery.delivery_id }}</td>
+            <td>{{ delivery.formatted_date }}</td>
+            <td>{{ delivery.receiver_name }}</td>
+            <td>{{ delivery.location }}</td>
+            <td><span class="tag {{ delivery.donation_type.lower() }}">{{ delivery.donation_type }}</span></td>
+            <td>{{ delivery.quantity_details }}</td>
+            <td>{{ delivery.volunteer_name }}</td>
+            <td><span class="status {{ 'onway' if 'Way' in delivery.status or 'Transit' in delivery.status else 'completed' }}">{{ delivery.status }}</span></td>
           </tr>
-
-          <tr data-status="On the Way">
-            <td>DLV-10232</td>
-            <td>2025-08-24</td>
-            <td>Ravi Kumar</td>
-            <td>Nizamabad / 503001</td>
-            <td><span class="tag clothes">Clothes</span></td>
-            <td>50 Jackets</td>
-            <td>S.Priya</td>
-            <td><span class="status onway">Delivered</span></td>
-            
+          {% else %}
+          <tr>
+            <td colspan="8" style="text-align: center; color: #aaa; padding: 20px;">No deliveries found in the database.</td>
           </tr>
-
-          <tr data-status="Out for Delivery">
-            <td>DLV-10242</td>
-            <td>2025-09-24</td>
-            <td>Nisha</td>
-            <td>Nirmal / 503011</td>
-            <td><span class="tag clothes">Clothes</span></td>
-            <td>50 Jackets</td>
-            <td>S.Priya</td>
-            <td><span class="status onway">Delivered</span></td>
-            
-          </tr>
-
-           <tr data-status="On the Way">
-            <td>DLV-10245</td>
-            <td>2026-04-24</td>
-            <td>Althamas</td>
-            <td>Nirmal /
-              504106</td>
-            <td><span class="tag food">Food</span></td>
-            <td>120 Meals</td>
-            <td>Venu Gopal</td>
-            <td><span class="status onway">OntheWay</span></td>
-            
-          </tr>
-
-          
+          {% endfor %}
         </tbody>
       </table>
 
@@ -180,6 +145,27 @@
   </footer>
 
   <script>
+    function filterTracking() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const statusVal = document.getElementById('statusFilter').value;
+      
+      const rows = document.querySelectorAll('#trackingTableBody tr');
+      rows.forEach(row => {
+        if (row.cells.length === 1) return;
+        const status = row.getAttribute('data-status');
+        const text = row.textContent.toLowerCase();
+        
+        let show = true;
+        if (query && !text.includes(query)) show = false;
+        if (statusVal !== 'all' && status !== statusVal) show = false;
+        
+        row.style.display = show ? '' : 'none';
+      });
+    }
+    
+    document.getElementById('searchInput').addEventListener('input', filterTracking);
+    document.getElementById('statusFilter').addEventListener('change', filterTracking);
+
     const toggleBtn = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');

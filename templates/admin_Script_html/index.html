@@ -97,28 +97,28 @@
 
                     <div class="stat-card">
                         <h4>Total Donations</h4>
-                        <h2>382,450</h2>
+                        <h2>{{ total_donations }}</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
                 <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Successful Receivers</h4>
-                        <h2>27,480</h2>
+                        <h2>{{ total_receivers }}</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
                 <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Meals Served</h4>
-                        <h2>145,300</h2>
+                        <h2>{{ meals_served }}</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
                 <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Funds Utilised</h4>
-                        <h2>289,700</h2>
+                        <h2>{{ funds_utilised }}</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
@@ -126,7 +126,7 @@
                 <a href="/admingraph" class="graph">
                     <div class="stat-card">
                         <h4>Clothes Donated</h4>
-                        <h2>18,900</h2>
+                        <h2>{{ clothes_donated }}</h2>
                         <div class="stat-bar"></div>
                     </div>
                 </a>
@@ -142,8 +142,8 @@
                             <h4>Pending Donations</h4>
                         </div>
                         <div class="card-body center-text">
-                            <h2 class="big-number">32 <span class="sub-text">Pending Approval</span></h2>
-                            <button class="action-btn yellow">Review Pending</button>
+                            <h2 class="big-number">{{ pending_donations_count }} <span class="sub-text">Pending Approval</span></h2>
+                            <a href="/admindonations"><button class="action-btn yellow">Review Pending</button></a>
                         </div>
                     </div>
                     <div class="dash-card">
@@ -151,8 +151,8 @@
                             <h4>Pending Requests</h4>
                         </div>
                         <div class="card-body center-text">
-                            <h2 class="big-number">32 <span class="sub-text">Pending Approval</span></h2>
-                            <button class="action-btn yellow">Review Pending</button>
+                            <h2 class="big-number">{{ pending_requests_count }} <span class="sub-text">Pending Approval</span></h2>
+                            <a href="/adminrequestpage"><button class="action-btn yellow">Review Pending</button></a>
                         </div>
                     </div>
                     <div class="dash-card">
@@ -160,8 +160,8 @@
                             <h4>Approved Donations</h4>
                         </div>
                         <div class="card-body center-text">
-                            <h2 class="big-number">32 <span class="sub-text">Approved</span></h2>
-                            <button class="action-btn green">Approved</button>
+                            <h2 class="big-number">{{ approved_donations_count }} <span class="sub-text">Approved</span></h2>
+                            <a href="/admindonations"><button class="action-btn green">Approved</button></a>
                         </div>
                     </div>
                     <div class="dash-card">
@@ -169,8 +169,8 @@
                             <h4>Approved Requests</h4>
                         </div>
                         <div class="card-body center-text">
-                            <h2 class="big-number">215 <span class="sub-text">Approved</span></h2>
-                            <button class="action-btn green">Approved</button>
+                            <h2 class="big-number">{{ approved_requests_count }} <span class="sub-text">Approved</span></h2>
+                            <a href="/adminrequestpage"><button class="action-btn green">Approved</button></a>
                         </div>
                     </div>
                 </div>
@@ -183,27 +183,39 @@
                 <div class="cards-row two-col">
                     <div class="dash-card">
                         <div class="card-header border-bottom">
-                            <h4>New Donor Verifications</h4>
+                            <h4>New Donor/Volunteer Verifications</h4>
                         </div>
+                        {% for user in pending_verifications if user.type_raw != 'ngo' %}
                         <div class="card-body row-flex">
-                            <span class="user-name">John Smith</span>
+                            <span class="user-name">{{ user.name }} ({{ user.type }})</span>
                             <div class="btn-group">
-                                <button class="sm-btn outline">Verify</button>
-                                <button class="sm-btn blue">View</button>
+                                <a href="/adminview?type={{ user.type_raw }}&id={{ user.id }}" class="sm-btn outline">Verify</a>
+                                <a href="/adminview?type={{ user.type_raw }}&id={{ user.id }}" class="sm-btn blue">View</a>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="card-body row-flex">
+                            <span class="user-name" style="color: #bbb;">No pending donor verifications</span>
+                        </div>
+                        {% endfor %}
                     </div>
                     <div class="dash-card">
                         <div class="card-header border-bottom">
-                            <h4>New Receiver Verifications</h4>
+                            <h4>New NGO/Receiver Verifications</h4>
                         </div>
+                        {% for user in pending_verifications if user.type_raw == 'ngo' %}
                         <div class="card-body row-flex">
-                            <span class="user-name">Hope Community Center</span>
+                            <span class="user-name">{{ user.name }}</span>
                             <div class="btn-group">
-                                <button class="sm-btn outline">Verify</button>
-                                <button class="sm-btn green-fill">View</button>
+                                <a href="/adminview?type={{ user.type_raw }}&id={{ user.id }}" class="sm-btn outline">Verify</a>
+                                <a href="/adminview?type={{ user.type_raw }}&id={{ user.id }}" class="sm-btn green-fill">View</a>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="card-body row-flex">
+                            <span class="user-name" style="color: #bbb;">No pending receiver verifications</span>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -217,8 +229,8 @@
                             <h4>Assigned</h4>
                         </div>
                         <div class="card-body">
-                            <h2 class="med-number">12 <span class="sub-text">Cases</span></h2>
-                            <button class="status-btn yellow-badge"><i class="fa-solid fa-box"></i> Assigned</button>
+                            <h2 class="med-number">{{ assigned_deliveries_count }} <span class="sub-text">Cases</span></h2>
+                            <a href="/admintracking"><button class="status-btn yellow-badge"><i class="fa-solid fa-box"></i> Assigned</button></a>
                         </div>
                     </div>
                     <div class="dash-card">
@@ -226,7 +238,7 @@
                             <h4>In Transit</h4>
                         </div>
                         <div class="card-body">
-                            <h2 class="med-number">8 <span class="sub-text">Shipments</span></h2>
+                            <h2 class="med-number">{{ transit_deliveries_count }} <span class="sub-text">Shipments</span></h2>
                             <div class="loading-line"></div>
                         </div>
                     </div>
@@ -235,8 +247,8 @@
                             <h4>Delivered</h4>
                         </div>
                         <div class="card-body">
-                            <h2 class="med-number">56 <span class="sub-text">Completed</span></h2>
-                            <button class="status-btn green-badge"><i class="fa-solid fa-check"></i> Delivered</button>
+                            <h2 class="med-number">{{ delivered_deliveries_count }} <span class="sub-text">Completed</span></h2>
+                            <a href="/admintracking"><button class="status-btn green-badge"><i class="fa-solid fa-check"></i> Delivered</button></a>
                         </div>
                     </div>
                 </div>

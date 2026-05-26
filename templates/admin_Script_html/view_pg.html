@@ -50,24 +50,31 @@
       </div>
 
       <div class="details">
-        <div><span>Application ID:</span> APL123456</div>
-        <div><span>Applicant Name:</span> Logamwar Omkar</div>
-        <div><span>Phone:</span> +91 8459632587</div>
-        <div><span>Email:</span> logamwaromya@gmail.com</div>
-        <div><span>Role / Type:</span> Regular Donor</div>
-        <div><span>Address:</span> Raju Nagar</div>
-        <div><span>City:</span> Bhainsa</div>
-        <div><span>Pincode:</span> 504103</div>
-        <div><span>Food Type:</span> Dry Goods</div>
-        <div><span>Quantity:</span> 50 Packs</div>
-        <div><span>Expiry Date:</span> 01/05/2026</div>
-        <div><span>Pickup Slot:</span> 2:00 PM - 3:00 PM</div>
-        <div><span>Status:</span> <b id="status">Pending</b></div>
+        <div><span>Applicant ID:</span> {{ user.id }}</div>
+        <div><span>Applicant Name:</span> {{ user.name }}</div>
+        <div><span>Phone:</span> {{ user.phone or 'N/A' }}</div>
+        <div><span>Email:</span> {{ user.email }}</div>
+        <div><span>Role / Type:</span> {{ user.type_display }}</div>
+        <div><span>City:</span> {{ user.city }}</div>
+        <div><span>Pincode:</span> {{ user.pincode }}</div>
+        {% if user.organization_type %}
+          <div><span>Organization Type:</span> {{ user.organization_type }}</div>
+        {% endif %}
+        {% if user.vehicle_type %}
+          <div><span>Vehicle Type:</span> {{ user.vehicle_type }}</div>
+        {% endif %}
+        <div><span>Status:</span> <b id="status" style="color: {% if user.status == 'Approved' %}green{% elif user.status == 'Rejected' %}red{% else %}orange{% endif %};">{{ user.status }}</b></div>
       </div>
 
       <div class="buttons">
-        <button class="approve" onclick="approve()">Approve</button>
-        <button class="reject" onclick="reject()">Reject</button>
+        {% if user.status == 'Pending' %}
+          <a href="/admin/verify/{{ user.type_raw }}/{{ user.id }}/approve"><button class="approve">Approve</button></a>
+          <a href="/admin/verify/{{ user.type_raw }}/{{ user.id }}/reject"><button class="reject">Reject</button></a>
+        {% else %}
+          <div style="font-weight: bold; color: {% if user.status == 'Approved' %}green{% else %}red{% endif %}; padding: 10px; text-align: center;">
+            Verification complete. User is {{ user.status }}.
+          </div>
+        {% endif %}
       </div>
     </div>
   </main>

@@ -90,24 +90,35 @@
           <h2>January 2026</h2>
 
           <div class="controls">
-             <select>
-              <option>2026</option>
-              <option>2025</option>
-              <option>2024</option>
-            </select>
+             <select id="yearFilter">
+               <option value="all">All Years</option>
+               <option value="2026">2026</option>
+               <option value="2025">2025</option>
+               <option value="2024">2024</option>
+             </select>
 
-            <select>
-              <option>January </option>
-              <option>February</option>
-              <option>December </option>
-              <option>November </option>
-            </select>
+             <select id="monthFilter">
+               <option value="all">All Months</option>
+               <option value="January">January</option>
+               <option value="February">February</option>
+               <option value="March">March</option>
+               <option value="April">April</option>
+               <option value="May">May</option>
+               <option value="June">June</option>
+               <option value="July">July</option>
+               <option value="August">August</option>
+               <option value="September">September</option>
+               <option value="October">October</option>
+               <option value="November">November</option>
+               <option value="December">December</option>
+             </select>
 
-            <select>
-              <option>Food</option>
-              <option>Clothes</option>
-              <option>Money</option>
-            </select>
+             <select id="typeFilter">
+               <option value="all">All Types</option>
+               <option value="Food">Food</option>
+               <option value="Clothes">Clothes</option>
+               <option value="Money">Money</option>
+             </select>
 
             <!-- <button class="export-btn">Export</button> -->
           </div>
@@ -125,97 +136,39 @@
             </tr>
           </thead>
 
-          <tbody>
-            <tr>
-              <td>01/02/2026</td>
-              <td>Food</td>
-              <td>Divij</td>
-              <td>100 Meals</td>
-              <td>Adilabad</td>
-              <td><span class="status approved">Approved</span></td>
+          <tbody id="donationsTableBody">
+            {% for donation in donations %}
+            <tr data-year="{{ donation.created_at.strftime('%Y') if donation.created_at else '' }}" 
+                data-month="{{ donation.created_at.strftime('%B') if donation.created_at else '' }}" 
+                data-type="{{ donation.formatted_type }}">
+              <td>{{ donation.formatted_date }}</td>
+              <td>{{ donation.formatted_type }}</td>
+              <td>{{ donation.donor_name }}</td>
+              <td>{{ donation.qty_details }}</td>
+              <td>{{ donation.city }}</td>
+              <td>
+                <span class="status {{ donation.status.lower().replace(' ', '').replace('the', '') }}">{{ donation.status }}</span>
+                <div class="status-actions" style="margin-top: 5px; font-size: 0.75rem; display: flex; gap: 6px; flex-wrap: wrap;">
+                  {% if donation.status != 'Approved' and donation.status != 'Completed' %}
+                    <a href="/admin/donation/{{ donation.source }}/{{ donation.id }}/approve" style="color: green; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-check"></i> Approve</a>
+                  {% endif %}
+                  {% if donation.status == 'Approved' %}
+                    <a href="/admin/donation/{{ donation.source }}/{{ donation.id }}/onway" style="color: blue; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-truck"></i> Ship</a>
+                  {% endif %}
+                  {% if donation.status == 'On The Way' %}
+                    <a href="/admin/donation/{{ donation.source }}/{{ donation.id }}/complete" style="color: purple; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Complete</a>
+                  {% endif %}
+                  {% if donation.status == 'Pending' %}
+                    <a href="/admin/donation/{{ donation.source }}/{{ donation.id }}/reject" style="color: red; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-xmark"></i> Reject</a>
+                  {% endif %}
+                </div>
+              </td>
             </tr>
-
+            {% else %}
             <tr>
-              <td>01/022026</td>
-              <td>Clothes</td>
-              <td>karthikeya</td>
-              <td>75 Bags</td>
-              <td>Basara</td>
-              <td><span class="status onway">On The Way</span></td>
+              <td colspan="6" style="text-align: center; color: #aaa; padding: 20px;">No donations found in the database.</td>
             </tr>
-
-            <tr>
-              <td>03/04/2025</td>
-              <td>Money</td>
-              <td>Vardhan</td>
-              <td>30000</td>
-              <td>Battigalli</td>
-              <td><span class="status completed">Completed</span></td>
-            </tr>
-
-            <tr>
-              <td>02/08/2025</td>
-              <td>Food</td>
-              <td>Adil</td>
-              <td>150 Meals</td>
-              <td>Asad baba nagar</td>
-              <td><span class="status approved">Approved</span></td>
-            </tr>
-
-            <tr>
-              <td>05/01/2026</td>
-              <td>Money</td>
-              <td>Anushka</td>
-              <td>5500</td>
-              <td>Colony</td>
-              <td><span class="status pending">Pending</span></td>
-            </tr>
-
-            <tr>
-              <td>03/06/2025</td>
-              <td>Clothes</td>
-              <td>yuvika</td>
-              <td>80 Bags</td>
-              <td>Barathjinig</td>
-              <td><span class="status completed">Completed</span></td>
-            </tr>
-
-            <tr>
-              <td>06/01/2025</td>
-              <td>Food</td>
-              <td>Samskruthi</td>
-              <td>200 Meals</td>
-              <td>Ram Nagar</td>
-              <td><span class="status onway">On The Way</span></td>
-            </tr>
-
-            <tr>
-              <td>03/05/2026</td>
-              <td>Money</td>
-              <td>Manmai</td>
-              <td>25000</td>
-              <td>Degaon</td>
-              <td><span class="status approved">Approved</span></td>
-            </tr>
-
-            <tr>
-              <td>05/12/2025</td>
-              <td>Food</td>
-              <td>Rama Krishna</td>
-              <td>120 Meals</td>
-              <td>Mategaon</td>
-              <td><span class="status approved">Approved</span></td>
-            </tr>
-
-
-            <tr>
-              <td>03/04/2025</td>
-              <td>Money</td>
-              <td>harsha</td>
-              <td>30000</td>
-              <td>Battigalli</td>
-              <td><span class="status completed">Completed</span></td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -223,13 +176,35 @@
 
     <div class="footer-space"></div>
 
-
-
     <footer>
       <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
     <script>
+      function filterDonations() {
+        const yearVal = document.getElementById('yearFilter').value;
+        const monthVal = document.getElementById('monthFilter').value;
+        const typeVal = document.getElementById('typeFilter').value;
+        
+        const rows = document.querySelectorAll('#donationsTableBody tr');
+        rows.forEach(row => {
+          if (row.cells.length === 1) return; 
+          const year = row.getAttribute('data-year');
+          const month = row.getAttribute('data-month');
+          const type = row.getAttribute('data-type');
+          
+          let show = true;
+          if (yearVal !== 'all' && year !== yearVal) show = false;
+          if (monthVal !== 'all' && month !== monthVal) show = false;
+          if (typeVal !== 'all' && type !== typeVal) show = false;
+          
+          row.style.display = show ? '' : 'none';
+        });
+      }
+      
+      document.getElementById('yearFilter').addEventListener('change', filterDonations);
+      document.getElementById('monthFilter').addEventListener('change', filterDonations);
+      document.getElementById('typeFilter').addEventListener('change', filterDonations);
       const toggleBtn = document.getElementById('sidebarToggle');
       const sidebar = document.getElementById('sidebar');
       const mainContent = document.getElementById('mainContent');
