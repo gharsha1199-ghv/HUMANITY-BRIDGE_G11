@@ -431,16 +431,86 @@ def ngo_formsubmit():
 def ngo_gallery():
     return render_template('ngo_Script_html/gallery_pg.html')
 
-@app.route('/ngogethelp_clothes')
+@app.route('/ngogethelp_clothes', methods=['GET', 'POST'])
 def ngo_gethelp_clothes():
+    if request.method == 'POST':
+        clothing_items = request.form.get('clothing_items') or ''
+        urgency = request.form.get('urgency', 'Normal')
+        additional_details = request.form.get('additional_details') or ''
+        agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO ngo_requests (
+                    request_type, meals_needed, clothing_items, amount_needed,
+                    urgency, additional_details, agreement_checked
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, ('Clothes', '', clothing_items, 0.00, urgency, additional_details, agreement_checked))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in NGO clothes support request:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/ngoformsubmit')
+        
     return render_template('ngo_Script_html/gethelp_clothes.html')
 
-@app.route('/ngogethelp_food')
+@app.route('/ngogethelp_food', methods=['GET', 'POST'])
 def ngo_gethelp_food():
+    if request.method == 'POST':
+        meals_needed = request.form.get('meals_needed') or ''
+        urgency = request.form.get('urgency', 'Normal')
+        additional_details = request.form.get('additional_details') or ''
+        agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO ngo_requests (
+                    request_type, meals_needed, clothing_items, amount_needed,
+                    urgency, additional_details, agreement_checked
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, ('Food', meals_needed, '', 0.00, urgency, additional_details, agreement_checked))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in NGO food support request:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/ngoformsubmit')
+        
     return render_template('ngo_Script_html/gethelp_food.html')
 
-@app.route('/ngogethelp_money')
+@app.route('/ngogethelp_money', methods=['GET', 'POST'])
 def ngo_gethelp_money():
+    if request.method == 'POST':
+        amount_needed = request.form.get('amount_needed')
+        try:
+            amount_needed = float(amount_needed) if amount_needed else 0.00
+        except ValueError:
+            amount_needed = 0.00
+        urgency = request.form.get('urgency', 'Normal')
+        additional_details = request.form.get('additional_details') or ''
+        agreement_checked = 1 if request.form.get('agreement_checked') in ['1', 'true', 'on'] else 0
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO ngo_requests (
+                    request_type, meals_needed, clothing_items, amount_needed,
+                    urgency, additional_details, agreement_checked
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, ('Money', '', '', amount_needed, urgency, additional_details, agreement_checked))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in NGO money support request:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/ngoformsubmit')
+        
     return render_template('ngo_Script_html/gethelp_money.html')
 
 @app.route('/ngogethelp_page')
