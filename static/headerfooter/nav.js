@@ -43,4 +43,59 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Fetch logged-in user information and dynamically update the page
+    fetch('/api/user-info')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logged_in) {
+                // 1. Update navigation username toggle elements
+                const userToggles = document.querySelectorAll('.user-toggle');
+                userToggles.forEach(userToggle => {
+                    userToggle.innerHTML = `${data.name} &#9662;`;
+                });
+
+                // 2. Update My Account profile name elements
+                const profileNames = document.querySelectorAll('.profile-name');
+                profileNames.forEach(profileName => {
+                    profileName.textContent = data.name;
+                });
+
+                // 3. Populate first name and last name input fields
+                const firstNameInput = document.getElementById('firstName');
+                const lastNameInput = document.getElementById('lastName');
+                if (firstNameInput || lastNameInput) {
+                    const nameParts = data.name.split(' ');
+                    if (firstNameInput) {
+                        firstNameInput.value = nameParts[0] || '';
+                    }
+                    if (lastNameInput) {
+                        lastNameInput.value = nameParts.slice(1).join(' ') || '';
+                    }
+                }
+
+                // 4. Populate other input/form fields
+                const nameInput = document.getElementById('name');
+                if (nameInput) nameInput.value = data.name;
+
+                const orgNameInput = document.getElementById('orgName');
+                if (orgNameInput) orgNameInput.value = data.name;
+
+                const businessNameInput = document.getElementById('businessName');
+                if (businessNameInput) businessNameInput.value = data.name;
+
+                const emailInput = document.getElementById('email');
+                if (emailInput) emailInput.value = data.email;
+
+                const phoneInput = document.getElementById('phone');
+                if (phoneInput) phoneInput.value = data.phone;
+
+                const cityInput = document.getElementById('city');
+                if (cityInput) cityInput.value = data.city;
+
+                const pincodeInput = document.getElementById('pincode');
+                if (pincodeInput) pincodeInput.value = data.pincode;
+            }
+        })
+        .catch(err => console.error('Error fetching user info:', err));
 });

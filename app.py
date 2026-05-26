@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request, redirect
+from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,6 +12,7 @@ db=mysql.connector.connect(
 
 
 app = Flask(__name__)
+app.secret_key = 'humanity_bridge_secret_key'
 
 
 
@@ -39,6 +40,7 @@ def beforelogin_gallery():
 
 @app.route('/login')
 def beforelogin_login():
+    session.clear()
     return render_template('beforelogin_Script_html/login_pg.html')
 
 @app.route('/ourwork')
@@ -413,27 +415,63 @@ def login():
 
 # static values for testing
     if email == "admin@gmail.com" and password == "humanitybridge":
+        session['name'] = "Admin"
+        session['email'] = email
+        session['role'] = "admin"
         return redirect('/adminhome')
     elif email == "ngo@gmail.com" and password == "humanitybridge":
+        session['name'] = "Sunshine Orphanage"
+        session['email'] = email
+        session['phone'] = "+91 90123 45678"
+        session['city'] = "Hyderabad"
+        session['pincode'] = "500001"
+        session['role'] = "ngo"
         return redirect('/ngohome')
     elif email == "donar@gmail.com" and password == "humanitybridge":
+        session['name'] = "Harsha Vardhan"
+        session['email'] = email
+        session['phone'] = "+91 98765 43210"
+        session['city'] = "Hyderabad"
+        session['pincode'] = "500001"
+        session['role'] = "donor"
         return redirect('/donorhome')
     elif email == "regulardonar@gmail.com" and password == "humanitybridge":
+        session['name'] = "Santhosh Dhaba"
+        session['email'] = email
+        session['phone'] = "+91 99999 88888"
+        session['city'] = "Hyderabad"
+        session['pincode'] = "500001"
+        session['role'] = "regulardonor"
         return redirect('/regulardonorhome')
     elif email == "volunteer@gmail.com" and password == "humanitybridge":
+        session['name'] = "Volunteer User"
+        session['email'] = email
+        session['phone'] = "+91 88888 77777"
+        session['city'] = "Hyderabad"
+        session['pincode'] = "500001"
+        session['role'] = "volunteer"
         return redirect('/volunteerhome')
     elif email == "b4login@gmail.com" and password == "humanitybridge":
+        session['name'] = "Before Login"
+        session['email'] = email
+        session['role'] = "beforelogin"
         return redirect('/')
 
     #database tables
     cursor = db.cursor()
 
     #donors table
-    cursor.execute("SELECT password FROM donors WHERE email = %s", (email,))
+    cursor.execute("SELECT password, name, phone, email, city, pincode FROM donors WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
         hashed_password = row[0]
         if check_password_hash(hashed_password, password):
+            session['name'] = row[1]
+            session['phone'] = row[2]
+            session['email'] = row[3]
+            session['city'] = row[4]
+            session['pincode'] = row[5]
+            session['role'] = "donor"
             cursor.close()
             return redirect('/donorhome')
         else:
@@ -441,11 +479,17 @@ def login():
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     #volunteers table
-    cursor.execute("SELECT password FROM volunteers WHERE email = %s", (email,))
+    cursor.execute("SELECT password, name, phone, email, city, pincode FROM volunteers WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
         hashed_password = row[0]
         if check_password_hash(hashed_password, password):
+            session['name'] = row[1]
+            session['phone'] = row[2]
+            session['email'] = row[3]
+            session['city'] = row[4]
+            session['pincode'] = row[5]
+            session['role'] = "volunteer"
             cursor.close()
             return redirect('/volunteerhome')
         else:
@@ -453,11 +497,17 @@ def login():
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     #regulardonors table
-    cursor.execute("SELECT password FROM regulardonors WHERE email = %s", (email,))
+    cursor.execute("SELECT password, name, phone, email, city, pincode FROM regulardonors WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
         hashed_password = row[0]
         if check_password_hash(hashed_password, password):
+            session['name'] = row[1]
+            session['phone'] = row[2]
+            session['email'] = row[3]
+            session['city'] = row[4]
+            session['pincode'] = row[5]
+            session['role'] = "regulardonor"
             cursor.close()
             return redirect('/regulardonorhome')
         else:
@@ -465,11 +515,17 @@ def login():
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
     #ngo_receivers table
-    cursor.execute("SELECT password FROM ngo_receivers WHERE email = %s", (email,))
+    cursor.execute("SELECT password, name, phone, email, city, pincode FROM ngo_receivers WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
         hashed_password = row[0]
         if check_password_hash(hashed_password, password):
+            session['name'] = row[1]
+            session['phone'] = row[2]
+            session['email'] = row[3]
+            session['city'] = row[4]
+            session['pincode'] = row[5]
+            session['role'] = "ngo"
             cursor.close()
             return redirect('/ngohome')
         else:
@@ -580,17 +636,20 @@ def admin_view_partners():
 
 
 
-
-
-
-
-
-
-
-
-
-
+@app.route('/api/user-info')
+def get_user_info():
+    if 'name' in session:
+        return {
+            'logged_in': True,
+            'name': session.get('name'),
+            'email': session.get('email'),
+            'phone': session.get('phone', ''),
+            'city': session.get('city', ''),
+            'pincode': session.get('pincode', ''),
+            'role': session.get('role', '')
+        }
+    return {'logged_in': False}
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True)
