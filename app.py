@@ -97,6 +97,8 @@ def donorlogin_donate():
 
 @app.route('/donordonatecloths', methods=['GET', 'POST'])
 def donorlogin_donatecloths():
+    if session.get('role') == 'regulardonor':
+        return redirect('/regulardonorhome')
     if request.method == 'POST':
         donor_name = request.form.get('donor_name') or session.get('name', 'Anonymous')
         phone = request.form.get('phone') or session.get('phone', '0000000000')
@@ -279,14 +281,102 @@ def regulardonar_donate():
 
 @app.route('/regulardonordonatecloths')
 def regulardonar_donatecloths():
-    return render_template('regulardonar_Script_html/donatecloths_pg.html')
+    return redirect('/regulardonorhome')
 
-@app.route('/regulardonordonatefood')
+@app.route('/regulardonordonatefood', methods=['GET', 'POST'])
 def regulardonar_donatefood():
+    if request.method == 'POST':
+        food_type = request.form.get('food_type')
+        food_category = request.form.get('food_category')
+        
+        donor_name = request.form.get('donor_name') or session.get('name', 'Anonymous')
+        phone = request.form.get('phone') or session.get('phone', '0000000000')
+        city = request.form.get('city') or session.get('city', 'Hyderabad')
+        pincode = request.form.get('pincode') or session.get('pincode', '500001')
+        full_address = request.form.get('full_address') or session.get('city', 'Hyderabad')
+        
+        expiry_date = request.form.get('expiry_date')
+        if not expiry_date:
+            expiry_date = None
+        expiry_time = request.form.get('expiry_time')
+        if not expiry_time:
+            expiry_time = None
+            
+        quantity = request.form.get('quantity')
+        try:
+            quantity = int(quantity) if quantity else None
+        except ValueError:
+            quantity = None
+            
+        description = request.form.get('description')
+        is_hygienic = 1 if request.form.get('is_hygienic') in ['1', 'true', 'on'] else 0
+        prepared_time = request.form.get('prepared_time')
+        if not prepared_time:
+            prepared_time = None
+        pickup_time = request.form.get('pickup_time')
+        if not pickup_time:
+            pickup_time = None
+            
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO regular_donor_donations (
+                    donation_type, donor_name, phone, city, pincode, full_address,
+                    food_type, food_category, expiry_date, expiry_time, quantity, 
+                    description, is_hygienic, prepared_time, pickup_time
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                'food', donor_name, phone, city, pincode, full_address,
+                food_type, food_category, expiry_date, expiry_time, quantity,
+                description, is_hygienic, prepared_time, pickup_time
+            ))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in regular food donation:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/regulardonorformsubmit')
+        
     return render_template('regulardonar_Script_html/donatefood_pg.html')
 
-@app.route('/regulardonordonatemoney')
+@app.route('/regulardonordonatemoney', methods=['GET', 'POST'])
 def regulardonar_donatemoney():
+    if request.method == 'POST':
+        amount = request.form.get('amount')
+        try:
+            amount = float(amount) if amount else None
+        except ValueError:
+            amount = None
+        purpose = request.form.get('purpose')
+        payment_method = request.form.get('payment_method')
+        upi_id = request.form.get('upi_id')
+        
+        donor_name = session.get('name', 'Anonymous')
+        phone = session.get('phone', '0000000000')
+        city = session.get('city', 'Hyderabad')
+        pincode = session.get('pincode', '500001')
+        full_address = session.get('address', 'Online Contribution')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                INSERT INTO regular_donor_donations (
+                    donation_type, donor_name, phone, city, pincode, full_address,
+                    amount, purpose, payment_method, upi_id
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                'money', donor_name, phone, city, pincode, full_address,
+                amount, purpose, payment_method, upi_id
+            ))
+            db.commit()
+            cursor.close()
+        except mysql.connector.Error as err:
+            print("Database error in regular money donation:", err)
+            return f"Database error: {err.msg}", 400
+            
+        return redirect('/regulardonorformsubmit')
+        
     return render_template('regulardonar_Script_html/donatemoney.html')
 
 @app.route('/regulardonordonation_history')

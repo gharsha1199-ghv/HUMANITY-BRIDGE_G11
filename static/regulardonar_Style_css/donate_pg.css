@@ -314,4 +314,452 @@ textarea:focus {
   .grid-2 {
     grid-template-columns: 1fr;
   }
+
+  .payment-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .card-inputs-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+  
+  .span-full {
+    grid-column: span 1;
+  }
+}
+
+/* Payment Gateway styling */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.payment-method-card {
+  cursor: pointer;
+  display: block;
+}
+
+.payment-method-card input[type="radio"] {
+  display: none;
+}
+
+.payment-method-card .method-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  height: 75px;
+}
+
+.payment-method-card input[type="radio"]:checked + .method-card-content {
+  border-color: #831b9a;
+  background: #fdf6ff;
+  color: #831b9a;
+  box-shadow: 0 4px 12px rgba(131, 27, 154, 0.12);
+}
+
+.payment-method-card:hover .method-card-content {
+  border-color: #831b9a;
+  transform: translateY(-2px);
+}
+
+.payment-method-card .method-card-content i {
+  font-size: 1.5rem;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+/* Custom form fields */
+.form-group-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-group-custom label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a2c7a;
+}
+
+.form-group-custom input,
+.form-group-custom select {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid #d8d8d8;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.form-group-custom input:focus,
+.form-group-custom select:focus {
+  border-color: #831b9a;
+  box-shadow: 0 0 0 3px rgba(131, 27, 154, 0.16);
+}
+
+.form-group-custom input.input-error,
+.form-group-custom select.input-error {
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
+}
+
+.error-text {
+  font-size: 11px;
+  color: #e53935;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Card Inputs Layout */
+.card-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: #fbf9fc;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #f1ebf5;
+}
+
+.span-full {
+  grid-column: span 2;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper input {
+  padding-right: 40px;
+}
+
+.card-brand-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: #777;
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+/* Modal Overlay Styles */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(42, 4, 74, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.payment-modal-card {
+  background: white;
+  width: 90%;
+  max-width: 440px;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 20px 45px rgba(42, 4, 74, 0.35);
+  color: #2a044a;
+  position: relative;
+  animation: modalZoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalZoomIn {
+  from { opacity: 0; transform: scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-secure-badge {
+  font-size: 12px;
+  color: #1b5e20;
+  background: #e8f5e9;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-secure-badge i {
+  font-size: 13px;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: #666;
+}
+
+.modal-body {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-step-content {
+  text-align: center;
+  animation: stepFadeIn 0.4s ease forwards;
+}
+
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-step-content h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #2a044a;
+}
+
+.modal-step-content p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+/* Spinner */
+.loader-spinner {
+  width: 55px;
+  height: 55px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #831b9a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* UPI Phone Simulation */
+.upi-phone-mock {
+  background: #fbf8ff;
+  border: 1px solid #ebdbff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.upi-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #831b9a;
+  margin-bottom: 10px;
+}
+
+.upi-logo-row i {
+  font-size: 18px;
+}
+
+.upi-amount-pulsing {
+  margin: 15px 0;
+  background: #fdf6ff;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px dashed #dcaeff;
+}
+
+.upi-amount-pulsing span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #831b9a;
+  font-weight: 600;
+}
+
+.upi-amount-pulsing h1 {
+  font-size: 28px;
+  color: #2a044a;
+  margin-top: 4px;
+  animation: pulseScale 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.countdown-timer {
+  font-size: 14px;
+  color: #c62828;
+  font-weight: 700;
+  background: #ffebee;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.simulation-btn {
+  width: 100%;
+  padding: 13px;
+  background: #ffcc00;
+  color: #2a044a;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.2);
+}
+
+.simulation-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+  box-shadow: 0 6px 12px rgba(255, 204, 0, 0.3);
+}
+
+/* Netbanking Simulation */
+.nb-portal-mock {
+  background: #f4f6f9;
+  border: 1px solid #e2e7ed;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.nb-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0d47a1;
+  margin-bottom: 12px;
+}
+
+.nb-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.nb-inputs input {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.nb-inputs input:focus {
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.15);
+}
+
+/* Card OTP Simulation */
+.card-otp-mock {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.card-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #1b5e20;
+  margin-bottom: 12px;
+}
+
+.amount-row {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.otp-input-row {
+  margin: 15px 0;
+}
+
+.otp-input-row input {
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 8px;
+  font-weight: 700;
+  padding: 8px;
+  width: 100%;
+  max-width: 180px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.otp-input-row input:focus {
+  border-color: #831b9a;
+  box-shadow: 0 0 0 3px rgba(131, 27, 154, 0.15);
+}
+
+/* Success Screen badge */
+.payment-success-badge {
+  font-size: 55px;
+  color: #2e7d32;
+  margin-bottom: 15px;
+  animation: popSuccess 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popSuccess {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
