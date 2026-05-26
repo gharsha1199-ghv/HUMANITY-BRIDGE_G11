@@ -30,7 +30,7 @@
                 <a href="/regulardonorourwork">Our work</a>
                 <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Regular Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/regulardonordashboard">View Dashboard</a>
                         <a href="/regulardonordonation_history">Donation History</a>
@@ -50,8 +50,23 @@
 
         <div class="history-content-wrapper">
             <div class="months-container">
+                <div class="months-grid">
+                    <a href="/regulardonordonation_history?month=All+Time" class="month-btn{% if not request.args.get('month') or request.args.get('month') == 'All Time' %} active{% endif %}">All Time</a>
+                    <a href="/regulardonordonation_history?month=January" class="month-btn{% if request.args.get('month') == 'January' %} active{% endif %}">Jan</a>
+                    <a href="/regulardonordonation_history?month=February" class="month-btn{% if request.args.get('month') == 'February' %} active{% endif %}">Feb</a>
+                    <a href="/regulardonordonation_history?month=March" class="month-btn{% if request.args.get('month') == 'March' %} active{% endif %}">Mar</a>
+                    <a href="/regulardonordonation_history?month=April" class="month-btn{% if request.args.get('month') == 'April' %} active{% endif %}">Apr</a>
+                    <a href="/regulardonordonation_history?month=May" class="month-btn{% if request.args.get('month') == 'May' %} active{% endif %}">May</a>
+                    <a href="/regulardonordonation_history?month=June" class="month-btn{% if request.args.get('month') == 'June' %} active{% endif %}">Jun</a>
+                    <a href="/regulardonordonation_history?month=July" class="month-btn{% if request.args.get('month') == 'July' %} active{% endif %}">Jul</a>
+                    <a href="/regulardonordonation_history?month=August" class="month-btn{% if request.args.get('month') == 'August' %} active{% endif %}">Aug</a>
+                    <a href="/regulardonordonation_history?month=September" class="month-btn{% if request.args.get('month') == 'September' %} active{% endif %}">Sep</a>
+                    <a href="/regulardonordonation_history?month=October" class="month-btn{% if request.args.get('month') == 'October' %} active{% endif %}">Oct</a>
+                    <a href="/regulardonordonation_history?month=November" class="month-btn{% if request.args.get('month') == 'November' %} active{% endif %}">Nov</a>
+                    <a href="/regulardonordonation_history?month=December" class="month-btn{% if request.args.get('month') == 'December' %} active{% endif %}">Dec</a>
+                </div>
                 <div class="history-table-container" id="history-table-container" style="display: block;">
-                    <h3 id="selected-month-title">Month History</h3>
+                    <h3 id="selected-month-title">{{ request.args.get('month') or 'All Time' }} History</h3>
                     <table class="history-table">
                         <thead>
                             <tr>
@@ -64,7 +79,20 @@
                             </tr>
                         </thead>
                         <tbody id="history-table-body">
-                            <!-- Populated dynamically -->
+                            {% for d in donations %}
+                            <tr>
+                                <td>{{ d.sno }}</td>
+                                <td>{{ d.formatted_date }}</td>
+                                <td>{{ d.donation }}</td>
+                                <td>{{ d.quantity_str }}</td>
+                                <td>{{ d.social_impact }}</td>
+                                <td>{{ d.eco_impact }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #ccc; padding: 20px;">No donations found for this period.</td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -76,52 +104,6 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const selectedMonthTitle = document.getElementById("selected-month-title");
-            const historyTableBody = document.getElementById("history-table-body");
-
-            // Parse URL params
-            const urlParams = new URLSearchParams(window.location.search);
-            const monthName = urlParams.get('month') || 'All Time';
-
-            selectedMonthTitle.innerText = `${monthName} History`;
-
-            // Dummy history data for demonstration
-            const donationHistory = {
-                "January": [
-                    { sno: 1, date: "12 Jan 2026", donation: "Food", quantity: "50 Meals", socialImpact: "Fed 50 families", ecoImpact: "Reduced 10kg food waste" },
-                    { sno: 2, date: "28 Jan 2026", donation: "Money", quantity: "$100", socialImpact: "Funded shelter", ecoImpact: "None" }
-                ],
-                "March": [
-                    { sno: 1, date: "15 Mar 2026", donation: "Food", quantity: "30 Meals", socialImpact: "Fed 30 people", ecoImpact: "Reduced 6kg food waste" }
-                ]
-            };
-
-            const history = donationHistory[monthName] || [];
-            
-            if (history.length > 0) {
-                history.forEach(item => {
-                    historyTableBody.innerHTML += `
-                        <tr>
-                            <td>${item.sno}</td>
-                            <td>${item.date}</td>
-                            <td>${item.donation}</td>
-                            <td>${item.quantity}</td>
-                            <td>${item.socialImpact}</td>
-                            <td>${item.ecoImpact}</td>
-                        </tr>
-                    `;
-                });
-            } else {
-                historyTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" style="text-align: center; color: #ccc;">No donations this month</td>
-                    </tr>
-                `;
-            }
-        });
-    </script>
     <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 </html>

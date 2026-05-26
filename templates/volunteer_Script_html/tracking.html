@@ -32,7 +32,7 @@
                     <a class="active" href="#">Tracking</a>
                     <a href="/volunteermyaccount">My Account</a>
                     <div class="user-dropdown">
-                        <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
+                        <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Volunteer') }} &#9662;</a>
                         <div class="dropdown-content">
                             <a href="/volunteerhome">View Dashboard</a>
                             <a href="/volunteervolunteer_history">Delivery History</a>
@@ -77,69 +77,49 @@
                     Active Deliveries
                 </h2>
 
+                {% for delivery in active_deliveries %}
                 <div class="delivery-card">
                     <div class="delivery-header">
-                        <div class="delivery-id">Order #V003</div>
-                        <div class="delivery-status">In Transit</div>
+                        <div class="delivery-id">Order #{{ delivery.delivery_id }}</div>
+                        <div class="delivery-status" style="background-color: {% if delivery.status == 'Assigned' %}#ffc107{% else %}#17a2b8{% endif %}; color: #212529; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">{{ delivery.status }}</div>
                     </div>
                     <div class="delivery-info">
                         <div class="info-row">
-                            <strong>Route:</strong>
-                            <span>Tech Corp → Food Bank HQ</span>
+                            <strong>To:</strong>
+                            <span>{{ delivery.receiver_name }}</span>
                         </div>
                         <div class="info-row">
-                            <strong>Progress:</strong>
-                            <span>65% Complete</span>
+                            <strong>Location:</strong>
+                            <span>{{ delivery.location }}</span>
                         </div>
                         <div class="info-row">
-                            <strong>ETA:</strong>
-                            <span>25 minutes</span>
+                            <strong>Items:</strong>
+                            <span>{{ delivery.quantity_details }}</span>
                         </div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 65%"></div>
-                    </div>
-                    <div class="delivery-actions">
-                        <button class="action-btn update-btn" onclick="updateLocation('V003')">
-                            <i class="fa-solid fa-location-dot"></i> Update Location
-                        </button>
-                        <button class="action-btn complete-btn" onclick="completeDelivery('V003')">
-                            <i class="fa-solid fa-check"></i> Complete
-                        </button>
+                    <div class="delivery-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                        {% if delivery.status == 'Assigned' %}
+                        <a href="/volunteer/start_delivery/{{ delivery.id }}" style="text-decoration: none; flex: 1;">
+                            <button class="action-btn update-btn" style="background-color: #007bff; color: white; width: 100%;">
+                                <i class="fa-solid fa-truck"></i> Start Delivery
+                            </button>
+                        </a>
+                        {% elif delivery.status == 'On The Way' or delivery.status == 'In Transit' %}
+                        <a href="/volunteer/complete_delivery/{{ delivery.id }}" style="text-decoration: none; flex: 1;">
+                            <button class="action-btn complete-btn" style="background-color: #28a745; color: white; width: 100%;">
+                                <i class="fa-solid fa-check"></i> Complete Delivery
+                            </button>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
-
-                <div class="delivery-card">
-                    <div class="delivery-header">
-                        <div class="delivery-id">Order #V005</div>
-                        <div class="delivery-status">Picked Up</div>
-                    </div>
-                    <div class="delivery-info">
-                        <div class="info-row">
-                            <strong>Route:</strong>
-                            <span>City Mall → Homeless Shelter</span>
-                        </div>
-                        <div class="info-row">
-                            <strong>Progress:</strong>
-                            <span>30% Complete</span>
-                        </div>
-                        <div class="info-row">
-                            <strong>ETA:</strong>
-                            <span>45 minutes</span>
-                        </div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 30%"></div>
-                    </div>
-                    <div class="delivery-actions">
-                        <button class="action-btn update-btn" onclick="updateLocation('V005')">
-                            <i class="fa-solid fa-location-dot"></i> Update Location
-                        </button>
-                        <button class="action-btn complete-btn" onclick="completeDelivery('V005')">
-                            <i class="fa-solid fa-check"></i> Complete
-                        </button>
-                    </div>
+                {% else %}
+                <div style="text-align: center; color: #aaa; padding: 40px 20px; border: 1px dashed #ddd; border-radius: 8px;">
+                    <i class="fa-solid fa-truck-ramp-box" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                    <h3>No Active Deliveries</h3>
+                    <p>Go to the <a href="/volunteerorders">Available Orders</a> tab to pick up new delivery routes!</p>
                 </div>
+                {% endfor %}
             </div>
 
             <div class="map-container">
@@ -172,51 +152,30 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
-                        <th>From</th>
                         <th>To</th>
+                        <th>Location</th>
                         <th>Items</th>
                         <th>Distance</th>
                         <th>Duration</th>
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="recentDeliveriesBody">
+                    {% for delivery in recent_deliveries %}
                     <tr>
-                        <td>#V002</td>
-                        <td>Sarah's Boutique</td>
-                        <td>St. Mary's Orphanage</td>
-                        <td>Clothes (35 pcs)</td>
-                        <td>8.2 km</td>
-                        <td>25 min</td>
-                        <td><span class="status-badge completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td>#V001</td>
-                        <td>John's Restaurant</td>
-                        <td>Hope Community Center</td>
-                        <td>Food (25 srv)</td>
-                        <td>3.5 km</td>
-                        <td>15 min</td>
-                        <td><span class="status-badge completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td>#V006</td>
-                        <td>Green Grocers</td>
-                        <td>Food Bank</td>
-                        <td>Vegetables (50kg)</td>
-                        <td>6.8 km</td>
-                        <td>20 min</td>
-                        <td><span class="status-badge completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td>#V007</td>
-                        <td>Book Store</td>
-                        <td>Community Library</td>
-                        <td>Books (100)</td>
-                        <td>4.2 km</td>
+                        <td>#{{ delivery.delivery_id }}</td>
+                        <td>{{ delivery.receiver_name }}</td>
+                        <td>{{ delivery.location }}</td>
+                        <td>{{ delivery.quantity_details }}</td>
                         <td>-</td>
-                        <td><span class="status-badge cancelled">Cancelled</span></td>
+                        <td>-</td>
+                        <td><span class="status-badge completed">{{ delivery.status }}</span></td>
                     </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #aaa; padding: 20px;">No recent deliveries recorded.</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

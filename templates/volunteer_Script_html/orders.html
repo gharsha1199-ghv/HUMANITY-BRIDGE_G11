@@ -32,7 +32,7 @@
                     <a href="/volunteertracking">Tracking</a>
                     <a href="/volunteermyaccount">My Account</a>
                     <div class="user-dropdown">
-                        <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
+                        <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Volunteer') }} &#9662;</a>
                         <div class="dropdown-content">
                             <a href="/volunteerhome">View Dashboard</a>
                             <a href="/volunteervolunteer_history">Delivery History</a>
@@ -89,187 +89,50 @@
         </div>
 
         <div class="orders-container" id="ordersContainer">
-            <div class="order-card urgent" data-status="pending" data-type="food" data-priority="urgent" data-location="downtown">
+            {% for order in orders %}
+            <div class="order-card {% if order.urgency == 'Urgent' or order.urgency == 'Critical' %}urgent{% endif %}" 
+                 data-status="pending" 
+                 data-type="{{ order.donation_type.lower() }}" 
+                 data-priority="{{ 'urgent' if order.urgency in ['Urgent', 'Critical'] else 'normal' }}" 
+                 data-location="{{ order.location.split('/')[0].strip().lower() if '/' in order.location else order.location.strip().lower() }}">
                 <div class="order-header">
                     <div class="order-id">
-                        Order #V001
+                        Order #{{ order.delivery_id }}
+                        {% if order.urgency in ['Urgent', 'Critical'] %}
                         <span class="priority-badge">URGENT</span>
+                        {% endif %}
                     </div>
-                    <div class="order-status pending">Pending</div>
+                    <div class="order-status pending">{{ order.status }}</div>
                 </div>
                 <div class="order-info">
                     <div class="order-info-row">
-                        <strong>From:</strong>
-                        <span>John's Restaurant (Downtown)</span>
-                    </div>
-                    <div class="order-info-row">
                         <strong>To:</strong>
-                        <span>Hope Community Center</span>
+                        <span>{{ order.receiver_name }}</span>
                     </div>
                     <div class="order-info-row">
-                        <strong>Distance:</strong>
-                        <span>3.5 km</span>
+                        <strong>Location:</strong>
+                        <span>{{ order.location }}</span>
                     </div>
                     <div class="order-info-row">
-                        <strong>Time:</strong>
-                        <span>Within 2 hours</span>
-                    </div>
-                </div>
-                <div class="items-list">
-                    <h4>Items to Deliver:</h4>
-                    <div class="item">
-                        <span>Cooked Food - Lunch</span>
-                        <span>25 servings</span>
-                    </div>
-                    <div class="item">
-                        <span>Fresh Vegetables</span>
-                        <span>10 kg</span>
+                        <strong>Items:</strong>
+                        <span>{{ order.quantity_details }}</span>
                     </div>
                 </div>
                 <div class="order-actions">
-                    <button class="action-btn accept-btn" onclick="acceptOrder('V001')">
-                        <i class="fa-solid fa-check"></i> Accept Order
-                    </button>
-                    <button class="action-btn view-btn" onclick="viewOrderDetails('V001')">
-                        <i class="fa-solid fa-eye"></i> View Details
-                    </button>
+                    <a href="/volunteer/accept_order/{{ order.id }}" style="text-decoration: none;">
+                        <button class="action-btn accept-btn" style="width: 100%;">
+                            <i class="fa-solid fa-check"></i> Accept Order
+                        </button>
+                    </a>
                 </div>
             </div>
-
-            <div class="order-card" data-status="pending" data-type="clothes" data-priority="normal" data-location="suburb">
-                <div class="order-header">
-                    <div class="order-id">Order #V002</div>
-                    <div class="order-status pending">Pending</div>
-                </div>
-                <div class="order-info">
-                    <div class="order-info-row">
-                        <strong>From:</strong>
-                        <span>Sarah's Boutique (West Side)</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>To:</strong>
-                        <span>St. Mary's Orphanage</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Distance:</strong>
-                        <span>8.2 km</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Time:</strong>
-                        <span>Within 24 hours</span>
-                    </div>
-                </div>
-                <div class="items-list">
-                    <h4>Items to Deliver:</h4>
-                    <div class="item">
-                        <span>Winter Clothes</span>
-                        <span>15 pieces</span>
-                    </div>
-                    <div class="item">
-                        <span>Children's Wear</span>
-                        <span>20 pieces</span>
-                    </div>
-                </div>
-                <div class="order-actions">
-                    <button class="action-btn accept-btn" onclick="acceptOrder('V002')">
-                        <i class="fa-solid fa-check"></i> Accept Order
-                    </button>
-                    <button class="action-btn view-btn" onclick="viewOrderDetails('V002')">
-                        <i class="fa-solid fa-eye"></i> View Details
-                    </button>
-                </div>
+            {% else %}
+            <div style="text-align: center; color: #aaa; width: 100%; padding: 40px 0; border: 1px dashed #ddd; border-radius: 8px;">
+                <i class="fa-solid fa-box-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <h3>No Available Orders</h3>
+                <p>Check back later for new delivery requests!</p>
             </div>
-
-            <div class="order-card urgent" data-status="assigned" data-type="money" data-priority="urgent" data-location="business">
-                <div class="order-header">
-                    <div class="order-id">
-                        Order #V003
-                        <span class="priority-badge">URGENT</span>
-                    </div>
-                    <div class="order-status assigned">Assigned to You</div>
-                </div>
-                <div class="order-info">
-                    <div class="order-info-row">
-                        <strong>From:</strong>
-                        <span>Tech Corp Office (Business District)</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>To:</strong>
-                        <span>Food Bank Headquarters</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Distance:</strong>
-                        <span>5.1 km</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Time:</strong>
-                        <span>Today, 3:00 PM</span>
-                    </div>
-                </div>
-                <div class="items-list">
-                    <h4>Items to Deliver:</h4>
-                    <div class="item">
-                        <span>Cash Donation</span>
-                        <span>$5,000</span>
-                    </div>
-                    <div class="item">
-                        <span>Check</span>
-                        <span>$2,500</span>
-                    </div>
-                </div>
-                <div class="order-actions">
-                    <button class="action-btn accept-btn" onclick="startDelivery('V003')">
-                        <i class="fa-solid fa-truck"></i> Start Delivery
-                    </button>
-                    <button class="action-btn view-btn" onclick="viewOrderDetails('V003')">
-                        <i class="fa-solid fa-eye"></i> View Details
-                    </button>
-                </div>
-            </div>
-
-            <div class="order-card" data-status="pending" data-type="food" data-priority="normal" data-location="north">
-                <div class="order-header">
-                    <div class="order-id">Order #V004</div>
-                    <div class="order-status pending">Pending</div>
-                </div>
-                <div class="order-info">
-                    <div class="order-info-row">
-                        <strong>From:</strong>
-                        <span>City Mall Food Court</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>To:</strong>
-                        <span>Homeless Shelter North</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Distance:</strong>
-                        <span>12.7 km</span>
-                    </div>
-                    <div class="order-info-row">
-                        <strong>Time:</strong>
-                        <span>Within 48 hours</span>
-                    </div>
-                </div>
-                <div class="items-list">
-                    <h4>Items to Deliver:</h4>
-                    <div class="item">
-                        <span>Packaged Food</span>
-                        <span>50 meals</span>
-                    </div>
-                    <div class="item">
-                        <span>Bread & Bakery Items</span>
-                        <span>30 pieces</span>
-                    </div>
-                </div>
-                <div class="order-actions">
-                    <button class="action-btn accept-btn" onclick="acceptOrder('V004')">
-                        <i class="fa-solid fa-check"></i> Accept Order
-                    </button>
-                    <button class="action-btn view-btn" onclick="viewOrderDetails('V004')">
-                        <i class="fa-solid fa-eye"></i> View Details
-                    </button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

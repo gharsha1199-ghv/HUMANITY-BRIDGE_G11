@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -29,7 +30,7 @@
                 <a href="/regulardonorourwork">Our Work</a>
                 <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Regular Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/regulardonordashboard">View Dashboard</a>
                         <a href="/regulardonordonation_history">Donation History</a>
@@ -56,6 +57,28 @@
         </div>
 
         <div class="form-box">
+            {% if status == 'Approved' %}
+            <div class="status-banner approved-banner" style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-circle-check" style="font-size: 20px;"></i>
+                <div>
+                    <strong>Verification Approved!</strong> Your business profile is verified and active.
+                </div>
+            </div>
+            {% elif status == 'Rejected' %}
+            <div class="status-banner rejected-banner" style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-circle-xmark" style="font-size: 20px;"></i>
+                <div>
+                    <strong>Verification Rejected.</strong> Please review your details and re-submit or contact support.
+                </div>
+            </div>
+            {% else %}
+            <div class="status-banner pending-banner" style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffeeba; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-circle-info" style="font-size: 20px;"></i>
+                <div>
+                    <strong>Verification Pending.</strong> Your details are being reviewed. An administrator will contact you soon.
+                </div>
+            </div>
+            {% endif %}
             <h3>Owner / Contact Person Details</h3>
 
             <div class="row">

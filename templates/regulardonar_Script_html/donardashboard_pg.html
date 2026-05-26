@@ -34,7 +34,7 @@
                 <a href="/regulardonorourwork">Our work</a>
                 <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Regular Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/regulardonordashboard">View Dashboard</a>
                         <a href="/regulardonordonation_history">Donation History</a>
@@ -52,14 +52,15 @@
             <div class="shining-line"></div>
         </div>
 
-        <!-- <div class="carousel-viewport" id="carousel">
+        <div class="carousel-viewport" id="carousel">
 
             <div class="carousel-spacer"></div>
 
+            {% for d in donations %}
             <div class="impact-card-wrapper">
                 <div class="main-date-card">
-                    <h2>12 Jan 2026</h2>
-                    <p>Food Donation</p>
+                    <h2>{{ d.formatted_date }}</h2>
+                    <p>{{ d.formatted_type }}</p>
                 </div>
                 <div class="stacked-layers">
                     <div class="impact-layer human-layer">
@@ -69,8 +70,7 @@
                         <div class="layer-content">
                             <i class="fa-solid fa-bowl-food secondary-icon"></i>
                             <div>
-                                <h4>Fed 50 families</h4>
-                                <p>in local shelters</p>
+                                <h4>{{ d.social_impact }}</h4>
                             </div>
                         </div>
                     </div>
@@ -81,170 +81,39 @@
                         <div class="layer-content">
                             <i class="fa-solid fa-recycle secondary-icon"></i>
                             <div>
-                                <h4>Reduced landfill</h4>
-                                <p>by 200kg</p>
+                                <h4>{{ d.eco_impact }}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="impact-card-wrapper">
-                <div class="main-date-card">
-                    <h2>12 Jan 2026</h2>
-                    <p>Food Donation</p>
-                </div>
-                <div class="stacked-layers">
-                    <div class="impact-layer human-layer">
-                        <div class="layer-header"><i class="fa-solid fa-users"></i>
-                            <h3>Human Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-bowl-food secondary-icon"></i>
-                            <div>
-                                <h4>Fed 50 families</h4>
-                                <p>in local shelters</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="impact-layer eco-layer">
-                        <div class="layer-header"><i class="fa-solid fa-leaf"></i>
-                            <h3>Eco Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-recycle secondary-icon"></i>
-                            <div>
-                                <h4>Reduced landfill</h4>
-                                <p>by 200kg</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {% else %}
+            <div style="text-align: center; color: #ccc; padding: 40px; width: 100%;">
+                <h3>No donations recorded yet.</h3>
+                <p>Start making an impact today!</p>
             </div>
-
-            <div class="impact-card-wrapper">
-                <div class="main-date-card">
-                    <h2>25 Mar 2025</h2>
-                    <p>Clean Water Project</p>
-                </div>
-                <div class="stacked-layers">
-                    <div class="impact-layer human-layer">
-                        <div class="layer-header">
-                            <i class="fa-solid fa-hands-holding-child"></i>
-                            <h3>Human Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-glass-water secondary-icon"></i>
-                            <div>
-                                <h4>Meals provided</h4>
-                                <p>to verified individuals</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="impact-layer eco-layer">
-                        <div class="layer-header">
-                            <i class="fa-solid fa-leaf"></i>
-                            <h3>Eco Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-droplet secondary-icon"></i>
-                            <div>
-                                <h4>Prevented waste</h4>
-                                <p>Saved 500 plastic bottles</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="impact-card-wrapper">
-                <div class="main-date-card">
-                    <h2>08 Sep 2027</h2>
-                    <p>Tree Planting Drive</p>
-                </div>
-                <div class="stacked-layers">
-                    <div class="impact-layer human-layer">
-                        <div class="layer-header"><i class="fa-solid fa-users"></i>
-                            <h3>Human Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-wind secondary-icon"></i>
-                            <div>
-                                <h4>Cleaner air</h4>
-                                <p>for the community</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="impact-layer eco-layer">
-                        <div class="layer-header"><i class="fa-solid fa-tree"></i>
-                            <h3>Eco Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-seedling secondary-icon"></i>
-                            <div>
-                                <h4>Planted 100 trees</h4>
-                                <p>offsetting carbon</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="impact-card-wrapper">
-                <div class="main-date-card">
-                    <h2>08 Sep 2027</h2>
-                    <p>Tree Planting Drive</p>
-                </div>
-                <div class="stacked-layers">
-                    <div class="impact-layer human-layer">
-                        <div class="layer-header"><i class="fa-solid fa-users"></i>
-                            <h3>Human Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-wind secondary-icon"></i>
-                            <div>
-                                <h4>Cleaner air</h4>
-                                <p>for the community</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="impact-layer eco-layer">
-                        <div class="layer-header"><i class="fa-solid fa-tree"></i>
-                            <h3>Eco Impact</h3>
-                        </div>
-                        <div class="layer-content">
-                            <i class="fa-solid fa-seedling secondary-icon"></i>
-                            <div>
-                                <h4>Planted 100 trees</h4>
-                                <p>offsetting carbon</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <div class="months-container">
-                <h2 style="padding-left: 100px;">2026</h2>
-                <div class="months-grid">
-                    <a href="/regulardonordonation_history?month=January" class="month-btn">Jan</a>
-                    <a href="/regulardonordonation_history?month=February" class="month-btn">Feb</a>
-                    <a href="/regulardonordonation_history?month=March" class="month-btn">Mar</a>
-                    <a href="/regulardonordonation_history?month=April" class="month-btn">Apr</a>
-                    <a href="/regulardonordonation_history?month=May" class="month-btn">May</a>
-                    <a href="/regulardonordonation_history?month=June" class="month-btn">Jun</a>
-                    <a href="/regulardonordonation_history?month=July" class="month-btn">Jul</a>
-                    <a href="/regulardonordonation_history?month=August" class="month-btn">Aug</a>
-                    <a href="/regulardonordonation_history?month=September" class="month-btn">Sep</a>
-                    <a href="/regulardonordonation_history?month=October" class="month-btn">Oct</a>
-                    <a href="/regulardonordonation_history?month=November" class="month-btn">Nov</a>
-                    <a href="/regulardonordonation_history?month=December" class="month-btn">Dec</a>
-                </div>
-            </div>
-
+            {% endfor %}
 
             <div class="carousel-spacer"></div>
 
+        </div>
+
+        <div class="months-container">
+            <h2 style="padding-left: 100px;">2026</h2>
+            <div class="months-grid">
+                <a href="/regulardonordonation_history?month=January" class="month-btn">Jan</a>
+                <a href="/regulardonordonation_history?month=February" class="month-btn">Feb</a>
+                <a href="/regulardonordonation_history?month=March" class="month-btn">Mar</a>
+                <a href="/regulardonordonation_history?month=April" class="month-btn">Apr</a>
+                <a href="/regulardonordonation_history?month=May" class="month-btn">May</a>
+                <a href="/regulardonordonation_history?month=June" class="month-btn">Jun</a>
+                <a href="/regulardonordonation_history?month=July" class="month-btn">Jul</a>
+                <a href="/regulardonordonation_history?month=August" class="month-btn">Aug</a>
+                <a href="/regulardonordonation_history?month=September" class="month-btn">Sep</a>
+                <a href="/regulardonordonation_history?month=October" class="month-btn">Oct</a>
+                <a href="/regulardonordonation_history?month=November" class="month-btn">Nov</a>
+                <a href="/regulardonordonation_history?month=December" class="month-btn">Dec</a>
+            </div>
         </div>
 
         <p class="bottom-subtitle">Your Contributions Making a Difference!</p>

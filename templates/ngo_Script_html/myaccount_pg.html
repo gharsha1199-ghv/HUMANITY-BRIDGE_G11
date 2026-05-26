@@ -31,7 +31,7 @@
                 <a href="/ngoourwork">Our Work</a>
                 <a href="/ngogallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Orphanage &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'NGO') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/ngorecieverdash">View Dashboard</a>
                         <a href="/ngongo_history">Request History</a>
@@ -54,21 +54,21 @@
                 <div class="profile-avatar">
                     <i class="fa-solid fa-hands-helping"></i>
                 </div>
-                <div class="profile-name">Sunshine Orphanage</div>
+                <div class="profile-name">{{ user.get('name', 'Sunshine Orphanage') }}</div>
                 <div class="profile-role">Verified NGO</div>
                 
                 <div class="profile-stats">
                     <div class="stat-item">
-                        <span class="stat-number">892</span>
-                        <span class="stat-label">Donations Received</span>
+                        <span class="stat-number">{{ total_requests }}</span>
+                        <span class="stat-label">Requests Submitted</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">5,234</span>
+                        <span class="stat-number">{{ people_helped }}</span>
                         <span class="stat-label">People Helped</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">156</span>
-                        <span class="stat-label">Active Volunteers</span>
+                        <span class="stat-number">{{ approved_requests }}</span>
+                        <span class="stat-label">Approved Requests</span>
                     </div>
                 </div>
             </div>
@@ -79,60 +79,71 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="orgName">Organization Name</label>
-                            <input type="text" id="orgName" name="orgName" value="Sunshine Orphanage" required>
+                            <input type="text" id="orgName" name="orgName" value="{{ user.get('name', '') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="orgType">Organization Type</label>
                             <select id="orgType" name="orgType">
-                                <option value="orphanage">Orphanage</option>
-                                <option value="shelter">Homeless Shelter</option>
-                                <option value="foodbank">Food Bank</option>
-                                <option value="education">Education Center</option>
+                                <option value="orphanage" {% if user.get('org_type') == 'orphanage' %}selected{% endif %}>Orphanage</option>
+                                <option value="shelter" {% if user.get('org_type') == 'shelter' %}selected{% endif %}>Homeless Shelter</option>
+                                <option value="foodbank" {% if user.get('org_type') == 'foodbank' %}selected{% endif %}>Food Bank</option>
+                                <option value="education" {% if user.get('org_type') == 'education' %}selected{% endif %}>Education Center</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" value="contact@sunshine.org" required>
+                        <input type="email" id="email" name="email" value="{{ user.get('email', '') }}" required readonly disabled>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" value="+91 11111 22222" required>
+                        <input type="tel" id="phone" name="phone" value="{{ user.get('phone', '') }}" required>
                     </div>
 
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <textarea id="address" name="address" rows="3" required>45 Hope Street, Hyderabad, Telangana, India</textarea>
+                        <textarea id="address" name="address" rows="3" required>{{ user.get('address', '') or '' }}</textarea>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="capacity">Capacity</label>
-                            <input type="number" id="capacity" name="capacity" value="150" min="1" required>
+                            <input type="number" id="capacity" name="capacity" value="{{ user.get('capacity', 100) }}" min="1" required>
                         </div>
                         <div class="form-group">
                             <label for="established">Established Year</label>
-                            <input type="number" id="established" name="established" value="2010" min="1900" max="2026" required>
+                            <input type="number" id="established" name="established" value="{{ user.get('established_year', 2015) }}" min="1900" max="2026" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" value="{{ user.get('city', '') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP Code / Pincode</label>
+                            <input type="text" id="zipCode" name="zipCode" value="{{ user.get('pincode', '') }}" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="needs">Current Needs</label>
                         <select id="needs" name="needs" multiple>
-                            <option value="food" selected>Food</option>
-                            <option value="clothes" selected>Clothes</option>
-                            <option value="books">Books</option>
-                            <option value="toys">Toys</option>
-                            <option value="medicines">Medicines</option>
-                            <option value="furniture">Furniture</option>
+                            <option value="food" {% if 'food' in user.get('needs', '').lower() %}selected{% endif %}>Food</option>
+                            <option value="clothes" {% if 'clothes' in user.get('needs', '').lower() %}selected{% endif %}>Clothes</option>
+                            <option value="books" {% if 'books' in user.get('needs', '').lower() %}selected{% endif %}>Books</option>
+                            <option value="toys" {% if 'toys' in user.get('needs', '').lower() %}selected{% endif %}>Toys</option>
+                            <option value="medicines" {% if 'medicines' in user.get('needs', '').lower() %}selected{% endif %}>Medicines</option>
+                            <option value="furniture" {% if 'furniture' in user.get('needs', '').lower() %}selected{% endif %}>Furniture</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="bio">Bio / About Organization</label>
-                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about your organization and mission...">Dedicated to providing shelter, education, and care for orphaned children in Hyderabad region.</textarea>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about your organization and mission...">{{ user.get('bio', '') or '' }}</textarea>
                     </div>
 
                     <div style="display: flex; gap: 15px; margin-top: 25px;">
@@ -237,8 +248,29 @@
 
         document.getElementById('profileForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('profile updated successfully!');
-            disableEditing('profileForm');
+            const formData = new FormData(this);
+            fetch('/ngomyaccount', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    disableEditing('profileForm');
+                    const newName = document.getElementById('orgName').value;
+                    document.querySelectorAll('.profile-name').forEach(el => el.innerText = newName);
+                    const dropdownToggle = document.querySelector('.user-toggle');
+                    if (dropdownToggle) {
+                        dropdownToggle.innerHTML = newName + ' &#9662;';
+                    }
+                } else {
+                    alert('Failed to update profile. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating profile:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
 
         function resetForm() {

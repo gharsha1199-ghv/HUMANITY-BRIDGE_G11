@@ -36,7 +36,7 @@
                 <a href="/ngoourwork">Our work</a>
                 <a href="/ngogallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Orphanage &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'NGO') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/ngorecieverdash">View Dashboard</a>
                         <a href="/ngongo_history">Request History</a>

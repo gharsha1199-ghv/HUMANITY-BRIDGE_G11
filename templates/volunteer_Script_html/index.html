@@ -32,7 +32,7 @@
                     <a href="/volunteertracking">Tracking</a>
                     <a href="/volunteermyaccount">My Account</a>
                     <div class="user-dropdown">
-                        <a href="#" class="login-btn user-toggle">Volunteer &#9662;</a>
+                        <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Volunteer') }} &#9662;</a>
                         <div class="dropdown-content">
                             <a href="/volunteerhome">View Dashboard</a>
                             <a href="/volunteervolunteer_history">Delivery History</a>
@@ -72,22 +72,22 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>Total Deliveries</h3>
-                    <div class="number">47</div>
+                    <div class="number">{{ total_deliveries }}</div>
                     <p>Completed deliveries</p>
                 </div>
                 <div class="stat-card">
                     <h3>People Helped</h3>
-                    <div class="number">238</div>
+                    <div class="number">{{ people_helped }}</div>
                     <p>Lives impacted</p>
                 </div>
                 <div class="stat-card">
                     <h3>Distance Covered</h3>
-                    <div class="number">1,245</div>
+                    <div class="number">{{ distance_covered }}</div>
                     <p>Kilometers traveled</p>
                 </div>
                 <div class="stat-card">
                     <h3>Volunteer Hours</h3>
-                    <div class="number">156</div>
+                    <div class="number">{{ volunteer_hours }}</div>
                     <p>Hours contributed</p>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                     <i class="fa-solid fa-user"></i>
                     <span>My Profile</span>
                 </a>
-                <a href="/volunteerorders" class="action-btn">
+                <a href="/volunteervolunteer_history" class="action-btn">
                     <i class="fa-solid fa-history"></i>
                     <span>Delivery History</span>
                 </a>

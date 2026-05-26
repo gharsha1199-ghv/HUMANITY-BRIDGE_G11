@@ -31,7 +31,7 @@
                 <a href="/regulardonorourwork">Our Work</a>
                 <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Regular Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/regulardonordashboard">View Dashboard</a>
                         <a href="/regulardonordonation_history">Donation History</a>
@@ -54,20 +54,20 @@
                 <div class="profile-avatar">
                     <i class="fa-solid fa-building"></i>
                 </div>
-                <div class="profile-name">Santhosh Dhaba</div>
+                <div class="profile-name">{{ session.get('name', 'Regular Donor') }}</div>
                 <div class="profile-role">Business Donor</div>
                 
                 <div class="profile-stats">
                     <div class="stat-item">
-                        <span class="stat-number">287</span>
+                        <span class="stat-number">{{ total_donations }}</span>
                         <span class="stat-label">Donations</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">8,456</span>
+                        <span class="stat-number">{{ people_helped }}</span>
                         <span class="stat-label">People Helped</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">$45,890</span>
+                        <span class="stat-number">{{ total_contributed }}</span>
                         <span class="stat-label">Total Contributed</span>
                     </div>
                 </div>
@@ -78,44 +78,44 @@
                 <form id="profileForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="businessName">Business Name</label>
-                            <input type="text" id="businessName" name="businessName" value="Santhosh Dhaba" required>
+                            <label for="firstName">Business Name</label>
+                            <input type="text" id="firstName" name="firstName" value="{{ session.get('name', '') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="businessType">Business Type</label>
                             <select id="businessType" name="businessType">
-                                <option value="restaurant">Restaurant</option>
-                                <option value="retail">Retail Store</option>
-                                <option value="manufacturing">Manufacturing</option>
-                                <option value="service">Service Provider</option>
+                                <option value="restaurant" {% if user.get('organization_type') == 'Restaurant' %}selected{% endif %}>Restaurant</option>
+                                <option value="retail" {% if user.get('organization_type') == 'Retail Store' %}selected{% endif %}>Retail Store</option>
+                                <option value="manufacturing" {% if user.get('organization_type') == 'Manufacturing' %}selected{% endif %}>Manufacturing</option>
+                                <option value="service" {% if user.get('organization_type') == 'Service Provider' %}selected{% endif %}>Service Provider</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" value="contact@santhoshdhaba.com" required>
+                        <input type="email" id="email" name="email" value="{{ session.get('email', '') }}" required readonly disabled>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" value="+91 99999 88888" required>
+                        <input type="tel" id="phone" name="phone" value="{{ session.get('phone', '') }}" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="city">City</label>
-                            <input type="text" id="city" name="city" value="Hyderabad" required>
+                            <input type="text" id="city" name="city" value="{{ session.get('city', '') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="state">State</label>
-                            <input type="text" id="state" name="state" value="Telangana" required>
+                            <label for="zipCode">ZIP Code / Pincode</label>
+                            <input type="text" id="zipCode" name="zipCode" value="{{ session.get('pincode', '') }}" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="address">Business Address</label>
-                        <textarea id="address" name="address" rows="3" required>Banjara Hills, Hyderabad, Telangana</textarea>
+                        <textarea id="address" name="address" rows="3" required>{{ session.get('city', '') }} - {{ session.get('pincode', '') }}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -221,6 +221,7 @@
         function enableEditing(formId) {
             const formInputs = document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`);
             formInputs.forEach(input => {
+                if (input.id === 'email') return; // Don't allow email editing
                 input.removeAttribute('readonly');
                 if(input.tagName === 'SELECT' || input.type === 'checkbox' || input.type === 'radio') {
                     input.removeAttribute('disabled');
@@ -233,14 +234,35 @@
 
         document.getElementById('profileForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('profile updated successfully!');
-            disableEditing('profileForm');
+            const formData = new FormData(this);
+            fetch('/regulardonormyaccount', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    disableEditing('profileForm');
+                    const newName = document.getElementById('firstName').value;
+                    document.querySelectorAll('.profile-name').forEach(el => el.innerText = newName);
+                    const dropdownToggle = document.querySelector('.user-toggle');
+                    if (dropdownToggle) {
+                        dropdownToggle.innerHTML = newName + ' &#9662;';
+                    }
+                } else {
+                    alert('Failed to update profile. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating profile:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
 
         function resetForm() {
             if (confirm('Are you sure you want to reset all changes?')) {
                 document.getElementById('profileForm').reset();
-                alert('Form has been reset to original values.');
+                disableEditing('profileForm');
             }
         }
     </script>

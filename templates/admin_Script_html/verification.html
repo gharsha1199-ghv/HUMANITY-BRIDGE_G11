@@ -141,9 +141,6 @@
                     <button class="btn view" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
                   </a>
                   {% if user.status == 'Pending' %}
-                    <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/approve">
-                      <button class="btn approve" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Approve</button>
-                    </a>
                     <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/reject">
                       <button class="btn reject" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Reject</button>
                     </a>

@@ -34,7 +34,7 @@
                 <a href="/donorourwork">Our work</a>
                 <a href="/donorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Harsha &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/donardashboard">View Dashboard</a>
                         <a href="/donordonation_history">Donation History</a>
@@ -66,27 +66,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for d in donations %}
                     <tr>
-                        <td>1</td>
-                        <td>12 Jan 2026</td>
-                        <td>Food Donation</td>
-                        <td>Fed 50 families in local shelters</td>
-                        <td>Reduced landfill by 200kg</td>
+                        <td>{{ d.sno }}</td>
+                        <td>{{ d.formatted_date }}</td>
+                        <td>{{ d.formatted_type }}</td>
+                        <td>{{ d.social_impact }}</td>
+                        <td>{{ d.eco_impact }}</td>
                     </tr>
+                    {% else %}
                     <tr>
-                        <td>2</td>
-                        <td>25 Mar 2025</td>
-                        <td>Food Donation</td>
-                        <td>Meals provided to verified individuals</td>
-                        <td>Prevented waste, Saved 500 plastic bottles</td>
+                        <td colspan="5" style="text-align: center; color: #ccc; padding: 20px;">No contributions found yet.</td>
                     </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>08 Sep 2027</td>
-                        <td>Food Donation</td>
-                        <td>Cleaner air for the community</td>
-                        <td>Planted 100 trees offsetting carbon</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

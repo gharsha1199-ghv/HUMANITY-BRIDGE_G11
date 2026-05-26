@@ -50,8 +50,23 @@
 
         <div class="history-content-wrapper">
             <div class="months-container">
+                <div class="months-grid">
+                    <div class="month-btn{% if not request.args.get('month') or request.args.get('month') == 'All Time' %} active{% endif %}" onclick="window.location.href='?month=All+Time'">All Time</div>
+                    <div class="month-btn{% if request.args.get('month') == 'January' %} active{% endif %}" onclick="window.location.href='?month=January'">Jan</div>
+                    <div class="month-btn{% if request.args.get('month') == 'February' %} active{% endif %}" onclick="window.location.href='?month=February'">Feb</div>
+                    <div class="month-btn{% if request.args.get('month') == 'March' %} active{% endif %}" onclick="window.location.href='?month=March'">Mar</div>
+                    <div class="month-btn{% if request.args.get('month') == 'April' %} active{% endif %}" onclick="window.location.href='?month=April'">Apr</div>
+                    <div class="month-btn{% if request.args.get('month') == 'May' %} active{% endif %}" onclick="window.location.href='?month=May'">May</div>
+                    <div class="month-btn{% if request.args.get('month') == 'June' %} active{% endif %}" onclick="window.location.href='?month=June'">Jun</div>
+                    <div class="month-btn{% if request.args.get('month') == 'July' %} active{% endif %}" onclick="window.location.href='?month=July'">Jul</div>
+                    <div class="month-btn{% if request.args.get('month') == 'August' %} active{% endif %}" onclick="window.location.href='?month=August'">Aug</div>
+                    <div class="month-btn{% if request.args.get('month') == 'September' %} active{% endif %}" onclick="window.location.href='?month=September'">Sep</div>
+                    <div class="month-btn{% if request.args.get('month') == 'October' %} active{% endif %}" onclick="window.location.href='?month=October'">Oct</div>
+                    <div class="month-btn{% if request.args.get('month') == 'November' %} active{% endif %}" onclick="window.location.href='?month=November'">Nov</div>
+                    <div class="month-btn{% if request.args.get('month') == 'December' %} active{% endif %}" onclick="window.location.href='?month=December'">Dec</div>
+                </div>
                 <div class="history-table-container" id="history-table-container" style="display: block;">
-                    <h3 id="selected-month-title">Month History</h3>
+                    <h3 id="selected-month-title">{{ request.args.get('month') or 'All Time' }} History</h3>
                     <table class="history-table">
                         <thead>
                             <tr>
@@ -62,6 +77,18 @@
                             </tr>
                         </thead>
                         <tbody id="history-table-body">
+                            {% for delivery in deliveries %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ delivery.formatted_date }}</td>
+                                <td>Deliver {{ delivery.quantity_details }} to {{ delivery.receiver_name }} at {{ delivery.location }}</td>
+                                <td><span style="color: lightgreen;">{{ delivery.status }}</span></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #ccc;">No deliveries found for this period.</td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -72,49 +99,6 @@
     <footer>
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const selectedMonthTitle = document.getElementById("selected-month-title");
-            const historyTableBody = document.getElementById("history-table-body");
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const monthName = urlParams.get('month') || 'All Time';
-
-            selectedMonthTitle.innerText = `${monthName} History`;
-
-            const donationHistory = {
-                "January": [
-                    { sno: 1, date: "12 Jan 2026", task: "Deliver Food to Shelter A", status: "Completed" },
-                    { sno: 2, date: "28 Jan 2026", task: "Pickup Clothes from Donor B", status: "Completed" }
-                ],
-                "March": [
-                    { sno: 1, date: "15 Mar 2026", task: "Deliver Medical Supplies", status: "Completed" }
-                ]
-            };
-
-            const history = donationHistory[monthName] || [];
-            
-            if (history.length > 0) {
-                history.forEach(item => {
-                    historyTableBody.innerHTML += `
-                        <tr>
-                            <td>${item.sno}</td>
-                            <td>${item.date}</td>
-                            <td>${item.task}</td>
-                            <td><span style="color: lightgreen;">${item.status}</span></td>
-                        </tr>
-                    `;
-                });
-            } else {
-                historyTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: #ccc;">No deliveries this month</td>
-                    </tr>
-                `;
-            }
-        });
-    </script>
     <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 </html>

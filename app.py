@@ -80,11 +80,116 @@ def beforelogin_signupvolunteer():
 
 @app.route('/donardashboard')
 def donorlogin_donardashboard():
-    return render_template('donorlogin_Script_html/donardashboard_pg.html')
+    name = session.get('name', 'Harsha Vardhan')
+    phone = session.get('phone', '+91 98765 43210')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM donor_donations WHERE donor_name = %s AND phone = %s ORDER BY created_at DESC", (name, phone))
+        donations = cursor.fetchall()
+        for idx, d in enumerate(donations):
+            d['sno'] = idx + 1
+            d['formatted_date'] = d['created_at'].strftime('%d %b %Y') if d['created_at'] else 'N/A'
+            if d['donation_type'] == 'money':
+                d['formatted_type'] = "Money Donation"
+                d['social_impact'] = "Funded NGO community operations"
+                d['eco_impact'] = "Supported carbon footprint offset"
+            elif d['donation_type'] == 'food':
+                d['formatted_type'] = "Food Donation"
+                q = d['quantity'] or 0
+                d['social_impact'] = f"Fed {int(q * 1.5)} people in local shelters"
+                d['eco_impact'] = f"Saved {int(q * 0.45)}kg food from landfill"
+            else:
+                d['formatted_type'] = "Clothes Donation"
+                q = d['quantity'] or 0
+                d['social_impact'] = f"Provided warmth to {q} families"
+                d['eco_impact'] = "Recycled fabric waste"
+        cursor.close()
+    except Exception as e:
+        donations = []
+        print("Error in donor dashboard:", e)
+        
+    return render_template('donorlogin_Script_html/donardashboard_pg.html', donations=donations)
 
-@app.route('/donarmyaccount')
+@app.route('/donarmyaccount', methods=['GET', 'POST'])
 def donorlogin_myaccount():
-    return render_template('donorlogin_Script_html/myaccount_pg.html')
+    email = session.get('email')
+    if not email:
+        return redirect('/login')
+        
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM donors WHERE email = %s", (email,))
+        user = cursor.fetchone() or {}
+        
+        name = user.get('name', session.get('name', 'Harsha Vardhan'))
+        phone = user.get('phone', session.get('phone', '+91 98765 43210'))
+        
+        cursor.execute("SELECT COUNT(*) as c, SUM(CASE WHEN donation_type='money' THEN amount ELSE 0 END) as money_sum FROM donor_donations WHERE donor_name = %s AND phone = %s", (name, phone))
+        stats = cursor.fetchone()
+        total_donations = stats['c'] or 0
+        total_contributed = f"Rs. {int(stats['money_sum'] or 0)}"
+        people_helped = total_donations * 15
+        
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE donor_name = %s AND phone = %s AND donation_type = 'food'", (name, phone))
+        food_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE donor_name = %s AND phone = %s AND donation_type = 'clothes'", (name, phone))
+        clothes_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE donor_name = %s AND phone = %s AND donation_type = 'money'", (name, phone))
+        money_count = cursor.fetchone()['c'] or 0
+        
+        cursor.close()
+    except Exception as e:
+        print("Error in donor myaccount:", e)
+        user = {}
+        total_donations = 0
+        total_contributed = "Rs. 0"
+        people_helped = 0
+        food_count = 0
+        clothes_count = 0
+        money_count = 0
+        
+    if request.method == 'POST':
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        full_name = f"{first_name} {last_name}" if first_name and last_name else (first_name or last_name or name)
+        phone = request.form.get('phone')
+        city = request.form.get('city')
+        pincode = request.form.get('zipCode') or request.form.get('pincode')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                UPDATE donors 
+                SET name = %s, phone = %s, city = %s, pincode = %s 
+                WHERE email = %s
+            """, (full_name, phone, city, pincode, email))
+            db.commit()
+            
+            session['name'] = full_name
+            session['phone'] = phone
+            session['city'] = city
+            session['pincode'] = pincode
+            cursor.close()
+        except Exception as e:
+            print("Error updating donor profile:", e)
+        return redirect('/donarmyaccount')
+        
+    name_parts = user.get('name', '').split(' ', 1)
+    first_name = name_parts[0] if name_parts else ''
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    
+    return render_template(
+        'donorlogin_Script_html/myaccount_pg.html',
+        user=user,
+        first_name=first_name,
+        last_name=last_name,
+        total_donations=total_donations,
+        total_contributed=total_contributed,
+        people_helped=people_helped,
+        food_count=food_count,
+        clothes_count=clothes_count,
+        money_count=money_count
+    )
 
 
 
@@ -239,7 +344,39 @@ def donorlogin_donatemoney():
 
 @app.route('/donordonation_history')
 def donorlogin_donation_history():
-    return render_template('donorlogin_Script_html/donation_history_pg.html')
+    name = session.get('name', 'Harsha Vardhan')
+    phone = session.get('phone', '+91 98765 43210')
+    month = request.args.get('month')
+    try:
+        cursor = db.cursor(dictionary=True)
+        if month and month != 'All Time':
+            cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM donor_donations WHERE donor_name = %s AND phone = %s AND MONTHNAME(created_at) = %s ORDER BY created_at DESC", (name, phone, month))
+        else:
+            cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM donor_donations WHERE donor_name = %s AND phone = %s ORDER BY created_at DESC", (name, phone))
+        donations = cursor.fetchall()
+        for idx, d in enumerate(donations):
+            d['sno'] = idx + 1
+            d['formatted_date'] = d['created_at'].strftime('%d %b %Y') if d['created_at'] else 'N/A'
+            if d['donation_type'] == 'money':
+                d['details'] = f"Rs. {int(d['amount'] or 0)}"
+                d['social_impact'] = "Funded NGO operations"
+                d['eco_impact'] = "Supported carbon offset"
+            elif d['donation_type'] == 'food':
+                q = d['quantity'] or 0
+                d['details'] = f"{q} Meals"
+                d['social_impact'] = f"Fed {int(q * 1.5)} people"
+                d['eco_impact'] = f"Reduced {int(q * 0.4)}kg food waste"
+            else:
+                q = d['quantity'] or 0
+                d['details'] = f"{q} Clothes"
+                d['social_impact'] = f"Helped {q} families"
+                d['eco_impact'] = "Recycled fabric waste"
+        cursor.close()
+    except Exception as e:
+        donations = []
+        print("Error fetching donor donation history:", e)
+        
+    return render_template('donorlogin_Script_html/donation_history_pg.html', donations=donations)
 
 @app.route('/donorformsubmit')
 def donorlogin_formsubmit():
@@ -274,7 +411,30 @@ def regulardonar_about():
 
 @app.route('/regulardonordashboard')
 def regulardonar_donardashboard():
-    return render_template('regulardonar_Script_html/donardashboard_pg.html')
+    name = session.get('name', 'Santhosh Dhaba')
+    phone = session.get('phone', '+91 99999 88888')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM regular_donor_donations WHERE donor_name = %s AND phone = %s ORDER BY created_at DESC", (name, phone))
+        donations = cursor.fetchall()
+        for idx, d in enumerate(donations):
+            d['sno'] = idx + 1
+            d['formatted_date'] = d['created_at'].strftime('%d %b %Y') if d['created_at'] else 'N/A'
+            if d['donation_type'] == 'money':
+                d['formatted_type'] = "Money Donation"
+                d['social_impact'] = "Funded NGO shelter operations"
+                d['eco_impact'] = "None"
+            else:
+                d['formatted_type'] = "Food Donation"
+                q = d['quantity'] or 0
+                d['social_impact'] = f"Fed {q} families in local shelters"
+                d['eco_impact'] = f"Reduced {int(q * 0.5)}kg food waste"
+        cursor.close()
+    except Exception as e:
+        donations = []
+        print("Error in regular donor dashboard:", e)
+        
+    return render_template('regulardonar_Script_html/donardashboard_pg.html', donations=donations)
 
 @app.route('/regulardonordonate')
 def regulardonar_donate():
@@ -382,7 +542,36 @@ def regulardonar_donatemoney():
 
 @app.route('/regulardonordonation_history')
 def regulardonar_donation_history():
-    return render_template('regulardonar_Script_html/donation_history_pg.html')
+    name = session.get('name', 'Santhosh Dhaba')
+    phone = session.get('phone', '+91 99999 88888')
+    month = request.args.get('month')
+    try:
+        cursor = db.cursor(dictionary=True)
+        if month and month != 'All Time':
+            cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM regular_donor_donations WHERE donor_name = %s AND phone = %s AND MONTHNAME(created_at) = %s ORDER BY created_at DESC", (name, phone, month))
+        else:
+            cursor.execute("SELECT id, donation_type, amount, quantity, created_at, status FROM regular_donor_donations WHERE donor_name = %s AND phone = %s ORDER BY created_at DESC", (name, phone))
+        donations = cursor.fetchall()
+        for idx, d in enumerate(donations):
+            d['sno'] = idx + 1
+            d['formatted_date'] = d['created_at'].strftime('%d %b %Y') if d['created_at'] else 'N/A'
+            if d['donation_type'] == 'money':
+                d['donation'] = "Money"
+                d['quantity_str'] = f"Rs. {int(d['amount'] or 0)}"
+                d['social_impact'] = "Funded NGO shelter operations"
+                d['eco_impact'] = "None"
+            else:
+                d['donation'] = "Food"
+                q = d['quantity'] or 0
+                d['quantity_str'] = f"{q} Meals"
+                d['social_impact'] = f"Fed {q} families"
+                d['eco_impact'] = f"Reduced {int(q * 0.5)}kg food waste"
+        cursor.close()
+    except Exception as e:
+        donations = []
+        print("Error fetching regular donor donation history:", e)
+        
+    return render_template('regulardonar_Script_html/donation_history_pg.html', donations=donations)
 
 @app.route('/regulardonorformsubmit')
 def regulardonar_formsubmit():
@@ -396,9 +585,82 @@ def regulardonar_gallery():
 def regulardonar_index():
     return render_template('regulardonar_Script_html/index.html')
 
-@app.route('/regulardonormyaccount')
+@app.route('/regulardonormyaccount', methods=['GET', 'POST'])
 def regulardonar_myaccount():
-    return render_template('regulardonar_Script_html/myaccount_pg.html')
+    email = session.get('email')
+    if not email:
+        return redirect('/login')
+        
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM regulardonors WHERE email = %s", (email,))
+        user = cursor.fetchone() or {}
+        
+        name = user.get('name', session.get('name', 'Santhosh Dhaba'))
+        phone = user.get('phone', session.get('phone', '+91 99999 88888'))
+        
+        cursor.execute("SELECT COUNT(*) as c, SUM(CASE WHEN donation_type='money' THEN amount ELSE 0 END) as money_sum FROM regular_donor_donations WHERE donor_name = %s AND phone = %s", (name, phone))
+        stats = cursor.fetchone()
+        total_donations = stats['c'] or 0
+        total_contributed = f"Rs. {int(stats['money_sum'] or 0)}"
+        people_helped = total_donations * 25
+        
+        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE donor_name = %s AND phone = %s AND donation_type = 'food'", (name, phone))
+        food_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE donor_name = %s AND phone = %s AND donation_type = 'money'", (name, phone))
+        money_count = cursor.fetchone()['c'] or 0
+        
+        cursor.close()
+    except Exception as e:
+        print("Error in regular donor myaccount:", e)
+        user = {}
+        total_donations = 0
+        total_contributed = "Rs. 0"
+        people_helped = 0
+        food_count = 0
+        money_count = 0
+        
+    if request.method == 'POST':
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        full_name = f"{first_name} {last_name}" if first_name and last_name else (first_name or last_name or name)
+        phone = request.form.get('phone')
+        city = request.form.get('city')
+        pincode = request.form.get('zipCode') or request.form.get('pincode')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                UPDATE regulardonors 
+                SET name = %s, phone = %s, city = %s, pincode = %s 
+                WHERE email = %s
+            """, (full_name, phone, city, pincode, email))
+            db.commit()
+            
+            session['name'] = full_name
+            session['phone'] = phone
+            session['city'] = city
+            session['pincode'] = pincode
+            cursor.close()
+        except Exception as e:
+            print("Error updating regulardonor profile:", e)
+        return redirect('/regulardonormyaccount')
+        
+    name_parts = user.get('name', '').split(' ', 1)
+    first_name = name_parts[0] if name_parts else ''
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    
+    return render_template(
+        'regulardonar_Script_html/myaccount_pg.html',
+        user=user,
+        first_name=first_name,
+        last_name=last_name,
+        total_donations=total_donations,
+        total_contributed=total_contributed,
+        people_helped=people_helped,
+        food_count=food_count,
+        money_count=money_count
+    )
 
 @app.route('/regulardonorourwork')
 def regulardonar_ourwork():
@@ -406,7 +668,19 @@ def regulardonar_ourwork():
 
 @app.route('/regulardonorregulardonarverification')
 def regulardonar_regulardonarverification():
-    return render_template('regulardonar_Script_html/regulardonarverification.html')
+    email = session.get('email')
+    if not email:
+        return redirect('/login')
+    try:
+        cursor = db.cursor()
+        cursor.execute("SELECT status FROM regulardonors WHERE email = %s", (email,))
+        row = cursor.fetchone()
+        status = row[0] if row else 'Pending'
+        cursor.close()
+    except Exception as e:
+        status = 'Pending'
+        print("Error getting regular donor status:", e)
+    return render_template('regulardonar_Script_html/regulardonarverification.html', status=status)
 
 
 
@@ -534,17 +808,128 @@ def ngo_gethelp_page():
 def ngo_index():
     return render_template('ngo_Script_html/index.html')
 
-@app.route('/ngomyaccount')
+@app.route('/ngomyaccount', methods=['GET', 'POST'])
 def ngo_myaccount():
-    return render_template('ngo_Script_html/myaccount_pg.html')
+    email = session.get('email')
+    if not email:
+        return redirect('/login')
+        
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM ngo_receivers WHERE email = %s", (email,))
+        user = cursor.fetchone() or {}
+        
+        name = user.get('name', session.get('name', 'Sunshine Orphanage'))
+        
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s", (name,))
+        total_requests = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Approved'", (name,))
+        approved_requests = cursor.fetchone()['c'] or 0
+        people_helped = approved_requests * 50
+        
+        cursor.close()
+    except Exception as e:
+        print("Error in ngo myaccount:", e)
+        user = {}
+        total_requests = 0
+        approved_requests = 0
+        people_helped = 0
+        
+    if request.method == 'POST':
+        name = request.form.get('orgName') or name
+        org_type = request.form.get('orgType')
+        phone = request.form.get('phone')
+        address = request.form.get('address')
+        capacity = request.form.get('capacity')
+        established_year = request.form.get('established')
+        needs_list = request.form.getlist('needs')
+        needs = ', '.join(needs_list) if needs_list else ''
+        bio = request.form.get('bio')
+        city = request.form.get('city')
+        pincode = request.form.get('zipCode') or request.form.get('pincode')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                UPDATE ngo_receivers 
+                SET name = %s, org_type = %s, phone = %s, address = %s,
+                    capacity = %s, established_year = %s, needs = %s,
+                    bio = %s, city = %s, pincode = %s 
+                WHERE email = %s
+            """, (name, org_type, phone, address, capacity, established_year, needs, bio, city, pincode, email))
+            db.commit()
+            
+            session['name'] = name
+            session['phone'] = phone
+            session['city'] = city
+            session['pincode'] = pincode
+            cursor.close()
+        except Exception as e:
+            print("Error updating ngo profile:", e)
+        return redirect('/ngomyaccount')
+        
+    name_parts = user.get('name', '').split(' ', 1)
+    first_name = name_parts[0] if name_parts else ''
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    
+    return render_template(
+        'ngo_Script_html/myaccount_pg.html',
+        user=user,
+        first_name=first_name,
+        last_name=last_name,
+        total_requests=total_requests,
+        approved_requests=approved_requests,
+        people_helped=people_helped
+    )
 
 @app.route('/ngongo_history')
 def ngo_ngo_history():
-    return render_template('ngo_Script_html/ngo_history_pg.html')
+    name = session.get('name', 'Sunshine Orphanage')
+    month = request.args.get('month')
+    try:
+        cursor = db.cursor(dictionary=True)
+        if month and month != 'All Time':
+            cursor.execute("SELECT id, request_type, meals_needed, clothing_items, amount_needed, urgency, created_at, status FROM ngo_requests WHERE ngo_name = %s AND MONTHNAME(created_at) = %s ORDER BY created_at DESC", (name, month))
+        else:
+            cursor.execute("SELECT id, request_type, meals_needed, clothing_items, amount_needed, urgency, created_at, status FROM ngo_requests WHERE ngo_name = %s ORDER BY created_at DESC", (name,))
+        requests_list = cursor.fetchall()
+        for idx, r in enumerate(requests_list):
+            r['sno'] = idx + 1
+            r['formatted_date'] = r['created_at'].strftime('%d %b %Y') if r['created_at'] else 'N/A'
+            if r['request_type'] == 'Food':
+                r['requirement'] = r['meals_needed'] or 'Food Support'
+                r['social_impact'] = "Meals for shelter children"
+                r['eco_impact'] = "Reduced food waste"
+            elif r['request_type'] == 'Clothes':
+                r['requirement'] = r['clothing_items'] or 'Clothing Support'
+                r['social_impact'] = "Warmth for children"
+                r['eco_impact'] = "Recycled fabric waste"
+            else:
+                r['requirement'] = f"Rs. {int(r['amount_needed'] or 0)}"
+                r['social_impact'] = "Funded education & operations"
+                r['eco_impact'] = "None"
+        cursor.close()
+    except Exception as e:
+        requests_list = []
+        print("Error fetching NGO requests history:", e)
+        
+    return render_template('ngo_Script_html/ngo_history_pg.html', requests=requests_list)
 
 @app.route('/ngongoverification')
 def ngo_ngoverification():
-    return render_template('ngo_Script_html/ngoverification.html')
+    email = session.get('email')
+    if not email:
+        return redirect('/login')
+    try:
+        cursor = db.cursor()
+        cursor.execute("SELECT status FROM ngo_receivers WHERE email = %s", (email,))
+        row = cursor.fetchone()
+        status = row[0] if row else 'Pending'
+        cursor.close()
+    except Exception as e:
+        status = 'Pending'
+        print("Error getting NGO status:", e)
+    return render_template('ngo_Script_html/ngoverification.html', status=status)
 
 @app.route('/ngoourwork')
 def ngo_ourwork():
@@ -552,7 +937,63 @@ def ngo_ourwork():
 
 @app.route('/ngorecieverdash')
 def ngo_recieverdash():
-    return render_template('ngo_Script_html/recieverdash.html')
+    name = session.get('name', 'Sunshine Orphanage')
+    try:
+        cursor = db.cursor(dictionary=True)
+        # Food count from completed deliveries
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE receiver_name = %s AND donation_type = 'Food' AND status = 'Delivered'", (name,))
+        food_count = cursor.fetchone()['c'] or 0
+        
+        # Clothes count from completed deliveries
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE receiver_name = %s AND donation_type = 'Clothes' AND status = 'Delivered'", (name,))
+        clothes_count = cursor.fetchone()['c'] or 0
+        
+        # Money count from completed NGO requests
+        cursor.execute("SELECT SUM(amount_needed) as s FROM ngo_requests WHERE ngo_name = %s AND request_type = 'Money' AND status = 'Completed'", (name,))
+        money_sum = cursor.fetchone()['s'] or 0
+        
+        # Eco impact metrics
+        eco_food = int(food_count * 55)
+        eco_clothes_reused = int(clothes_count * 20)
+        eco_clothes_co2 = int(clothes_count * 52)
+        
+        # Request counts
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Pending'", (name,))
+        pending_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Approved'", (name,))
+        approved_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'On The Way'", (name,))
+        onway_count = cursor.fetchone()['c'] or 0
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Completed'", (name,))
+        completed_count = cursor.fetchone()['c'] or 0
+        
+        cursor.close()
+    except Exception as e:
+        print("Error fetching NGO dashboard stats:", e)
+        food_count = 0
+        clothes_count = 0
+        money_sum = 0
+        eco_food = 0
+        eco_clothes_reused = 0
+        eco_clothes_co2 = 0
+        pending_count = 0
+        approved_count = 0
+        onway_count = 0
+        completed_count = 0
+        
+    return render_template(
+        'ngo_Script_html/recieverdash.html',
+        food_count=food_count,
+        clothes_count=clothes_count,
+        money_sum=int(money_sum),
+        eco_food=eco_food,
+        eco_clothes_reused=eco_clothes_reused,
+        eco_clothes_co2=eco_clothes_co2,
+        pending_count=pending_count,
+        approved_count=approved_count,
+        onway_count=onway_count,
+        completed_count=completed_count
+    )
 
 
 
@@ -561,28 +1002,189 @@ def ngo_recieverdash():
 
 
 
-                                                        # volunteer login pages
+                                                # volunteer login pages
 
 
 @app.route('/volunteerhome')
 def volunteer_index():
-    return render_template('volunteer_Script_html/index.html')
+    volunteer_name = session.get('name', 'Volunteer User')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE volunteer_name = %s AND status = 'Delivered'", (volunteer_name,))
+        total_deliveries = cursor.fetchone()['c'] or 0
+        people_helped = total_deliveries * 25
+        distance_covered = int(total_deliveries * 6.2)
+        volunteer_hours = total_deliveries * 2
+        cursor.close()
+    except Exception as e:
+        print("Error fetching volunteer stats:", e)
+        total_deliveries = 0
+        people_helped = 0
+        distance_covered = 0
+        volunteer_hours = 0
+        
+    return render_template(
+        'volunteer_Script_html/index.html',
+        total_deliveries=total_deliveries,
+        people_helped=people_helped,
+        distance_covered=distance_covered,
+        volunteer_hours=volunteer_hours
+    )
 
-@app.route('/volunteermyaccount')
+@app.route('/volunteermyaccount', methods=['GET', 'POST'])
 def volunteer_myaccount():
-    return render_template('volunteer_Script_html/myaccount_pg.html')
+    volunteer_email = session.get('email', 'volunteer@gmail.com')
+    volunteer_name = session.get('name', 'Volunteer User')
+    
+    if request.method == 'POST':
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        full_name = f"{first_name} {last_name}" if first_name and last_name else (first_name or last_name or volunteer_name)
+        phone = request.form.get('phone')
+        city = request.form.get('city')
+        pincode = request.form.get('zipCode')
+        vehicle_type = request.form.get('vehicle')
+        
+        try:
+            cursor = db.cursor()
+            cursor.execute("""
+                UPDATE volunteers 
+                SET name = %s, phone = %s, city = %s, pincode = %s, vehicle_type = %s 
+                WHERE email = %s
+            """, (full_name, phone, city, pincode, vehicle_type, volunteer_email))
+            db.commit()
+            
+            session['name'] = full_name
+            session['phone'] = phone
+            session['city'] = city
+            session['pincode'] = pincode
+            session['vehicle_type'] = vehicle_type
+            
+            cursor.close()
+        except Exception as e:
+            print("Error updating volunteer profile:", e)
+            
+        return redirect('/volunteermyaccount')
+
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT COUNT(*) as c FROM deliveries WHERE volunteer_name = %s AND status = 'Delivered'", (volunteer_name,))
+        total_deliveries = cursor.fetchone()['c'] or 0
+        people_helped = total_deliveries * 25
+        volunteer_hours = total_deliveries * 2
+        cursor.close()
+    except Exception as e:
+        print("Error in volunteer account stats:", e)
+        total_deliveries = 0
+        people_helped = 0
+        volunteer_hours = 0
+
+    name_parts = volunteer_name.split(' ', 1)
+    first_name = name_parts[0] if name_parts else ''
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    
+    return render_template(
+        'volunteer_Script_html/myaccount_pg.html',
+        total_deliveries=total_deliveries,
+        people_helped=people_helped,
+        volunteer_hours=volunteer_hours,
+        first_name=first_name,
+        last_name=last_name
+    )
 
 @app.route('/volunteerorders')
 def volunteer_orders():
-    return render_template('volunteer_Script_html/orders.html')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, delivery_id, date, receiver_name, location, donation_type, quantity_details, status FROM deliveries WHERE volunteer_name = 'Pending' OR volunteer_name = 'To be assigned' OR volunteer_name IS NULL ORDER BY created_at DESC")
+        orders = cursor.fetchall()
+        for o in orders:
+            o['urgency'] = 'Normal'
+        cursor.close()
+    except Exception as e:
+        orders = []
+        print("Error fetching available orders:", e)
+        
+    return render_template('volunteer_Script_html/orders.html', orders=orders)
 
 @app.route('/volunteertracking')
 def volunteer_tracking():
-    return render_template('volunteer_Script_html/tracking.html')
+    volunteer_name = session.get('name', 'Volunteer User')
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, delivery_id, date, receiver_name, location, donation_type, quantity_details, status FROM deliveries WHERE volunteer_name = %s AND status IN ('Assigned', 'On The Way', 'In Transit') ORDER BY created_at DESC", (volunteer_name,))
+        active_deliveries = cursor.fetchall()
+        
+        cursor.execute("SELECT id, delivery_id, date, receiver_name, location, donation_type, quantity_details, status FROM deliveries WHERE volunteer_name = %s AND status = 'Delivered' ORDER BY date DESC LIMIT 5", (volunteer_name,))
+        recent_deliveries = cursor.fetchall()
+        cursor.close()
+    except Exception as e:
+        active_deliveries = []
+        recent_deliveries = []
+        print("Error fetching tracking data:", e)
+        
+    return render_template(
+        'volunteer_Script_html/tracking.html',
+        active_deliveries=active_deliveries,
+        recent_deliveries=recent_deliveries
+    )
 
 @app.route('/volunteervolunteer_history')
 def volunteer_volunteer_history():
-    return render_template('volunteer_Script_html/volunteer_history_pg.html')
+    volunteer_name = session.get('name', 'Volunteer User')
+    month = request.args.get('month')
+    try:
+        cursor = db.cursor(dictionary=True)
+        if month and month != 'All Time':
+            cursor.execute("SELECT id, delivery_id, date, receiver_name, location, quantity_details, status FROM deliveries WHERE volunteer_name = %s AND status = 'Delivered' AND MONTHNAME(date) = %s ORDER BY date DESC", (volunteer_name, month))
+        else:
+            cursor.execute("SELECT id, delivery_id, date, receiver_name, location, quantity_details, status FROM deliveries WHERE volunteer_name = %s AND status = 'Delivered' ORDER BY date DESC", (volunteer_name,))
+        deliveries = cursor.fetchall()
+        for d in deliveries:
+            d['formatted_date'] = d['date'].strftime('%d %b %Y') if d['date'] else 'N/A'
+        cursor.close()
+    except Exception as e:
+        deliveries = []
+        print("Error fetching delivery history:", e)
+        
+    return render_template('volunteer_Script_html/volunteer_history_pg.html', deliveries=deliveries)
+
+@app.route('/volunteer/accept_order/<int:order_id>')
+def volunteer_accept_order(order_id):
+    volunteer_name = session.get('name', 'Volunteer User')
+    try:
+        cursor = db.cursor()
+        cursor.execute("UPDATE deliveries SET volunteer_name = %s, status = 'Assigned' WHERE id = %s", (volunteer_name, order_id))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error accepting order:", e)
+        
+    return redirect('/volunteertracking')
+
+@app.route('/volunteer/start_delivery/<int:order_id>')
+def volunteer_start_delivery(order_id):
+    try:
+        cursor = db.cursor()
+        cursor.execute("UPDATE deliveries SET status = 'On The Way' WHERE id = %s", (order_id,))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error starting delivery:", e)
+        
+    return redirect('/volunteertracking')
+
+@app.route('/volunteer/complete_delivery/<int:order_id>')
+def volunteer_complete_delivery(order_id):
+    try:
+        cursor = db.cursor()
+        cursor.execute("UPDATE deliveries SET status = 'Delivered', date = CURDATE() WHERE id = %s", (order_id,))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error completing delivery:", e)
+        
+    return redirect('/volunteertracking')
 
 
 
@@ -939,8 +1541,37 @@ def admin_update_donation(source, donation_id, action):
     status_val = status_map.get(action, 'Pending')
     
     try:
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
         cursor.execute(f"UPDATE {table_name} SET status = %s WHERE id = %s", (status_val, donation_id))
+        
+        if status_val == 'Approved':
+            if source == 'donor':
+                cursor.execute(f"SELECT donation_type, donor_name, city, pincode, quantity, food_category, clothing_category, description FROM {table_name} WHERE id = %s", (donation_id,))
+            else:
+                cursor.execute(f"SELECT donation_type, donor_name, city, pincode, quantity, food_category, description FROM {table_name} WHERE id = %s", (donation_id,))
+            donation = cursor.fetchone()
+            if donation and donation['donation_type'] in ['food', 'clothes']:
+                dtype = 'Food' if donation['donation_type'] == 'food' else 'Clothes'
+                loc = f"{donation['city']} / {donation['pincode']}"
+                if dtype == 'Food':
+                    qty = donation['quantity'] or 0
+                    cat = donation['food_category'] or ''
+                    qty_det = f"{qty} Meals ({cat})" if qty else (donation['description'] or 'Food Donation')
+                else:
+                    qty = donation['quantity'] or 0
+                    cat = donation.get('clothing_category') or ''
+                    qty_det = f"{qty} Items ({cat})" if qty else (donation['description'] or 'Clothes Donation')
+                
+                qty_det = qty_det or 'Details Pending'
+                deliv_id = f"DLV-DON-{10000 + donation_id}"
+                
+                cursor.execute("SELECT id FROM deliveries WHERE delivery_id = %s", (deliv_id,))
+                if not cursor.fetchone():
+                    cursor.execute("""
+                        INSERT INTO deliveries (delivery_id, date, receiver_name, location, donation_type, quantity_details, volunteer_name, status)
+                        VALUES (%s, CURDATE(), %s, %s, %s, %s, %s, %s)
+                    """, (deliv_id, 'Pending Receiver', loc, dtype, qty_det, 'Pending', 'Pending'))
+        
         db.commit()
         cursor.close()
     except Exception as e:
@@ -959,8 +1590,27 @@ def admin_update_request(request_id, action):
     status_val = status_map.get(action, 'Pending')
     
     try:
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
         cursor.execute("UPDATE ngo_requests SET status = %s WHERE id = %s", (status_val, request_id))
+        
+        if status_val == 'Approved':
+            cursor.execute("SELECT request_type, meals_needed, clothing_items, ngo_name, city, pincode FROM ngo_requests WHERE id = %s", (request_id,))
+            req = cursor.fetchone()
+            if req and req['request_type'] in ['Food', 'Clothes']:
+                dtype = req['request_type']
+                loc = f"{req['city']} / {req['pincode']}"
+                qty_det = req['meals_needed'] if dtype == 'Food' else req['clothing_items']
+                qty_det = qty_det or 'Details Pending'
+                ngo_name = req['ngo_name'] or 'Unknown NGO'
+                deliv_id = f"DLV-REQ-{10000 + request_id}"
+                
+                cursor.execute("SELECT id FROM deliveries WHERE delivery_id = %s", (deliv_id,))
+                if not cursor.fetchone():
+                    cursor.execute("""
+                        INSERT INTO deliveries (delivery_id, date, receiver_name, location, donation_type, quantity_details, volunteer_name, status)
+                        VALUES (%s, CURDATE(), %s, %s, %s, %s, %s, %s)
+                    """, (deliv_id, ngo_name, loc, dtype, qty_det, 'Pending', 'Pending'))
+                    
         db.commit()
         cursor.close()
     except Exception as e:
@@ -1026,49 +1676,12 @@ def login():
     password = request.form['password']
     reg_no = request.form.get('reg_no')
 
-                                              # static values for testing
+    # Admin is a special case since there is no admin table
     if email == "admin@gmail.com" and password == "humanitybridge":
         session['name'] = "Admin"
         session['email'] = email
         session['role'] = "admin"
         return redirect('/adminhome')
-    elif email == "ngo@gmail.com" and reg_no == "123456" and password == "humanitybridge":
-        session['name'] = "Sunshine Orphanage"
-        session['email'] = "ngo@gmail.com"
-        session['phone'] = "+91 90123 45678"
-        session['city'] = "Hyderabad"
-        session['pincode'] = "500001"
-        session['role'] = "ngo"
-        return redirect('/ngohome')
-    elif email == "donar@gmail.com" and password == "humanitybridge":
-        session['name'] = "Harsha Vardhan"
-        session['email'] = email
-        session['phone'] = "+91 98765 43210"
-        session['city'] = "Hyderabad"
-        session['pincode'] = "500001"
-        session['role'] = "donor"
-        return redirect('/donorhome')
-    elif email == "regulardonar@gmail.com" and reg_no == "123456" and password == "humanitybridge":
-        session['name'] = "Santhosh Dhaba"
-        session['email'] = "regulardonar@gmail.com"
-        session['phone'] = "+91 99999 88888"
-        session['city'] = "Hyderabad"
-        session['pincode'] = "500001"
-        session['role'] = "regulardonor"
-        return redirect('/regulardonorhome')
-    elif email == "volunteer@gmail.com" and password == "humanitybridge":
-        session['name'] = "Volunteer User"
-        session['email'] = email
-        session['phone'] = "+91 88888 77777"
-        session['city'] = "Hyderabad"
-        session['pincode'] = "500001"
-        session['role'] = "volunteer"
-        return redirect('/volunteerhome')
-    elif email == "b4login@gmail.com" and password == "humanitybridge":
-        session['name'] = "Before Login"
-        session['email'] = email
-        session['role'] = "beforelogin"
-        return redirect('/')
 
     cursor = db.cursor()
 
@@ -1091,7 +1704,7 @@ def login():
             return render_template('beforelogin_Script_html/login_pg.html', error="Invalid Email or Password!")
 
                                                    #volunteers table
-    cursor.execute("SELECT password, name, phone, email, city, pincode FROM volunteers WHERE email = %s", (email,))
+    cursor.execute("SELECT password, name, phone, email, city, pincode, vehicle_type FROM volunteers WHERE email = %s", (email,))
     row = cursor.fetchone()
     if row:
         hashed_password = row[0]
@@ -1102,6 +1715,7 @@ def login():
             session['city'] = row[4]
             session['pincode'] = row[5]
             session['role'] = "volunteer"
+            session['vehicle_type'] = row[6]
             cursor.close()
             return redirect('/volunteerhome')
         else:

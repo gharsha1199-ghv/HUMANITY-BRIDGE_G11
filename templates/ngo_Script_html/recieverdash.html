@@ -36,7 +36,7 @@
                 <a href="/ngoourwork">Our work</a>
                 <a href="/ngogallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Orphanage &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'NGO') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/ngorecieverdash">View Dashboard</a>
                         <a href="/ngongo_history">Request History</a>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="card-info">
                             <h5>Total Food Donations Received</h5>
-                            <h2>300</h2>
+                            <h2>{{ food_count }}</h2>
                             <p>Total Food Donations</p>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="card-info">
                             <h5>Total Clothes Donations Received</h5>
-                            <h2>80</h2>
+                            <h2>{{ clothes_count }}</h2>
                             <p>Total Clothes Donations</p>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="card-info">
                             <h5>Total Money Donations Received</h5>
-                            <h2>Rs 7,550</h2>
+                            <h2>Rs. {{ money_sum }}</h2>
                             <p>Total Money Received</p>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="eco-info">
                         <h4>Eco Impact from Food</h4>
-                        <p><strong class="green-text">2,640 kg</strong> of food waste reduced</p>
+                        <p><strong class="green-text">{{ eco_food }} kg</strong> of food waste reduced</p>
                     </div>
                 </div>
 
@@ -124,8 +124,8 @@
                     <div class="eco-info">
                         <h4>Eco Impact from Clothes</h4>
                         <div class="eco-stats">
-                            <span><strong class="green-text">754</strong> clothes reused</span>
-                            <span><strong class="green-text">1,960 kg</strong> <br> of CO<sub>2</sub> emissions
+                            <span><strong class="green-text">{{ eco_clothes_reused }}</strong> clothes reused</span>
+                            <span><strong class="green-text">{{ eco_clothes_co2 }} kg</strong> <br> of CO<sub>2</sub> emissions
                                 saved</span>
                         </div>
                     </div>
@@ -140,25 +140,25 @@
                 <div class="status-card">
                     <div class="status-icon yellow-text"><i class="fa-solid fa-hourglass-half"></i></div>
                     <h4>Pending Requests</h4>
-                    <div class="count-pill">8</div>
+                    <div class="count-pill">{{ pending_count }}</div>
                 </div>
 
                 <div class="status-card">
                     <div class="status-icon green-text"><i class="fa-solid fa-circle-check"></i></div>
                     <h4>Approved Requests</h4>
-                    <div class="count-pill">10</div>
+                    <div class="count-pill">{{ approved_count }}</div>
                 </div>
 
                 <div class="status-card">
                     <div class="status-icon blue-text"><i class="fa-solid fa-truck"></i></div>
                     <h4>On the Way</h4>
-                    <div class="count-pill">6</div>
+                    <div class="count-pill">{{ onway_count }}</div>
                 </div>
 
                 <div class="status-card">
                     <div class="status-icon green-text"><i class="fa-solid fa-check"></i></div>
                     <h4>Completed Requests</h4>
-                    <div class="count-pill">24</div>
+                    <div class="count-pill">{{ completed_count }}</div>
                 </div>
             </div>
 

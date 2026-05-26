@@ -30,7 +30,7 @@
                 <a href="/ngoourwork">Our Work</a>
                 <a href="/ngogallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Orphanage &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'NGO') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/ngorecieverdash">View Dashboard</a>
                         <a href="/ngongo_history">Request History</a>
@@ -50,19 +50,60 @@
 
         <div class="history-content-wrapper">
             <div class="months-container">
+                <div class="months-grid">
+                    <a href="/ngongo_history?month=All+Time" class="month-btn{% if not request.args.get('month') or request.args.get('month') == 'All Time' %} active{% endif %}">All Time</a>
+                    <a href="/ngongo_history?month=January" class="month-btn{% if request.args.get('month') == 'January' %} active{% endif %}">Jan</a>
+                    <a href="/ngongo_history?month=February" class="month-btn{% if request.args.get('month') == 'February' %} active{% endif %}">Feb</a>
+                    <a href="/ngongo_history?month=March" class="month-btn{% if request.args.get('month') == 'March' %} active{% endif %}">Mar</a>
+                    <a href="/ngongo_history?month=April" class="month-btn{% if request.args.get('month') == 'April' %} active{% endif %}">Apr</a>
+                    <a href="/ngongo_history?month=May" class="month-btn{% if request.args.get('month') == 'May' %} active{% endif %}">May</a>
+                    <a href="/ngongo_history?month=June" class="month-btn{% if request.args.get('month') == 'June' %} active{% endif %}">Jun</a>
+                    <a href="/ngongo_history?month=July" class="month-btn{% if request.args.get('month') == 'July' %} active{% endif %}">Jul</a>
+                    <a href="/ngongo_history?month=August" class="month-btn{% if request.args.get('month') == 'August' %} active{% endif %}">Aug</a>
+                    <a href="/ngongo_history?month=September" class="month-btn{% if request.args.get('month') == 'September' %} active{% endif %}">Sep</a>
+                    <a href="/ngongo_history?month=October" class="month-btn{% if request.args.get('month') == 'October' %} active{% endif %}">Oct</a>
+                    <a href="/ngongo_history?month=November" class="month-btn{% if request.args.get('month') == 'November' %} active{% endif %}">Nov</a>
+                    <a href="/ngongo_history?month=December" class="month-btn{% if request.args.get('month') == 'December' %} active{% endif %}">Dec</a>
+                </div>
                 <div class="history-table-container" id="history-table-container" style="display: block;">
-                    <h3 id="selected-month-title">Month History</h3>
+                    <h3 id="selected-month-title">{{ request.args.get('month') or 'All Time' }} History</h3>
                     <table class="history-table">
                         <thead>
                             <tr>
                                 <th>S.No</th>
                                 <th>Date</th>
                                 <th>Request Type</th>
-                                <th>Received Item</th>
-                                <th>Quantity</th>
+                                <th>Requirement</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="history-table-body">
+                            {% for r in requests %}
+                            <tr>
+                                <td>{{ r.sno }}</td>
+                                <td>{{ r.formatted_date }}</td>
+                                <td>{{ r.request_type }}</td>
+                                <td>{{ r.requirement }}</td>
+                                <td>
+                                    <span class="status-pill {{ r.status.lower().replace(' ', '-') if r.status else 'pending' }}" style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;
+                                    {% if r.status == 'Approved' or r.status == 'Completed' %}
+                                        background-color: #d4edda; color: #155724;
+                                    {% elif r.status == 'On The Way' %}
+                                        background-color: #cce5ff; color: #004085;
+                                    {% elif r.status == 'Rejected' %}
+                                        background-color: #f8d7da; color: #721c24;
+                                    {% else %}
+                                        background-color: #fff3cd; color: #856404;
+                                    {% endif %}">
+                                        {{ r.status or 'Pending' }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #ccc; padding: 20px;">No requests found for this period.</td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -74,49 +115,6 @@
         <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const selectedMonthTitle = document.getElementById("selected-month-title");
-            const historyTableBody = document.getElementById("history-table-body");
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const monthName = urlParams.get('month') || 'All Time';
-
-            selectedMonthTitle.innerText = `${monthName} History`;
-
-            const donationHistory = {
-                "January": [
-                    { sno: 1, date: "10 Jan 2026", type: "Food Request", item: "Rice & Lentils", quantity: "50 kg" },
-                    { sno: 2, date: "22 Jan 2026", type: "Clothes Request", item: "Winter Coats", quantity: "20 pieces" }
-                ],
-                "March": [
-                    { sno: 1, date: "05 Mar 2026", type: "Fund Request", item: "Medical Bills", quantity: "$200" }
-                ]
-            };
-
-            const history = donationHistory[monthName] || [];
-            
-            if (history.length > 0) {
-                history.forEach(item => {
-                    historyTableBody.innerHTML += `
-                        <tr>
-                            <td>${item.sno}</td>
-                            <td>${item.date}</td>
-                            <td>${item.type}</td>
-                            <td>${item.item}</td>
-                            <td>${item.quantity}</td>
-                        </tr>
-                    `;
-                });
-            } else {
-                historyTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" style="text-align: center; color: #ccc;">No requests this month</td>
-                    </tr>
-                `;
-            }
-        });
-    </script>
     <script src="{{ url_for('static', filename='headerfooter/nav.js') }}"></script>
 </body>
 </html>

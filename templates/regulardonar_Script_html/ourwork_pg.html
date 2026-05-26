@@ -30,7 +30,7 @@
                 <a class="active" href="#">Our Work</a>
                 <a href="/regulardonorgallery">Gallery</a>
                 <div class="user-dropdown">
-                    <a href="#" class="login-btn user-toggle">Santhosh Dhaba &#9662;</a>
+                    <a href="#" class="login-btn user-toggle">{{ session.get('name', 'Regular Donor') }} &#9662;</a>
                     <div class="dropdown-content">
                         <a href="/regulardonordashboard">View Dashboard</a>
                         <a href="/regulardonordonation_history">Donation History</a>
