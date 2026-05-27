@@ -326,11 +326,11 @@ def donorlogin_donatemoney():
             cursor.execute("""
                 INSERT INTO donor_donations (
                     donation_type, donor_name, phone, city, pincode, full_address, 
-                    amount, purpose, payment_method, upi_id
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    amount, purpose, payment_method, upi_id, status
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 'money', donor_name, phone, city, pincode, full_address,
-                amount, purpose, payment_method, upi_id
+                amount, purpose, payment_method, upi_id, 'Completed'
             ))
             db.commit()
             cursor.close()
@@ -524,11 +524,11 @@ def regulardonar_donatemoney():
             cursor.execute("""
                 INSERT INTO regular_donor_donations (
                     donation_type, donor_name, phone, city, pincode, full_address,
-                    amount, purpose, payment_method, upi_id
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    amount, purpose, payment_method, upi_id, status
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 'money', donor_name, phone, city, pincode, full_address,
-                amount, purpose, payment_method, upi_id
+                amount, purpose, payment_method, upi_id, 'Completed'
             ))
             db.commit()
             cursor.close()
@@ -1878,4 +1878,4 @@ def get_user_info():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0',port=5000)
