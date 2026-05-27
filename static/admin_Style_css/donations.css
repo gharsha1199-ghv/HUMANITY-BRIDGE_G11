@@ -145,6 +145,7 @@ tbody tr:hover {
   font-size: 12px;
   font-weight: 600;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .approved {

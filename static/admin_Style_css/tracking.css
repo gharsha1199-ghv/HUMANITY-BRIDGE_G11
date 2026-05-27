@@ -217,13 +217,16 @@ tbody tr:hover {
   color: white;
   font-size: 12px;
   font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .onway {
   background: #4361ee;
 }
 
-.delivered {
+.delivered,
+.completed {
   background: #2ecc71;
 }
 

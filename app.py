@@ -1516,16 +1516,19 @@ def admin_verify_user(user_type, user_id, action):
         'ngo': 'ngo_receivers'
     }
     table_name = table_map.get(user_type)
-    status_val = 'Approved' if action == 'approve' else 'Rejected'
     
     if table_name:
         try:
             cursor = db.cursor()
-            cursor.execute(f"UPDATE {table_name} SET status = %s WHERE id = %s", (status_val, user_id))
+            if action == 'delete':
+                cursor.execute(f"DELETE FROM {table_name} WHERE id = %s", (user_id,))
+            else:
+                status_val = 'Approved' if action == 'approve' else 'Rejected'
+                cursor.execute(f"UPDATE {table_name} SET status = %s WHERE id = %s", (status_val, user_id))
             db.commit()
             cursor.close()
         except Exception as e:
-            print("Error verifying user:", e)
+            print("Error verifying/deleting user:", e)
             
     return redirect('/adminverification')
 

@@ -98,16 +98,34 @@
             <button class="tab">New Receivers</button>
           </div> -->
 
-          <div class="filters">
-            <input type="text" placeholder="Search...">
-            <select>
-              <option>Month</option>
+          <div class="filters" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="searchInput" placeholder="Search..." style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 0.9rem;">
+            <select id="monthFilter" style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 0.9rem;">
+              <option value="all">All Months</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
             </select>
-            <select>
-              <option>All Status</option>
-              <option>Pending</option>
-              <option>Approved</option>
-              <option>Rejected</option>
+            <select id="typeFilter" style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 0.9rem;">
+              <option value="all">All User Types</option>
+              <option value="Individual Donor">Individual Donor</option>
+              <option value="Volunteer">Volunteer</option>
+              <option value="Regular Donor">Regular Donor</option>
+              <option value="NGO Receiver">NGO Receiver</option>
+            </select>
+            <select id="statusFilter" style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 0.9rem;">
+              <option value="all">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
             </select>
           </div>
         </div>
@@ -128,7 +146,10 @@
 
           <tbody>
             {% for user in users %}
-            <tr>
+            <tr data-year="{{ user.created_at.strftime('%Y') if user.created_at else '' }}" 
+                data-month="{{ user.created_at.strftime('%B') if user.created_at else '' }}" 
+                data-type="{{ user.user_type }}" 
+                data-status="{{ user.status }}">
               <td>{{ user.formatted_date }}</td>
               <td>{{ user.user_type }}</td>
               <td class="name">{{ user.name }}</td>
@@ -140,15 +161,9 @@
                   <a href="/adminview?type={{ user.user_type_raw }}&id={{ user.id }}">
                     <button class="btn view" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
                   </a>
-                  {% if user.status == 'Pending' %}
-                    <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/reject">
-                      <button class="btn reject" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Reject</button>
-                    </a>
-                  {% elif user.status == 'Approved' %}
-                    <span style="color: #28a745; font-weight: 500; font-size: 0.9rem;"><i class="fa-solid fa-circle-check"></i> Approved</span>
-                  {% else %}
-                    <span style="color: #dc3545; font-weight: 500; font-size: 0.9rem;"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>
-                  {% endif %}
+                  <a href="/admin/verify/{{ user.user_type_raw }}/{{ user.id }}/delete" onclick="return confirm('Are you sure you want to delete this user? This will prevent them from logging in.');">
+                    <button class="btn reject" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button>
+                  </a>
                 </div>
               </td>
             </tr>
@@ -190,6 +205,36 @@
         body.classList.toggle('sidebar-active');
       });
     }
+
+    function filterUsers() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const monthVal = document.getElementById('monthFilter').value;
+      const typeVal = document.getElementById('typeFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+      
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        if (row.cells.length === 1) return; // skip "No records found" row
+        
+        const month = row.getAttribute('data-month');
+        const type = row.getAttribute('data-type');
+        const status = row.getAttribute('data-status');
+        const text = row.textContent.toLowerCase();
+        
+        let show = true;
+        if (searchVal && !text.includes(searchVal)) show = false;
+        if (monthVal !== 'all' && month !== monthVal) show = false;
+        if (typeVal !== 'all' && type !== typeVal) show = false;
+        if (statusVal !== 'all' && status !== statusVal) show = false;
+        
+        row.style.display = show ? '' : 'none';
+      });
+    }
+    
+    document.getElementById('searchInput').addEventListener('input', filterUsers);
+    document.getElementById('monthFilter').addEventListener('change', filterUsers);
+    document.getElementById('typeFilter').addEventListener('change', filterUsers);
+    document.getElementById('statusFilter').addEventListener('change', filterUsers);
 
     // Hamburger menu for mobile
     // const hamburger = document.querySelector('.hamburger');

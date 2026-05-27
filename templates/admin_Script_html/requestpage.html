@@ -146,20 +146,20 @@
                             
                             <td>{{ request.city }}</td>
                             <td>
-                                <span class="status {{ request.status.lower().replace(' ', '').replace('the', '') }}">{{ request.status }}</span>
-                                <div class="status-actions" style="margin-top: 5px; font-size: 0.75rem; display: flex; gap: 6px; flex-wrap: wrap;">
-                                  {% if request.status != 'Approved' and request.status != 'Completed' %}
-                                    <a href="/admin/request/{{ request.id }}/approve" style="color: green; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-check"></i> Approve</a>
-                                  {% endif %}
-                                  {% if request.status == 'Approved' %}
-                                    <a href="/admin/request/{{ request.id }}/onway" style="color: blue; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-truck"></i> Ship</a>
-                                  {% endif %}
-                                  {% if request.status == 'On The Way' %}
-                                    <a href="/admin/request/{{ request.id }}/complete" style="color: purple; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Complete</a>
-                                  {% endif %}
-                                  {% if request.status == 'Pending' %}
-                                    <a href="/admin/request/{{ request.id }}/reject" style="color: red; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-xmark"></i> Reject</a>
-                                  {% endif %}
+                                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px;">
+                                    <span class="status {{ request.status.lower().replace(' ', '').replace('the', '') }}">{{ request.status }}</span>
+                                    <div class="status-actions" style="font-size: 0.7rem; display: flex; gap: 6px; align-items: center; justify-content: flex-start; margin-top: 2px;">
+                                      {% if request.status == 'Pending' %}
+                                        <a href="/admin/request/{{ request.id }}/approve" style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 3px; transition: 0.2s;"><i class="fa-solid fa-check"></i> Approve</a>
+                                        <a href="/admin/request/{{ request.id }}/reject" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 3px; transition: 0.2s;"><i class="fa-solid fa-xmark"></i> Reject</a>
+                                      {% endif %}
+                                      {% if request.status == 'Approved' %}
+                                        <a href="/admin/request/{{ request.id }}/onway" style="color: #004085; background-color: #cce5ff; border: 1px solid #b8daff; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 3px; transition: 0.2s;"><i class="fa-solid fa-truck"></i> Ship</a>
+                                      {% endif %}
+                                      {% if request.status == 'On The Way' %}
+                                        <a href="/admin/request/{{ request.id }}/complete" style="color: #4a148c; background-color: #f3e5f5; border: 1px solid #e1bee7; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 3px; transition: 0.2s;"><i class="fa-solid fa-circle-check"></i> Complete</a>
+                                      {% endif %}
+                                    </div>
                                 </div>
                             </td>
                         </tr>
