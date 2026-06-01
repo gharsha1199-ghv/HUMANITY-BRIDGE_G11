@@ -111,6 +111,7 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-left:8px;
 }
 
 thead {

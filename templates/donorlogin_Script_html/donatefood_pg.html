@@ -130,26 +130,35 @@
 
       <div class="form-card">
         <div class="form-group">
-          <form id="donationForm" method="POST" action="/donordonatefood">
+           <form id="donationForm">
 
-            
+              <h3>Type of Food</h3>
 
-            
 
-            
 
-            
 
-            
-              
+
+
+              <div class="row-check">
+                <label class="checkbox-row">
+                  <input type="radio" name="foodType" value="packed">
+                  <span>Packed / Sealed Food</span>
+                </label>
+
+                <label class="check">
+                  <input type="radio" name="foodType" value="raw">
+                  <span>Raw Ingredients</span>
+                </label>
+              </div>
+            </div>
 
             <div class="form-block">
               <h3>Food Category</h3>
-              <select id="foodCategory" name="food_category" required>
+              <select id="foodCategory">
                 <option value="" disabled selected>Select</option>
-                <option value="Raw Ingredients">Raw Ingredients</option>
-                <option value="Packed Food">Packed Food</option>
-                <option value="Mixed">Mixed</option>
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+                <option value="mixed">Mixed</option>
               </select>
             </div>
 
@@ -157,18 +166,18 @@
               <h3>Donor Details</h3>
 
               <div class="grid-2">
-                <input type="text" id="donorName" name="donor_name" placeholder="Donor Name" required>
-                <input type="tel" id="donorPhone" name="phone" placeholder="Phone Number" required>
+                <input type="text" id="donorName" placeholder="Donor Name">
+                <input type="tel" id="donorPhone" placeholder="Phone Number">
               </div>
 
               <div class="grid-2 mt-10">
-                <input type="email" id="donorEmail" name="email" placeholder="Email (optional)">
-                <input type="text" id="donorCity" name="city" placeholder="City" required>
+                <input type="email" id="donorEmail" placeholder="Email (optional)">
+                <input type="text" id="donorCity" placeholder="City">
               </div>
 
               <div class="grid-2 mt-10">
-                <input type="text" id="donorPincode" name="pincode" placeholder="Pincode" required>
-                <input type="text" id="pickupAddress" name="full_address" placeholder="Pickup Address" required>
+                <input type="number" id="donorPincode" placeholder="Pincode">
+                <input type="text" id="pickupAddress" placeholder="Pickup Address">
               </div>
             </div>
 
@@ -176,28 +185,35 @@
               <h3>Freshness / Expiry Details</h3>
 
               <div class="grid-2" id="expiryBox">
-                <input type="date" id="expiryDate" name="expiry_date" required>
-                <input type="time" id="expiryTime" name="expiry_time" placeholder="Best before time (optional)">
+                <input type="date" id="expiryDate">
+                <input type="time" id="expiryTime" placeholder="Best before time (optional)">
               </div>
 
               <p class="note">Expiry details help the admin approve only safe donations.</p>
             </div>
 
-            <div class="form-block">
+            <!-- <div class="form-block">
               <h3>Quantity of Food</h3>
 
               <div class="grid-2">
-                <input type="number" id="quantity" name="food_quantity" placeholder="Quantity" required>
-                <input type="text" id="unitField" name="food_unit" value="Select food type first" readonly>
+                <input type="number" id="quantity" placeholder="Quantity">
+                <input type="text" id="unitField" value="Select food type first" readonly>
+                <br>
               </div>
-
-              <input type="text" id="peopleServe" name="description_notes" class="mt-100"
-                placeholder="Explain about the food (example: item names, quantity details, any notes..">
             </div>
+            <br>
+            <br>
+
+            <div class="form-block">
+            <input type="text" id="peopleServe" class="mt-100"
+                placeholder="Explain about the food (example: item names, quantity details, any notes..)">
+            </div> -->
+            <br>
+            <br>
 
             <div class="form-block hidden" id="sealedBox">
               <h3>Sealed Status</h3>
-              <select id="sealedStatus" name="sealed_status">
+              <select id="sealedStatus">
                 <option value="" disabled selected>Is it properly sealed?</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -207,12 +223,12 @@
               <h3>Packaging & Storage Status</h3>
 
               <label class="check">
-                <input type="checkbox" id="packedProperly" name="packed_properly" value="1">
+                <input type="checkbox" id="packedProperly">
                 <span>Properly packed</span>
               </label>
 
               <label class="confirm">
-                <input type="checkbox" id="confirmCheckbox" name="is_hygienic" value="1" required checked>
+                <input type="checkbox" id="confirmCheckbox">
                 <span>I confirm that the food is safe and stored under hygienic conditions.</span>
               </label>
             </div>
@@ -221,25 +237,26 @@
               <h3>Pickup Availability</h3>
 
               <div class="grid-2">
-                <input type="time" id="availableFrom" name="prepared_time" required>
-                <input type="time" id="availableTill" name="pickup_time" required>
+                <input type="time" id="availableFrom">
+                <input type="time" id="availableTill">
               </div>
             </div>
 
             <div class="form-block">
               <h3>Extra Contact (Optional)</h3>
               <div class="grid-2">
-                <input type="text" id="extraPerson" name="extra_person" placeholder="Contact Person Name (optional)">
-                <input type="tel" id="extraPhone" name="extra_phone" placeholder="Contact Number (optional)">
+                <input type="text" id="extraPerson" placeholder="Contact Person Name (optional)">
+                <input type="tel" id="extraPhone" placeholder="Contact Number (optional)">
               </div>
             </div>
 
             <div class="form-block">
               <h3>Upload Food Image (Optional)</h3>
-              <input type="file" id="foodImage" name="food_image" accept="image/*">
+              <input type="file" id="foodImage" accept="image/*">
             </div>
 
-            <button type="submit" class="submit-btn">Donate Food Responsibly</button>
+            <button type="button" class="submit-btn" onclick="window.location.href = '/regulardonorformsubmit'">Donate Food
+              Responsibly</button>
           </form>
         </div>
       </div>

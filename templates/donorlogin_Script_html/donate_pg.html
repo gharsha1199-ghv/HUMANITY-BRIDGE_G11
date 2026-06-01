@@ -229,10 +229,17 @@
               <p class="note">Expiry details help the admin approve only safe donations.</p>
             </div>
 
-            <div class="form-block">
-              <h3>Description</h3>
-              
-              <input type="text" class="mt-10" id="foodDesc" placeholder="Brief description of the items...">
+                      <div class="form-block">
+              <h3>Quantity of Food</h3>
+
+              <div class="grid-2">
+                <input type="number" id="quantity" placeholder="Quantity">
+                <input type="text" id="unitField" value="Select food type first" readonly>
+              </div>
+              <br>
+
+              <input type="text" id="peopleServe" class="mt-100"
+                placeholder="Explain about the food (example: item names, quantity details, any notes..">
             </div>
 
             <div class="form-block">
