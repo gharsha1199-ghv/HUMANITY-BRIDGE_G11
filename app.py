@@ -265,6 +265,11 @@ def donorlogin_donatefood():
             expiry_time = None
             
         food_quantity = request.form.get('food_quantity')
+        try:
+            food_quantity_int = int(food_quantity) if food_quantity else None
+        except ValueError:
+            food_quantity_int = None
+
         food_unit = request.form.get('food_unit')
         description_notes = request.form.get('description_notes')
         if food_quantity and food_unit:
@@ -286,12 +291,12 @@ def donorlogin_donatefood():
                 INSERT INTO donor_donations (
                     donation_type, donor_name, phone, city, pincode, full_address,
                     food_category, expiry_date, expiry_time, description, is_hygienic, 
-                    prepared_time, pickup_time
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    prepared_time, pickup_time, quantity
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 'food', donor_name, phone, city, pincode, full_address,
                 food_category, expiry_date, expiry_time, description, is_hygienic,
-                prepared_time, pickup_time
+                prepared_time, pickup_time, food_quantity_int
             ))
             db.commit()
             cursor.close()
@@ -958,7 +963,7 @@ def ngo_recieverdash():
         eco_clothes_co2 = int(clothes_count * 52)
         
         # Request counts
-        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Pending'", (name,))
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status IN ('Pending', 'Matched')", (name,))
         pending_count = cursor.fetchone()['c'] or 0
         cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE ngo_name = %s AND status = 'Approved'", (name,))
         approved_count = cursor.fetchone()['c'] or 0
@@ -1177,8 +1182,26 @@ def volunteer_start_delivery(order_id):
 @app.route('/volunteer/complete_delivery/<int:order_id>')
 def volunteer_complete_delivery(order_id):
     try:
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT delivery_id FROM deliveries WHERE id = %s", (order_id,))
+        row = cursor.fetchone()
+        
+        # Update delivery status
         cursor.execute("UPDATE deliveries SET status = 'Delivered', date = CURDATE() WHERE id = %s", (order_id,))
+        
+        if row:
+            delivery_id = row['delivery_id']
+            if delivery_id.startswith("DLV-MAT-"):
+                parts = delivery_id.split("-")
+                if len(parts) == 5:
+                    source = parts[2]
+                    donation_id = int(parts[3])
+                    request_id = int(parts[4])
+                    
+                    table_name = 'donor_donations' if source == 'donor' else 'regular_donor_donations'
+                    cursor.execute(f"UPDATE {table_name} SET status = 'Completed' WHERE id = %s", (donation_id,))
+                    cursor.execute("UPDATE ngo_requests SET status = 'Completed' WHERE id = %s", (request_id,))
+                    
         db.commit()
         cursor.close()
     except Exception as e:
@@ -1308,13 +1331,13 @@ def admin_index():
         clothes_donated = int(cursor.fetchone()['q'] or 0)
         
         # 6. Pending/Approved counts
-        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE status = 'Pending'")
+        cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE status IN ('Pending', 'Matched')")
         pd1 = cursor.fetchone()['c']
-        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE status = 'Pending'")
+        cursor.execute("SELECT COUNT(*) as c FROM regular_donor_donations WHERE status IN ('Pending', 'Matched')")
         pd2 = cursor.fetchone()['c']
         pending_donations_count = pd1 + pd2
         
-        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE status = 'Pending'")
+        cursor.execute("SELECT COUNT(*) as c FROM ngo_requests WHERE status IN ('Pending', 'Matched')")
         pending_requests_count = cursor.fetchone()['c']
         
         cursor.execute("SELECT COUNT(*) as c FROM donor_donations WHERE status = 'Approved'")
@@ -1620,6 +1643,140 @@ def admin_update_request(request_id, action):
         print("Error updating request status:", e)
         
     return redirect('/adminrequestpage')
+
+
+def extract_qty_val(val):
+    if val is None:
+        return 0
+    if isinstance(val, int) or isinstance(val, float):
+        return int(val)
+    digits = ''.join(c for c in str(val) if c.isdigit())
+    return int(digits) if digits else 0
+
+
+@app.route('/admin/match/donation/<source>/<int:donation_id>')
+def admin_match_donation(source, donation_id):
+    table_name = 'donor_donations' if source == 'donor' else 'regular_donor_donations'
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute(f"SELECT id, donation_type, donor_name, city, pincode, quantity, description FROM {table_name} WHERE id = %s", (donation_id,))
+        donation = cursor.fetchone()
+        if not donation:
+            cursor.close()
+            return "Donation not found", 404
+        
+        donation['source'] = source
+        donation_qty = extract_qty_val(donation['quantity'])
+        d_type = donation['donation_type'].lower()
+        
+        # Query all pending NGO requests
+        cursor.execute("SELECT id, request_type, meals_needed, clothing_items, ngo_name, city, pincode, created_at FROM ngo_requests WHERE status = 'Pending'")
+        all_reqs = cursor.fetchall()
+        
+        matching_requests = []
+        for req in all_reqs:
+            r_type = req['request_type'].lower()
+            r_qty_str = req['meals_needed'] if r_type == 'food' else req['clothing_items']
+            r_qty = extract_qty_val(r_qty_str)
+            req['qty'] = r_qty
+            req['formatted_date'] = req['created_at'].strftime('%d/%m/%Y') if req['created_at'] else 'N/A'
+            matching_requests.append(req)
+                
+        cursor.close()
+    except Exception as e:
+        donation = {}
+        matching_requests = []
+        print("Error in admin_match_donation:", e)
+        
+    return render_template('admin_Script_html/match_pg.html', type='donation', item=donation, matches=matching_requests)
+
+
+@app.route('/admin/match/request/<int:request_id>')
+def admin_match_request(request_id):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, request_type, meals_needed, clothing_items, ngo_name, city, pincode, created_at FROM ngo_requests WHERE id = %s", (request_id,))
+        req = cursor.fetchone()
+        if not req:
+            cursor.close()
+            return "Request not found", 404
+        
+        r_type = req['request_type'].lower()
+        r_qty_str = req['meals_needed'] if r_type == 'food' else req['clothing_items']
+        req_qty = extract_qty_val(r_qty_str)
+        
+        # Query all pending donor_donations of same type
+        cursor.execute("SELECT id, donation_type, donor_name, city, pincode, quantity, description, created_at FROM donor_donations WHERE status = 'Pending'")
+        indiv_donations = cursor.fetchall()
+        
+        # Query all pending regular_donor_donations
+        cursor.execute("SELECT id, donation_type, donor_name, city, pincode, quantity, description, created_at FROM regular_donor_donations WHERE status = 'Pending'")
+        reg_donations = cursor.fetchall()
+            
+        all_donations = []
+        for d in indiv_donations:
+            d['source'] = 'donor'
+            all_donations.append(d)
+        for d in reg_donations:
+            d['source'] = 'regular'
+            all_donations.append(d)
+            
+        matching_donations = []
+        for d in all_donations:
+            d_qty = extract_qty_val(d['quantity'])
+            d['qty'] = d_qty
+            d['formatted_date'] = d['created_at'].strftime('%d/%m/%Y') if d['created_at'] else 'N/A'
+            matching_donations.append(d)
+                
+        cursor.close()
+    except Exception as e:
+        req = {}
+        matching_donations = []
+        print("Error in admin_match_request:", e)
+        
+    return render_template('admin_Script_html/match_pg.html', type='request', item=req, matches=matching_donations)
+
+
+@app.route('/admin/match/link/<source>/<int:donation_id>/<int:request_id>')
+def admin_link_action(source, donation_id, request_id):
+    table_name = 'donor_donations' if source == 'donor' else 'regular_donor_donations'
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute(f"SELECT donation_type, donor_name, city, pincode, quantity, description FROM {table_name} WHERE id = %s", (donation_id,))
+        donation = cursor.fetchone()
+        
+        cursor.execute("SELECT request_type, ngo_name, city, pincode, meals_needed, clothing_items FROM ngo_requests WHERE id = %s", (request_id,))
+        req = cursor.fetchone()
+        
+        if donation and req:
+            d_type = donation['donation_type'].lower()
+            dtype_display = donation['donation_type'].capitalize()
+            qty = extract_qty_val(donation['quantity'])
+            
+            r_type = req['request_type'].lower()
+            r_qty_str = req['meals_needed'] if r_type == 'food' else req['clothing_items']
+            
+            deliv_id = f"DLV-MAT-{source}-{donation_id}-{request_id}"
+            loc = f"Pickup: {donation['city']}/{donation['pincode']} -> NGO: {req['ngo_name']} in {req['city']}/{req['pincode']}"
+            
+            qty_unit = 'Meals' if d_type == 'food' else 'Bags'
+            qty_det = f"Donor: {qty} {qty_unit} -> NGO Req: {r_qty_str}"
+            
+            cursor.execute("SELECT id FROM deliveries WHERE delivery_id = %s", (deliv_id,))
+            if not cursor.fetchone():
+                cursor.execute("""
+                    INSERT INTO deliveries (delivery_id, date, receiver_name, location, donation_type, quantity_details, volunteer_name, status)
+                    VALUES (%s, CURDATE(), %s, %s, %s, %s, %s, %s)
+                """, (deliv_id, req['ngo_name'], loc, dtype_display, qty_det, 'Pending', 'Pending'))
+                
+                cursor.execute(f"UPDATE {table_name} SET status = 'Matched' WHERE id = %s", (donation_id,))
+                cursor.execute("UPDATE ngo_requests SET status = 'Matched' WHERE id = %s", (request_id,))
+                db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error linking donation and request:", e)
+        
+    return redirect('/admindonations')
 
 
 

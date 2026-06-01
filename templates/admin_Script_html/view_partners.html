@@ -29,20 +29,23 @@
 
         .view-wrapper {
             flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
             padding: 120px 20px 60px 20px;
+            text-align: center;
+            display: block;
         }
 
         .view-card {
             background: white;
             width: 100%;
-            max-width: 900px;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
         }
 
         .card-logo {
@@ -165,7 +168,8 @@
         }
 
         .table-container {
-            overflow-x: auto;
+            flex: 1;
+            overflow-y: auto;
             border-radius: 10px;
             border: 1.5px solid #e0d4fc;
         }

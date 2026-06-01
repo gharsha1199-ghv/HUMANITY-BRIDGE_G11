@@ -50,7 +50,7 @@
 
 
 
-  <section class="distribution-section">
+  <section class="distribution-section" style="max-width: 1200px; margin: 0 auto; padding: 120px 20px 60px 20px; text-align: center;">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h3>Admin<span>Panel</span></h3>
@@ -58,7 +58,6 @@
       <ul class="sidebar-menu">
         <li><a href="/adminhome"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
         <li><a href="/adminverification"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
-
         <li><a href="/admindonations"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
         <li class="active"><a href="#"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
         <li><a href="/adminrequestpage"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
@@ -71,20 +70,18 @@
         &nbsp;<br>
         &nbsp; <br>
         &nbsp;<br>
-
         &nbsp;<br>
         &nbsp; <br>
         &nbsp;<br>
         &nbsp;<br>
         &nbsp;<br>
-        <li id="logout"><a href="/login"><i
-              class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+        <li id="logout"><a href="/login"><i class="fa-solid fa-right-from-bracket"></i>logout</a></li>
       </ul>
     </aside>
 
-    <h1 class="title">Distribution Tracking</h1>
+    <h1 class="title" style="margin-top: 0; color: white; text-align: center; margin-bottom: 24px;">Distribution Tracking</h1>
 
-    <div class="card">
+    <div class="card" style="background: #ffffff; border-radius: 16px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); min-height: 600px; display: flex; flex-direction: column;">
 
       <div class="controls">
         <div class="search-box">
@@ -104,40 +101,42 @@
         </div>
       </div>
 
-      <table id="distributionTable">
-        <thead>
-          <tr>
-            <th>Delivery ID</th>
-            <th>Date</th>
-            <th>Receiver Name</th>
-            <th>Location</th>
-            <th>Donation Type</th>
-            <th>Quantity / Details</th>
-            <th>Volunteer</th>
-            <th>Status</th>
-            
-          </tr>
-        </thead>
+      <div class="table-wrapper" style="flex: 1; overflow-y: auto; text-align: left;">
+        <table id="distributionTable">
+          <thead>
+            <tr>
+              <th>Delivery ID</th>
+              <th>Date</th>
+              <th>Receiver Name</th>
+              <th>Location</th>
+              <th>Donation Type</th>
+              <th>Quantity / Details</th>
+              <th>Volunteer</th>
+              <th>Status</th>
+              
+            </tr>
+          </thead>
 
-        <tbody id="trackingTableBody">
-          {% for delivery in deliveries %}
-          <tr data-status="{{ delivery.status }}">
-            <td>{{ delivery.delivery_id }}</td>
-            <td>{{ delivery.formatted_date }}</td>
-            <td>{{ delivery.receiver_name }}</td>
-            <td>{{ delivery.location }}</td>
-            <td><span class="tag {{ delivery.donation_type.lower() }}">{{ delivery.donation_type }}</span></td>
-            <td>{{ delivery.quantity_details }}</td>
-            <td>{{ delivery.volunteer_name }}</td>
-            <td><span class="status {{ 'onway' if 'Way' in delivery.status or 'Transit' in delivery.status else 'completed' }}">{{ delivery.status }}</span></td>
-          </tr>
-          {% else %}
-          <tr>
-            <td colspan="8" style="text-align: center; color: #aaa; padding: 20px;">No deliveries found in the database.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          <tbody id="trackingTableBody">
+            {% for delivery in deliveries %}
+            <tr data-status="{{ delivery.status }}">
+              <td>{{ delivery.delivery_id }}</td>
+              <td>{{ delivery.formatted_date }}</td>
+              <td>{{ delivery.receiver_name }}</td>
+              <td>{{ delivery.location }}</td>
+              <td><span class="tag {{ delivery.donation_type.lower() }}">{{ delivery.donation_type }}</span></td>
+              <td>{{ delivery.quantity_details }}</td>
+              <td>{{ delivery.volunteer_name }}</td>
+              <td><span class="status {{ 'onway' if 'Way' in delivery.status or 'Transit' in delivery.status else 'completed' }}">{{ delivery.status }}</span></td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="8" style="text-align: center; color: #aaa; padding: 20px;">No deliveries found in the database.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
     </div>
   </section>

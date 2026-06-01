@@ -10,6 +10,48 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 60px 20px;
+            text-align: center;
+            display: block;
+            min-height: auto;
+        }
+        .history-content-wrapper {
+            max-width: 100%;
+            width: 100%;
+        }
+        .history-table-container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            min-height: 600px;
+            display: flex !important;
+            flex-direction: column;
+            color: #333;
+            width: 100%;
+        }
+        .history-table-container h3 {
+            color: #4e025f;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .history-table {
+            color: #333;
+        }
+        .history-table th {
+            color: #4e025f;
+        }
+        .history-table th, .history-table td {
+            border-bottom: 1px solid #eee;
+        }
+        .history-table tbody tr:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -65,19 +107,21 @@
                 </div>
                 <div class="history-table-container" id="history-table-container" style="display: block;">
                     <h3 id="selected-month-title">Month History</h3>
-                    <table class="history-table">
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                                <th>User/Entity</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-table-body">
-                        </tbody>
-                    </table>
+                    <div class="table-wrapper" style="flex: 1; overflow-y: auto; text-align: left;">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                    <th>User/Entity</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

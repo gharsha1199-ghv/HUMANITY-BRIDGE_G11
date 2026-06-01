@@ -85,7 +85,7 @@
                                 <td>{{ r.request_type }}</td>
                                 <td>{{ r.requirement }}</td>
                                 <td>
-                                    <span class="status-pill {{ r.status.lower().replace(' ', '-') if r.status else 'pending' }}" style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;
+                                    <span class="status-pill {{ 'pending' if r.status == 'Matched' else (r.status.lower().replace(' ', '-') if r.status else 'pending') }}" style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;
                                     {% if r.status == 'Approved' or r.status == 'Completed' %}
                                         background-color: #d4edda; color: #155724;
                                     {% elif r.status == 'On The Way' %}
@@ -95,7 +95,7 @@
                                     {% else %}
                                         background-color: #fff3cd; color: #856404;
                                     {% endif %}">
-                                        {{ r.status or 'Pending' }}
+                                        {{ 'Pending' if r.status == 'Matched' else (r.status or 'Pending') }}
                                     </span>
                                 </td>
                             </tr>

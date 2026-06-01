@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humanity Bridge | Match Support</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin_Style_css/donations.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='headerfooter/footer.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconlogo.jpeg') }}" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .match-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 120px 20px 60px 20px;
+      color: white;
+    }
+    .match-container h1 {
+      margin-bottom: 5px;
+      font-size: 2.2rem;
+    }
+    .match-subtitle {
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+    .detail-card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      color: #333;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .detail-item label {
+      font-weight: bold;
+      color: #6a1b9a;
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .detail-item span {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .matches-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      color: #333;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      min-height: 450px;
+      display: flex;
+      flex-direction: column;
+    }
+    .matches-card h2 {
+      margin-bottom: 20px;
+      color: #6a1b9a;
+      border-bottom: 2px solid #f3e5f5;
+      padding-bottom: 10px;
+      font-size: 1.5rem;
+    }
+    .link-btn {
+      color: white !important;
+      background: linear-gradient(135deg, #8e24aa, #6a1b9a);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .link-btn:hover {
+      background: linear-gradient(135deg, #a235bb, #7b1fa2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(106, 27, 154, 0.3);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: 0.2s;
+    }
+    .back-link:hover {
+      color: #ffcc00;
+    }
+    .no-matches {
+      text-align: center;
+      padding: 40px 0;
+      color: #888;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">
+        <button id="sidebarToggle" class="toggle-btn"><i class="fa-solid fa-bars"></i></button>
+        <img src="{{ url_for('static', filename='images/projectlogo.png') }}" alt="logo">
+        <span>Humanity Bridge</span>
+      </div>
+      <nav>
+        <a href="/adminadd_partner" class="login-btn">Add Partners</a>
+        <a href="/adminview_partners" class="login-btn">View Partners</a>
+        <div class="user-dropdown">
+          <a href="#" class="login-btn user-toggle">Admin &#9662;</a>
+          <div class="dropdown-content">
+            <a href="/adminhome">View Dashboard</a>
+            <a href="/adminadmin_history">System History</a>
+            <a href="/adminmyaccount">My Account</a>
+            <a href="/login">Logout</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>Admin<span>Panel</span></h3>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="/adminhome"><i class="fa-solid fa-chart-pie"></i> Overview</a></li>
+      <li><a href="/adminverification"><i class="fa-solid fa-user-check"></i> Verifications</a></li>
+      <li class="active"><a href="/admindonations"><i class="fa-solid fa-hand-holding-dollar"></i> Donations</a></li>
+      <li><a href="/admintracking"><i class="fa-solid fa-truck-fast"></i> Tracking</a></li>
+      <li><a href="/adminrequestpage"><i class="fa-solid fa-file-invoice"></i> Requests</a></li>
+      <li id="logout"><a href="/login"><i class="fa-solid fa-right-from-bracket"></i>logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="match-container">
+    <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    
+    {% if type == 'donation' %}
+      <h1>Match Donation</h1>
+      <p class="match-subtitle">Find and link compatible NGO requests for this donation.</p>
+
+      <div class="detail-card">
+        <h3 style="color: #6a1b9a; border-bottom: 2px solid #f3e5f5; padding-bottom: 10px; margin-bottom: 15px;">Selected Donation Details</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <label>Donation Type</label>
+            <span>{{ item.donation_type.capitalize() }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Donor Name</label>
+            <span>{{ item.donor_name }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Quantity</label>
+            <span>
+              {% if item.donation_type == 'food' %}
+                {{ item.quantity }} Meals
+              {% else %}
+                {{ item.quantity }} Bags/Items
+              {% endif %}
+            </span>
+          </div>
+          <div class="detail-item">
+            <label>Location</label>
+            <span>{{ item.city }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="matches-card">
+        <h2>Compatible NGO Requests</h2>
+        <div class="table-wrapper" style="flex: 1; overflow-y: auto; text-align: left;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>NGO Name</th>
+                <th>Requirement</th>
+                <th>Location</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for match in matches %}
+                <tr>
+                  <td>{{ match.formatted_date }}</td>
+                  <td>{{ match.ngo_name }}</td>
+                  <td>
+                    {% if match.request_type == 'Food' %}
+                      {{ match.meals_needed }}
+                    {% else %}
+                      {{ match.clothing_items }}
+                    {% endif %}
+                  </td>
+                  <td>{{ match.city }}</td>
+                  <td>
+                    <a href="/admin/match/link/{{ item.source }}/{{ item.id }}/{{ match.id }}" class="link-btn"><i class="fa-solid fa-link"></i> Link & Dispatch</a>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5" class="no-matches">No matching pending NGO requests found with the same type and quantity.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    {% else %}
+      <h1>Match NGO Request</h1>
+      <p class="match-subtitle">Find and link compatible donations for this request.</p>
+
+      <div class="detail-card">
+        <h3 style="color: #6a1b9a; border-bottom: 2px solid #f3e5f5; padding-bottom: 10px; margin-bottom: 15px;">Selected Request Details</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <label>Request Type</label>
+            <span>{{ item.request_type }}</span>
+          </div>
+          <div class="detail-item">
+            <label>NGO Name</label>
+            <span>{{ item.ngo_name }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Requirement</label>
+            <span>
+              {% if item.request_type == 'Food' %}
+                {{ item.meals_needed }}
+              {% else %}
+                {{ item.clothing_items }}
+              {% endif %}
+            </span>
+          </div>
+          <div class="detail-item">
+            <label>Location</label>
+            <span>{{ item.city }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="matches-card">
+        <h2>Compatible Donations</h2>
+        <div class="table-wrapper" style="flex: 1; overflow-y: auto; text-align: left;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Donor Name</th>
+                <th>Quantity Details</th>
+                <th>Location</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for match in matches %}
+                <tr>
+                  <td>{{ match.formatted_date }}</td>
+                  <td>{{ match.donor_name }}</td>
+                  <td>
+                    {% if match.donation_type == 'food' %}
+                      {{ match.quantity }} Meals
+                    {% else %}
+                      {{ match.quantity }} Bags/Items
+                    {% endif %}
+                  </td>
+                  <td>{{ match.city }}</td>
+                  <td>
+                    <a href="/admin/match/link/{{ match.source }}/{{ match.id }}/{{ item.id }}" class="link-btn"><i class="fa-solid fa-link"></i> Link & Dispatch</a>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5" class="no-matches">No matching pending donations found with the same type and quantity.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>© 2026 Humanity Bridge. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  </script>
+</body>
+
+</html>
