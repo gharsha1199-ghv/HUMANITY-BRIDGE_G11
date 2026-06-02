@@ -706,7 +706,9 @@
           const foodCategory = document.getElementById('foodCategory').value;
           const expiryDate = document.getElementById('foodExpiryDate').value;
           const expiryTime = document.getElementById('foodExpiryTime').value;
-          const foodDesc = document.getElementById('foodDesc').value;
+          const foodDesc = document.getElementById('peopleServe') ? document.getElementById('peopleServe').value : '';
+          const foodQuantity = document.getElementById('quantity') ? document.getElementById('quantity').value : '';
+          const foodUnit = document.getElementById('unitField') ? document.getElementById('unitField').value : '';
           const foodPackedProperly = document.getElementById('foodPackedProperly').checked ? '1' : '0';
           const foodAvailableFrom = document.getElementById('foodAvailableFrom').value;
           const foodAvailableTill = document.getElementById('foodAvailableTill').value;
@@ -727,6 +729,8 @@
           formData.append('expiry_date', expiryDate);
           formData.append('expiry_time', expiryTime);
           formData.append('description_notes', foodDesc);
+          formData.append('food_quantity', foodQuantity);
+          formData.append('food_unit', foodUnit);
           formData.append('is_hygienic', foodPackedProperly);
           formData.append('prepared_time', foodAvailableFrom);
           formData.append('pickup_time', foodAvailableTill);

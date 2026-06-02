@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = 'humanity_bridge_secret_key'
 
 
-
+  
 
 
 
