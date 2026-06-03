@@ -1427,12 +1427,38 @@ def admin_requestpage():
                 r['requirement'] = r['clothing_items'] or 'Clothes'
             else:
                 r['requirement'] = f"Rs. {int(r['amount_needed'] or 0)}"
+                
+        # Calculate Admin Balance
+        cursor.execute("SELECT SUM(amount) as s FROM donor_donations WHERE donation_type = 'money'")
+        sum1 = cursor.fetchone()['s'] or 0
+        cursor.execute("SELECT SUM(amount) as s FROM regular_donor_donations WHERE donation_type = 'money'")
+        sum2 = cursor.fetchone()['s'] or 0
+        total_donations_val = sum1 + sum2
+        
+        cursor.execute("SELECT SUM(amount_needed) as s FROM ngo_requests WHERE request_type = 'Money' AND status = 'Completed'")
+        funds_utilised_val = cursor.fetchone()['s'] or 0
+        
+        admin_balance = total_donations_val - funds_utilised_val
+                
         cursor.close()
     except Exception as e:
         requests_list = []
+        admin_balance = 0
         print("Error fetching NGO requests:", e)
         
-    return render_template('admin_Script_html/requestpage.html', requests=requests_list)
+    return render_template('admin_Script_html/requestpage.html', requests=requests_list, admin_balance=admin_balance)
+
+@app.route('/admin/transfer_money', methods=['POST'])
+def admin_transfer_money():
+    request_id = request.form.get('request_id')
+    try:
+        cursor = db.cursor()
+        cursor.execute("UPDATE ngo_requests SET status = 'Completed' WHERE id = %s", (request_id,))
+        db.commit()
+        cursor.close()
+    except Exception as e:
+        print("Error completing transfer:", e)
+    return redirect('/adminrequestpage')
 
 @app.route('/admintracking')
 def admin_tracking():
