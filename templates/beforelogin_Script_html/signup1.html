@@ -111,6 +111,18 @@
                             <option value="none">No Vehicle (Public Transport)</option>
                         </select>
                     </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                            <i class="fa-solid fa-hashtag"></i>
+                            <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="Vehicle Number">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="file" id="uploadLicence" name="uploadLicence" accept="image/*,.pdf" style="padding: 9px 15px 9px 45px;">
+                        </div>
+                    </div>
+
                     <!-- <div class="input-group" style="align-items: flex-start;">
                         <i class="fa-solid fa-clock" style="top: 22px;"></i>
                         <textarea id="volAvailability" placeholder="Your Availability (e.g., Weekends, Evenings, Afternoons)" rows="2"></textarea>
