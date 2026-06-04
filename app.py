@@ -3,13 +3,20 @@ import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
-db=mysql.connector.connect(
-    host='127.0.0.1',
-    user='root',
-    password='Sharjina@74802',
-    database='humanity_bridge'
-)
+# db=mysql.connector.connect(
+#     host='127.0.0.1',
+#     user='root',
+#     password='Sharjina@74802',
+#     database='humanity_bridge'
+# )
 
+db=mysql.connector.connect(
+    host='acela.proxy.rlwy.net',
+    user='root',
+    password='rpWSyJlfAOCgkzbmfkYSbmuOvhxvNCZu',
+    database='railway',
+    port=13498
+)
 
 
 app = Flask(__name__)
