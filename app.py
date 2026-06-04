@@ -15,8 +15,12 @@ db=mysql.connector.connect(
 app = Flask(__name__)
 app.secret_key = 'humanity_bridge_secret_key'
 
-
-  
+@app.before_request
+def check_db_connection():
+    try:
+        db.ping(reconnect=True, attempts=3, delay=2)
+    except Exception as e:
+        print("Database ping failed:", e)  
 
 
 
@@ -1579,6 +1583,9 @@ def admin_verify_user(user_type, user_id, action):
         except Exception as e:
             print("Error verifying/deleting user:", e)
             
+    referrer = request.referrer
+    if referrer and '/adminview_partners' in referrer:
+        return redirect('/adminview_partners')
     return redirect('/adminverification')
 
 @app.route('/admin/donation/<source>/<int:donation_id>/<action>')
@@ -1839,12 +1846,26 @@ def signup():
             """, (name, phone, email, city, pincode, hashed_password))
 
         elif role == "volunteer":
-            vehicle_type = request.form.get('vehicle_type')
+            import os
+            from werkzeug.utils import secure_filename
+            vehicle_type = request.form.get('vehicle_type', '')
+            vehicle_number = request.form.get('vehicleNumber', '')
+            
+            file = request.files.get('uploadLicence')
+            file_name = ''
+            file_path = ''
+            if file and file.filename:
+                file_name = secure_filename(file.filename)
+                upload_folder = os.path.join(app.root_path, 'static', 'uploads')
+                os.makedirs(upload_folder, exist_ok=True)
+                full_path = os.path.join(upload_folder, file_name)
+                file.save(full_path)
+                file_path = os.path.join('static', 'uploads', file_name).replace('\\', '/')
 
             cursor.execute("""
-                INSERT INTO volunteers (name, phone, email, city, pincode, vehicle_type, password)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, (name, phone, email, city, pincode, vehicle_type, hashed_password))
+                INSERT INTO volunteers (name, phone, email, city, pincode, vehicle_type, vehicle_number, file_name, file_path, password)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (name, phone, email, city, pincode, vehicle_type, vehicle_number, file_name, file_path, hashed_password))
 
         db.commit()
         cursor.close()
@@ -1980,14 +2001,14 @@ def admin_add_partner_post():
         if partner_type == "donor" or partner_type == "Regular donor":
             organization_type = request.form.get('organization_type')
             cursor.execute("""
-                INSERT INTO regulardonors (partner_type, name, organization_type, phone, email, city, pincode, registration_number, password)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO regulardonors (partner_type, name, organization_type, phone, email, city, pincode, registration_number, password, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 'Approved')
             """, ("Regular donor", name, organization_type, phone, email, city, pincode, registration_number, hashed_password))
 
         elif partner_type == "ngo" or partner_type == "NGO/Receiver":
             cursor.execute("""
-                INSERT INTO ngo_receivers (partner_type, name, phone, email, city, pincode, registration_no, password)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO ngo_receivers (partner_type, name, phone, email, city, pincode, registration_no, password, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 'Approved')
             """, ("NGO/Receiver", name, phone, email, city, pincode, registration_number, hashed_password))
 
         db.commit()
@@ -2007,10 +2028,10 @@ def admin_add_partner_post():
 def admin_view_partners():
     try:
         cursor = db.cursor(dictionary=True)
-        cursor.execute("SELECT name, 'donor' as type, organization_type as orgType, phone as contact, email, city, pincode as area, registration_number as regNum, status FROM regulardonors")
+        cursor.execute("SELECT id, name, 'donor' as type, 'regulardonor' as type_raw, organization_type as orgType, phone as contact, email, city, pincode as area, registration_number as regNum, status FROM regulardonors")
         regulardonors_data = cursor.fetchall()
         
-        cursor.execute("SELECT name, 'ngo' as type, '' as orgType, phone as contact, email, city, pincode as area, registration_no as regNum, status FROM ngo_receivers")
+        cursor.execute("SELECT id, name, 'ngo' as type, 'ngo' as type_raw, '' as orgType, phone as contact, email, city, pincode as area, registration_no as regNum, status FROM ngo_receivers")
         ngo_receivers_data = cursor.fetchall()
         
         partners = regulardonors_data + ngo_receivers_data
